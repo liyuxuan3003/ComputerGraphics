@@ -1,0 +1,12 @@
+\section{光线追踪的基本概念}
+
+光线追踪的基本概念可以用\xref{fig:光线追踪的基本概念}来说明，对于每个像素，我们将会产生一条光线，光线的原点和方向与选取的投影方式有关。光线会在三维空间中穿行，光线第一个遇到的物体就代表该像素“看到”的是这个物体，像素就会被渲染为这个物体的颜色。例如在\xref{fig:光线追踪的基本概念}中光线追踪到的是三角面$T_1$。三角面$T_2$未被光线经过，三角面$T_3$在光线上但$T_1$在其前面先遇到光线了。
+\begin{Figure}[光线追踪的基本概念]
+    \includegraphics[scale=0.8]{build/Chapter04B_03.fig.pdf}
+\end{Figure}
+
+因此，简单来说，光线追踪可以分为两个步骤
+\begin{enumerate}
+    \item 光线产生（Ray Generation），确定每个像素对应的光线的原点和方向。
+    \item 光线相交（Ray Intersection），找到最近的与光线相交的物体。
+\end{enumerate}

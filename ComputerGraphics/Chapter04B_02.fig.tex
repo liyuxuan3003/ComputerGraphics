@@ -1,0 +1,59 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.65]
+
+\draw[ultra thin] (-11.5,-5.3) rectangle (5,5.8);
+
+\begin{scope}[3d view]
+
+\path (-11,0,0) coordinate (e);
+
+\foreach \y in {3.5,2.5,1.5,0.5}
+{
+    \path (0,\y,3.5) coordinate (A1);
+    \path (0,-\y,-3.5) coordinate (A2);
+    \path ($(e)!1.25!(A1)$) coordinate (B1);
+    \path ($(e)!1.25!(A2)$) coordinate (B2);
+    \draw[-latex] (A1) -- (B1);
+    \draw[-latex] (A2) -- (B2);
+}
+
+\fill[black!20!white] (0,-4,-4) -- (0,-4,4) -- (0,4,4) -- (0,4,-4) -- cycle;
+\draw[thick] (0,-4,-4) node[right] {$v_b$} -- (0,-4,4) node[below right] {$v_t$} node[above] {$u_r$} -- (0,4,4) node[above] {$u_l$} -- (0,4,-4) -- cycle;
+
+\draw (e) -- node[above] {$d$} (0,0,0);
+
+\foreach \x in {-3,-2,...,3}
+{
+    \foreach \y in {-3,-2,...,3}
+    {
+        \draw[ultra thin,gray] (0,\x,-4) -- (0,\x,4);
+        \draw[ultra thin,gray] (0,-4,\y) -- (0,4,\y);
+    }
+}
+
+\foreach \y in {3.5,2.5,1.5,0.5}
+{
+    \path (0,\y,3.5) coordinate (A1);
+    \path (0,-\y,-3.5) coordinate (A2);
+    \path ($(e)!1.25!(A1)$) coordinate (B1);
+    \path ($(e)!1.25!(A2)$) coordinate (B2);
+    \begin{scope}
+        \clip (0,-4,-4) -- (0,-4,4) -- (0,4,4) -- (0,4,-4) -- cycle;
+        \draw[dashed] (A1) -- (B1);
+        \draw[dashed] (A2) -- (B2);
+    \end{scope}
+    \draw (e) -- (A1) node[ocirc] {};
+    \draw (e) -- (A2) node[ocirc] {};
+}
+
+\draw[-latex,thick] (e) -- ++ (0,0,1.5) node[right] {$\vb{v}$};
+\draw[-latex,thick] (e) -- ++ (0,-1.5,0) node[below] {$\vb{u}$};
+\draw[-latex,thick] (e) -- ++ (-1.5,0,0) node[above] {$\vb{w}$};
+\path (e) node[circ] {} node[above left] {$\vb{e}$};
+
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

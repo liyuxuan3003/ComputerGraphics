@@ -1,0 +1,34 @@
+\section{Blinn-Phong着色}
+现实中许多物体看起来是有光泽的。这是因为，物体表面受到光照时，在散射（Diffuse）机制外还同时存在镜面反射（Specular Reflection）机制。换言之，如果视角在光源产生的入射光对应的反射光方向上，看到的颜色会更亮。Blinn-Phong着色就是在考虑镜面反射的影响。
+
+如\xref{fig:Lambertian着色}所示，$\vb{n}$是表面的法向，$\vb{l},\vb{v}$分别为光源和视线的方向。这里要考察视线方向是否位于光源入射光的反射光上，其实一个等效的做法是，考察$\vb{v},\vb{l}$平分线处的单位矢量$\vb{h}$和表面的法向$\vb{n}$间的夹角$\alpha$有多大？容易证明，我们可以将$\vb{h}$可以表达成以下形式
+\begin{Equation}
+    \vb{h}=\frac{\vb{v}+\vb{l}}{\norm{\vb{v}+\vb{l}}}
+\end{Equation}
+因为$\vb{v},\vb{l}$均为单位矢量故$\vb{v}+\vb{l}$必位于两者平分线上，而除以模是为将其也转为单位矢量。
+
+\begin{Figure}[Blinn-Phong着色]
+    \includegraphics[scale=0.8]{build/Chapter05C_01.fig.pdf}
+\end{Figure}
+基于此，Blinn-Phong着色可以表述为
+\begin{BoxFormula}[Blinn-Phong着色]
+    Blinn-Phong着色
+    \begin{Equation}
+        c=c_ac_r+c_lc_r\max(0,\vb{n}\cdot\vb{l})+c_lc_p\max(0,\vb{n}\cdot\vb{h})^p
+    \end{Equation}
+\end{BoxFormula}
+其中，$c_p$是镜面反射颜色，$c_p$和$c_r$不一定要是相同的，但是应当确保$c_p+c_r<1$以保证不会令RGB溢出$[0,1]$的范围。$p$称为Phong指数，它代表了物体表面的光泽度，我们容易看出，$p$越大则镜面反射项$c_lc_p\max(0,\vb{n}\cdot\vb{h})^p$衰减越快，可以这样理解，镜面反射会令视线处于反射光两侧一定角度内出现额外的高光，$p$则会决定高光的范围，$p$越大则高光范围越小。
+
+在\xref{tab:着色过程的符号和表达式整理}中，我们整理了着色中出现的符号和表达式
+\begin{Tablex}[着色过程的符号和表达式整理]{llZ}
+    <颜色或表达式&&说明\\>
+    $c_r$&&物体表面的散射颜色\\
+    $c_p$&&物体表面的反射颜色\\
+    $c_l$&&点状光源的颜色\\
+    $c_a$&&环境光源的颜色\\
+    $c_r+c_p\leq 1$&&物体的颜色和不能超过$1$\\
+    $c_l+c_a\leq 1$&&光源的颜色和不能超过$1$\\ \hline
+    $c_ac_r$&Ambient&环境光源的散射\\
+    $c_lc_r\max(0,\vb{n}\cdot\vb{l})$&Lambertian&点光源的散射\\
+    $c_lc_p\max(0,\vb{n}\cdot\vb{h})^{p}$&Blinn-Phong&点光源的反射\\
+\end{Tablex}

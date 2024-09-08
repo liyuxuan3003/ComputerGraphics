@@ -1,0 +1,16 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=2]
+
+\def\xstep{0.0005}
+\foreach \x in {0,\xstep,...,1}
+{
+    \fill[white!\fpeval{100*\x^(1/2.2)}!black] (\fpeval{(\x-\xstep/1.5)*5},0) rectangle (\fpeval{(\x+\xstep/1.5)*5},1);
+}
+
+\draw[thick] (0,0) rectangle (5,1);
+\draw[ultra thin] (-0.05,-0.05) rectangle (5.05,1.05);
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,47 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.65]
+
+\draw[ultra thin] (-3,-5.3) rectangle (5,5.8);
+
+\begin{scope}[3d view]
+
+\foreach \y in {3.5,2.5,1.5,0.5}
+{
+    \draw[-latex] (0,\y,3.5) -- (3.5,\y,3.5);
+    \draw[-latex] (0,-\y,-3.5) -- (3.5,-\y,-3.5);
+}
+
+\fill[black!20!white] (0,-4,-4) -- (0,-4,4) -- (0,4,4) -- (0,4,-4) -- cycle;
+\draw[thick] (0,-4,-4) node[right] {$v_b$} -- (0,-4,4) node[below right] {$v_t$} node[above] {$u_r$} -- (0,4,4) node[above] {$u_l$} -- (0,4,-4) -- cycle;
+
+\foreach \x in {-3,-2,...,3}
+{
+    \foreach \y in {-3,-2,...,3}
+    {
+        \draw[ultra thin,gray] (0,\x,-4) -- (0,\x,4);
+        \draw[ultra thin,gray] (0,-4,\y) -- (0,4,\y);
+    }
+}
+
+\begin{scope}
+\clip (0,-4,-4) -- (0,-4,4) -- (0,4,4) -- (0,4,-4) -- cycle;
+\foreach \y in {3.5,2.5,1.5,0.5}
+{
+    \draw[dashed] (0,\y,3.5) -- (2.5,\y,3.5);
+    \draw[dashed] (0,-\y,-3.5) -- (2.5,-\y,-3.5);
+    \path (0,\y,3.5) node[ocirc] {};
+    \path (0,-\y,-3.5) node[ocirc] {};
+}
+\end{scope}
+
+\draw[-latex,thick] (0,0,0) -- (0,0,1.5) node[right] {$\vb{v}$};
+\draw[-latex,thick] (0,0,0) -- (0,-1.5,0) node[above] {$\vb{u}$};
+\draw[-latex,thick] (0,0,0) -- (-1.5,0,0) node[above] {$\vb{w}$};
+\path (0,0,0) node[circ] {} node[above right] {$\vb{e}$};
+
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

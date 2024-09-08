@@ -1,0 +1,31 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}
+
+\draw[ultra thin] (-5,-1.5) rectangle (5.5,4);
+
+\begin{scope}[3d view]
+    \draw[-latex] (-5,0,0) node[left] {$\vb{e}$} node[circ] {} -- node[above left,pos=0.3] {$\vb{p}(t)=\vb{e}+\vb{d}t$} (6,0,0);
+
+    \fill[black!20!white,save path=\triA] (0,0,-1) node[left,black] {$\vb{b}$}  node[right,black] {$\vb{f}(\beta,\gamma)=\vb{a}+\beta(\vb{b}-\vb{a})+\gamma(\vb{c}-\vb{a})$} -- (0,1,1) node[above,black] {$T_1$} node[left,black] {$\vb{a}$} -- (0,-1,0.5) node[right,black] {$\vb{c}$} -- cycle;
+    \fill[black!20!white,save path=\triB] (0,4,1) -- (0,2,3) node[above,black] {$T_2$} -- (0,1,2.5) -- cycle;
+    \fill[black!20!white,save path=\triC] (3,1.5,-1) -- (3,-0.5,1) node[above,black] {$T_3$} -- (3,-1.5,0) -- cycle;
+    \draw[thick] [use path=\triA];
+    \draw[thick] [use path=\triB];
+    \draw[thick] [use path=\triC];
+
+    \begin{scope}
+        \clip [use path=\triA];
+        \draw[dashed] (0,0,0) -- (5,0,0);
+        \draw (-5,0,0) -- (0,0,0) node[ocirc] {};
+    \end{scope}
+    \begin{scope}
+        \clip [use path=\triC];
+        \draw[dashed] (3,0,0) -- (5,0,0);
+        \draw (-5,0,0) -- (3,0,0) node[ocirc] {};
+    \end{scope}
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

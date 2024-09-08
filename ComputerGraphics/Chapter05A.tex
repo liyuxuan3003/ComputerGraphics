@@ -1,0 +1,23 @@
+\section{Lambertian着色}
+
+Lambertian着色是最简单的模型，其认为，照射至物体表面的光取决于表面和光源的夹角
+\begin{itemize}
+    \item 若物体表面正对着光源，则表面是完全照亮的。
+    \item 若物体表面平行于光源，则表明是完全黑暗的。
+\end{itemize}
+
+\begin{Figure}[Lambertian着色]
+    \includegraphics[scale=0.8]{build/Chapter05A_01.fig.pdf}
+\end{Figure}
+
+如\xref{fig:Lambertian着色}所示，$\vb{n}$是表面的法向，$\vb{l}$是光源的方向，它们都被设定为单位向量。
+\begin{BoxFormula}[Lambertian着色]
+    Lambertian着色认为
+    \begin{Equation}
+        c=c_lc_r\max(0,\vb{n}\cdot\vb{l})
+    \end{Equation}
+\end{BoxFormula}
+其中，$c_l$是光源颜色，$c_r$是物体散射颜色，该公式应当对RGB各计算一次以得到RGB每个分量的结果。在\xref{fig:Lambertian着色}中用$\theta$表示$\vb{n},\vb{l}$的夹角，由于$\vb{n},\vb{l}$都是单位矢量，因此$\vb{n}\cdot\vb{l}=\cos\theta$，这符合前面的预期，当$\theta=0$时给出$1$
+即最亮，当$\theta=\pm\pi/2$时给出$0$即最暗。然而我们必须要处理的一种情况是当光源位于表面背后，此时$\vb{n}\cdot\vb{l}<0$为负数，这会违背RGB的数值在区间$[0,1]$的要求，而且直观上“不可能比黑更黑”，因此需要将$\vb{n}\cdot\vb{l}$和$0$之间取$\max$函数。
+
+Lambertian着色的一个特点是它与视角无关。这一点我们可以这样理解：Lambertian着色假定物体表面向各方向均匀散射了从光源接收的能量，所以从各个视角看起来都是一样的。

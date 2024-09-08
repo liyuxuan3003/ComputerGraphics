@@ -1,0 +1,46 @@
+\section{光线相交}
+由于实际的三维模型都是由其表面一系列的三角面组成的，因此，我们唯一要处理的和光线相交的物体就是三角面。和光线的表示类似，三角面也可以用参数方程的方式表达
+\begin{Equation}[三角面方程]
+    \vb{f}(\beta,\gamma)=\vb{a}+\beta(\vb{b}-\vb{a})+\gamma(\vb{c}-\vb{a})
+\end{Equation}
+
+其中，$\vb{a},\vb{b},\vb{c}$为三角面的三个顶点，$\beta,\gamma$是参数满足$\beta>0,\gamma>0$以及$\beta+\gamma<1$。
+
+现在联立$\vb{p}(t)=\vb{f}(\beta,\gamma)$，代入\xrefeq{光线方程}和\xrefeq{三角面方程}\setpeq{光线相交}
+\begin{Equation}&[1]
+    \vb{e}+\vb{d}t=\vb{a}+\beta(\vb{b}-\vb{a})+\gamma(\vb{c}-\vb{a})
+\end{Equation}
+将$\vb{e},\vb{d}$和$\vb{a},\vb{b},\vb{c}$展开
+\begin{Align}
+    x_e+tx_d&=x_a+\beta(x_b-x_a)+\gamma(x_c-x_a)\\
+    y_e+ty_d&=y_a+\beta(y_b-y_a)+\gamma(y_c-y_a)\\
+    z_e+tz_d&=z_a+\beta(z_b-z_a)+\gamma(z_c-z_a)
+\end{Align}
+我们可以写成标准的矩阵形式
+\begin{Equation}
+    \begin{pmatrix}
+        x_a-x_b&x_a-x_c&x_d\\
+        y_a-y_b&y_a-y_c&y_d\\
+        z_a-z_b&z_a-z_c&z_d\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        \beta\\
+        \gamma\\
+        t\\
+    \end{pmatrix}=
+    \begin{pmatrix}
+        x_a-x_c\\
+        y_a-y_c\\
+        z_a-z_c\\
+    \end{pmatrix}
+\end{Equation}
+这个方程可以很容易的通过行列式的相关知识求出结果，至此求交点的问题已经被解决。
+\begin{BoxFormula}[光线和三角面的相交]
+    光线和三角面相交，联立方程为
+    \begin{Equation}
+        \vb{e}+\vb{d}t=\vb{a}+\beta(\vb{b}-\vb{a})+\gamma(\vb{c}-\vb{a})
+    \end{Equation}
+\end{BoxFormula}
+解出方程后，我们将得到一组$t,\beta,\gamma$，如何判读这个结果？首先，若$\beta,\gamma>0$和$\beta+\gamma<1$不成立，则说明该光线与三角面所在平面的交点并不在三角面内部。其次，应确定$t\in[t_0,t_1]$成立，通常而言$t_0=0$而$t_1=+\infty$，我们不希望在视野背后的三角面也被渲染。最后，如果光线与多个三角面存在交点，我们应当渲染的是$t$最小的三角面，因为它在视野中最靠前。
+
+这里有一个问题，透视投影中$0\leq t\leq 1$是观察点和像平面间的区域，该区域是否要渲染？

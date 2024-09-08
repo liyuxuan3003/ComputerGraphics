@@ -1,0 +1,53 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}
+
+\xSetX
+\xValDefine{xC}[0]
+\xValOffset{xAR}{xC}[-0.5]
+\xValOffset{xAL}{xAR}[-3.25]
+\xValMiddle{xAC}{xAL}{xAR}
+\xValMirror{xBR}{xAL}{xC}
+\xValMirror{xBL}{xAR}{xC}
+\xValMiddle{xBC}{xBL}{xBR}
+
+\xSetY
+\xValDefine{yB}[0]
+\xValOffset{yLB}{yB}[0]
+\xValOffset{yLA}{yLB}[0.75]
+\xValOffset{yPB}{yLA}[0.1]
+\xValOffset{yPA}{yPB}[0.75]
+\xValOffset{yNegB}{yPA}[0.1]
+\xValOffset{yNegA}{yNegB}[0.5]
+\xValOffset{yCrB}{yNegA}[0]
+\xValOffset{yCrA}{yCrB}[1.25]
+\xValOffset{yPosB}{yCrA}[0]
+\xValOffset{yPosA}{yPosB}[0.5]
+\xValOffset{yQB}{yPosA}[0.1]
+\xValOffset{yQA}{yQB}[0.75]
+\xValOffset{yA}{yQA}[0]
+
+\draw[fill=black!25!yellow] (xAL|-yLB) rectangle node[white]{Backlight} (xBR|-yLA);
+\draw[fill=gray!70!black] (xAL|-yPB) rectangle node[white]{Polarizer (Horizontal)} (xBR|-yPA);
+\draw[fill=gray!70!black] (xAL|-yQB) rectangle node[white]{Polarizer (Vertical)} (xBR|-yQA);
+ 
+\draw[fill=gray] (xAL|-yNegB) rectangle node[white] {Cathode [-]} (xAR|-yNegA);
+\draw[fill=gray] (xBL|-yNegB) rectangle node[white] {Cathode [+]} (xBR|-yNegA);
+\draw[fill=purple] (xAL|-yCrB) rectangle node[white] {Liquid Crystal} (xAR|-yCrA);
+\draw[fill=purple] (xBL|-yCrB) rectangle node[white] {Liquid Crystal} (xBR|-yCrA);
+\draw[fill=gray] (xAL|-yPosA) rectangle node[white] {Anode [+]} (xBR|-yPosB);
+
+\foreach \x in {-0.3,0,0.3}
+{
+    \draw[black!15!yellow,-latex,thick] ($(xAC|-yLA)+(\x,0)$) -- ($(xAC|-yQA)+(\x,0)$);
+    \draw[black!15!yellow,-latex,thick] ($(xBC|-yLA)+(\x,0)$) -- ($(xBC|-yQB)+(\x,0)$);
+}
+
+\path (xAC|-yQA) node[above] {ON};
+\path (xBC|-yQA) node[above] {OFF};
+
+\xValBorder{xAL}{xBR}{yB}{yA}[0.6]*
+
+\end{tikzpicture}
+\end{document}

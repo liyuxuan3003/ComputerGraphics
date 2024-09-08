@@ -1,0 +1,11 @@
+\section{Ambient着色}
+Lambertian着色存在的一个问题是，对于物体背对光源部分的表面，将是完全黑暗的，然而这往往和现实不符。物体背光一侧相较迎光一侧肯定要更暗一些，但不可能是完全黑暗的。
+
+Ambient着色改进了这一点，其叠加了一个环境光源$c_a$项
+\begin{BoxFormula}[Ambient着色]
+    Ambient着色认为
+    \begin{Equation}
+        c=c_ac_r+c_lc_r\max(0,\vb{n}\cdot\vb{l})
+    \end{Equation}
+\end{BoxFormula}
+Ambient着色可以认为是模拟了现实中由于各个物体的散射使环境中存在的一个各向同性的基础亮度。此外，要指出的是，我们需要确保环境光源和点光源的总和$c_a+c_l<1$，否则会导致RGB的结果溢出$[0,1]$的范围，另外一种可行的方式是当结果高于$1$将其限定在$1$。

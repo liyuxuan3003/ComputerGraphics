@@ -1,0 +1,42 @@
+\section{着色频率}
+在前面三节中，我们讨论了一个点处的颜色应该如何根据光源和视角的方向计算。那么在实践中，对于一个三角面，我们到底要计算多少点的颜色？这就是着色频率，有三个等级
+
+\begin{enumerate}
+    \item 平面着色（Flat Shading）：面上各点使用同一颜色。
+    \item 顶点着色（Gouraud Shading）：面上一点的颜色是顶点颜色的插值。
+    \item 像素着色（Phong Shading）：面上一点的颜色是顶点法向量在该点插值对应的颜色。
+\end{enumerate}
+
+
+这里需要进一步解释的是顶点着色和像素着色，它们都涉及一个问题，什么是顶点处的法向量？这个提法很怪，因为一个三角面只有一个法向量$\vb{n}$。实际上，顶点处的法向量$\vb{n}_a,\vb{n}_b,\vb{n}_c$定义为该顶点连接的所有三角面的法向量的平均值，这样一来，顶点可以均衡考虑临近三角面的方向从而通过后续插值在三角面之间创建比较自然的颜色过渡，而顶点着色和像素着色的差异就在于它们的插值方式略有不同，为此，我们有必要先解释一下三角面上的插值原理。
+
+我们再次写出三角面的参数方程
+\begin{Equation}
+    \vb{f}=\vb{a}+\beta(\vb{b}-\vb{a})+\gamma(\vb{c}-\vb{a})
+\end{Equation}
+我们不妨将$\vb{a}$提出
+\begin{Equation}
+    \vb{f}=(1-\beta-\gamma)\vb{a}+\beta\vb{b}+\gamma\vb{c}
+\end{Equation}
+引入$\alpha=1-\beta-\gamma$
+\begin{Equation}
+    \vb{f}=\alpha\vb{a}+\beta\vb{b}+\gamma\vb{c}
+\end{Equation}
+三角面上任意一点都可以由$(\alpha,\beta,\gamma)$表示，这称为重心坐标（Barycentric Coordinate）。而如果三个顶点处有某个量$x_a,x_b,x_c$，那么$(\alpha,\beta,\gamma)$处的$x$就可由$x=\alpha x_a+\beta x_b+\gamma x_c$插值。
+
+顶点着色的意思是，根据$\vb{n}_a,\vb{n}_b,\vb{n}_c$先算出顶点处的颜色$c_a,c_b,c_c$，随后插值出颜色
+\begin{Equation}
+    c=\alpha c_a+\beta c_b+\gamma c_c
+\end{Equation}
+像素着色的意思是，根据$\vb{n}_a,\vb{n}_b,\vb{n}_c$先插值出待计算点处的法向量$\vb{n}$，随后再通过该点处的法向量$\vb{n}$计算出相应的颜色，假如记颜色和法向量间的函数关系为$f$，则有
+\begin{Equation}
+    c=f(\alpha \vb{n}_a+\beta \vb{n}_b+\gamma \vb{n}_c)
+\end{Equation}
+简而言之，顶点着色插值对象为颜色，像素着色插值对象为法向量。像素着色的精度要优于顶点着色，尽管似乎只是颜色计算和插值计算互换了一下顺序，但这样一来，像素着色能赋予三角面上每个点均匀变化的法向量，这对于对法向量极为敏感的Blinn-Phong着色模型很重要。
+
+
+% \begin{enumerate}
+%     \item 频率为三角面（Flat Shading），三角面上各点使用同一颜色。
+%     \item 频率为顶点（Gouraud Shading），三角面上一点的颜色是顶点颜色的插值。
+%     \item 频率为像素（Phong Shading），三角面上一点的颜色是顶点法向量在该点插值对应的颜色。
+% \end{enumerate}

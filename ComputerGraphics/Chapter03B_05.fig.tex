@@ -1,0 +1,22 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}
+
+\draw[-latex,thick] (-1.5,0) -- (8,0) node[above] {$x$};
+\draw[-latex,thick] (0,-1.5) -- (0,8) node[right] {$y$};
+
+\foreach \x in {0,1,2,3}
+{
+    \foreach \y in {0,1,2,3}
+    {
+        \draw[ultra thin,fill=gray,opacity=0.5] ($(\x*2,\y*2)+(-1,-1)$) rectangle ($(\x*2,\y*2)+(1,1)$);
+
+        \draw (\x*2,\y*2) node[ocirc] {} node[below right] {\small $(\x,\y)$};
+    }
+}
+
+\draw[ultra thin] (-1.7,-1.7) rectangle (8.3,8.3);
+
+\end{tikzpicture}
+\end{document}

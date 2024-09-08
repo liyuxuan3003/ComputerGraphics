@@ -1,0 +1,28 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.25]
+
+\fill[black!20!white] (-2.8,0) rectangle (2.8,-2);
+\draw[thick] (-2.8,0) -- (2.8,0);
+
+\path (0,0) coordinate (O);
+\draw[thick,-latex] (0,0) -- ++ (90:2) node[above] {$\vb{n}$} coordinate (N);
+\draw[thick,-latex] (0,0) -- ++ (135:2) node[above] {$\vb{l}$} coordinate (L); 
+\draw[thick,-latex] (0,0) -- ++ (30:2) node[above] {$\vb{v}$} coordinate (V); 
+\draw[thick,gray,-latex] (0,0) -- ++ (75:2) node[above] {$\vb{h}$} coordinate (H); 
+
+\draw[dotted] (135:2) -- (135:3);
+\draw[dotted] (30:2) -- (30:3);
+
+\path (135:2.75) node[circ] {} node[above] {Light};
+\path (30:2.75) node[circ] {} node[above] {View};
+
+\draw pic["$\alpha$",angle eccentricity=1.5,angle radius=0.8cm,draw] {angle=H--O--N};
+\draw pic[angle radius=0.28cm,draw=gray] {angle=V--O--H};
+\draw pic[angle radius=0.32cm,draw=gray] {angle=H--O--L};
+
+\draw[ultra thin] (-3,-2.2) rectangle (3,2.6);
+
+\end{tikzpicture}
+\end{document}
