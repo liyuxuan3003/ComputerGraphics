@@ -1,12 +1,16 @@
 \section{光线相交}
 由于实际的三维模型都是由其表面一系列的三角面组成的，因此，我们唯一要处理的和光线相交的物体就是三角面。和光线的表示类似，三角面也可以用参数方程的方式表达
-\begin{Equation}[三角面方程]
-    \vb{f}(\beta,\gamma)=\vb{a}+\beta(\vb{b}-\vb{a})+\gamma(\vb{c}-\vb{a})
-\end{Equation}
+\begin{BoxDefinition}[三角面的参数方程]
+    三角面遵循以下参数方程
+    \begin{Equation}
+        \vb{f}(\beta,\gamma)=\vb{a}+\beta(\vb{b}-\vb{a})+\gamma(\vb{c}-\vb{a})
+    \end{Equation}
+\end{BoxDefinition}
 
-其中，$\vb{a},\vb{b},\vb{c}$为三角面的三个顶点，$\beta,\gamma$是参数满足$\beta>0,\gamma>0$以及$\beta+\gamma<1$。
+其中，$\vb{a},\vb{b},\vb{c}$为三角面的三个顶点，$\beta,\gamma$是参数满足$\beta>0,\gamma>0$以及$\beta+\gamma<1$，这个范围是为了保证点位于三角面内部，因为$\vb{a}+\beta(\vb{b}-\vb{a})+\gamma(\vb{c}-\vb{a})$本身表示的是一整个平面。
 
-现在联立$\vb{p}(t)=\vb{f}(\beta,\gamma)$，代入\xrefeq{光线方程}和\xrefeq{三角面方程}\setpeq{光线相交}
+现在联立$\vb{p}(t)=\vb{f}(\beta,\gamma)$，代入\xref{def:三维直线的参数方程}和\xref{def:三角面的参数方程}，
+
 \begin{Equation}&[1]
     \vb{e}+\vb{d}t=\vb{a}+\beta(\vb{b}-\vb{a})+\gamma(\vb{c}-\vb{a})
 \end{Equation}
@@ -29,18 +33,42 @@
         t\\
     \end{pmatrix}=
     \begin{pmatrix}
-        x_a-x_c\\
-        y_a-y_c\\
-        z_a-z_c\\
+        x_a-x_e\\
+        y_a-y_e\\
+        z_a-z_e\\
+    \end{pmatrix}
+\end{Equation}
+这等价于
+\begin{Equation}
+    \begin{pmatrix}
+        \vb{a}-\vb{b}&\vb{a}-\vb{c}&\vb{d}
+    \end{pmatrix}
+    \begin{pmatrix}
+        \beta\\
+        \gamma\\
+        t
+    \end{pmatrix}=
+    \begin{pmatrix}
+        \vb{a}-\vb{e}
     \end{pmatrix}
 \end{Equation}
 这个方程可以很容易的通过行列式的相关知识求出结果，至此求交点的问题已经被解决。
-\begin{BoxFormula}[光线和三角面的相交]
-    光线和三角面相交，联立方程为
-    \begin{Equation}
-        \vb{e}+\vb{d}t=\vb{a}+\beta(\vb{b}-\vb{a})+\gamma(\vb{c}-\vb{a})
-    \end{Equation}
-\end{BoxFormula}
-解出方程后，我们将得到一组$t,\beta,\gamma$，如何判读这个结果？首先，若$\beta,\gamma>0$和$\beta+\gamma<1$不成立，则说明该光线与三角面所在平面的交点并不在三角面内部。其次，应确定$t\in[t_0,t_1]$成立，通常而言$t_0=0$而$t_1=+\infty$，我们不希望在视野背后的三角面也被渲染。最后，如果光线与多个三角面存在交点，我们应当渲染的是$t$最小的三角面，因为它在视野中最靠前。
+% \begin{BoxFormula}[光线和三角面的相交]
+%     光线和三角面相交，联立方程为
+%     \begin{Equation}
+%         \begin{pmatrix}
+%             \vb{a}-\vb{b}&\vb{a}-\vb{c}&\vb{d}
+%         \end{pmatrix}
+%         \begin{pmatrix}
+%             \beta\\
+%             \gamma\\
+%             t
+%         \end{pmatrix}=
+%         \begin{pmatrix}
+%             \vb{a}-\vb{e}
+%         \end{pmatrix}
+%     \end{Equation}
+% \end{BoxFormula}
+解出方程后，我们将得到一组$t,\beta,\gamma$，如何判读这个结果？首先，若$\beta,\gamma>0$和$\beta+\gamma<1$不成立，则说明该光线与三角面所在平面的交点并不在三角面内部。其次，应验证$t\in[t_0,t_1]$是否成立，通常而言$t_0=0$而$t_1=+\infty$，我们不希望在视野背后的三角面也被渲染。最后，如果光线与多个三角面存在交点，我们应当渲染的是$t$最小的三角面，因为它在视野中最靠前。
 
-这里有一个问题，透视投影中$0\leq t\leq 1$是观察点和像平面间的区域，该区域是否要渲染？
+% 这里有一个问题，透视投影中$0\leq t\leq 1$是观察点和像平面间的区域，该区域是否要渲染？

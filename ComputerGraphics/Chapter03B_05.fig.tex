@@ -3,8 +3,8 @@
 \begin{document}
 \begin{tikzpicture}
 
-\draw[-latex,thick] (-1.5,0) -- (8,0) node[above] {$x$};
-\draw[-latex,thick] (0,-1.5) -- (0,8) node[right] {$y$};
+\draw[-latex,thick] (-2,3) -- (8,3) node[above] {$x$};
+\draw[-latex,thick] (3,-2) -- (3,8) node[right] {$y$};
 
 \foreach \x in {0,1,2,3}
 {
@@ -16,7 +16,12 @@
     }
 }
 
-\draw[ultra thin] (-1.7,-1.7) rectangle (8.3,8.3);
+\path (-1,3) node[above left] {$x_l$};
+\path (+7,3) node[above right] {$x_r$};
+\path (3,+7) node[above right] {$y_t$};
+\path (3,-1) node[below right] {$y_b$};
+
+\draw[ultra thin] (-2.3,-2.3) rectangle (8.3,8.3);
 
 \end{tikzpicture}
 \end{document}

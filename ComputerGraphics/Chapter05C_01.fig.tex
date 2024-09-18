@@ -1,7 +1,7 @@
 \documentclass{xStandalone}
 
 \begin{document}
-\begin{tikzpicture}[scale=1.25]
+\begin{tikzpicture}[scale=1.5]
 
 \fill[black!20!white] (-2.8,0) rectangle (2.8,-2);
 \draw[thick] (-2.8,0) -- (2.8,0);
@@ -19,6 +19,7 @@
 \path (30:2.75) node[circ] {} node[above] {View};
 
 \draw pic["$\alpha$",angle eccentricity=1.5,angle radius=0.8cm,draw] {angle=H--O--N};
+\draw pic["$\theta$",angle eccentricity=1.5,angle radius=0.6cm,draw] {angle=N--O--L};
 \draw pic[angle radius=0.28cm,draw=gray] {angle=V--O--H};
 \draw pic[angle radius=0.32cm,draw=gray] {angle=H--O--L};
 

@@ -20,14 +20,18 @@
 
 假设二维图像的像素总数是$n_x\times n_y$，对于$(i,j)$处的像素，其水平位置$u$和垂直位置$v$为
 \begin{Gather}
-    u=u_l+(u_r-u_l)(i+0.5)/n_x\\
-    v=v_b+(v_t-v_b)(j+0.5)/n_y
+    u=x_l+(x_r-x_l)(i+0.5)/n_x\\
+    v=y_b+(y_t-y_b)(j+0.5)/n_y
 \end{Gather}
 
 我们可以用一个参数方程表达三维空间的直线（即这里的光线）
-\begin{Equation}[光线方程]
-    \vb{p}(t)=\vb{e}+\vb{d}t
-\end{Equation}
+\begin{BoxDefinition}[三维直线的参数方程]
+    三维空间中的直线遵循以下参数方程
+    \begin{Equation}
+        \vb{p}(t)=\vb{e}+\vb{d}t
+    \end{Equation}
+\end{BoxDefinition}
+
 其中，$\vb{e}$代表光线的原点，$\vb{d}$代表光线的方向。应指出的是光线的原点$\vb{e}$未必是\xref{fig:两种投影方式}中投影的原点$\vb{e}$，为强调这一区别，在本小节将光线方程$\vb{p}(t)=\vb{e}+\vb{d}t$中的$\vb{e},\vb{d}$记为$\vb{e}_{ray},\vb{d}_{ray}$。
 
 对于平行投影，光线的原点在变化，但方向不变

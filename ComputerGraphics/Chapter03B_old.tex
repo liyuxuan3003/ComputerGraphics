@@ -1,0 +1,98 @@
+\section{栅格图像}
+在了解栅格设备后，本节我们将讨论有关栅格图像的若干问题。
+
+\subsection{栅格图像的数学建模}
+首先我们来讨论连续图像，连续图像可以视为这样一个映射
+\begin{Equation}
+    I(x,y): R\to V
+\end{Equation}
+其中，$R\subset \R^2$是图像存在的一个矩形区域。$V$则包含了所有可能出现的像素值，对于灰度图像有$V=\R^{+}$，因为光强应当是一个非负值。对于由RGB构成的彩色图像则有$V=(\R^{+})^3$。
+
+连续图像的实质是光强在矩形域上的连续分布。栅格图像的像素实际上采样的就是像素所在的小区域上光强的平均值，如\xref{fig:栅格图像的建模}所示，这里有必要明确的是像素的排列顺序，使用$(i,j)$表示第$i$列第$j$行的像素，列自左向右，行自下至上。像素坐标$(i,j)$代表了该像素点的中心位置，若总共有$n_x$列$n_y$行像素，则图像的定义域$R=[-0.5,n_x-0.5]\times [-0.5,n_y-0.5]$。
+
+\begin{Figure}[栅格图像的建模]
+    \includegraphics[scale=0.8]{build/Chapter03B_05.fig.pdf}
+\end{Figure}
+
+\subsection{像素的值}
+像素的值应该如何量化？主要有两种方式
+\begin{itemize}
+    \item 高动态范围（HDR, High Dynamic Range），使用浮点数来表示光强的大小，这种做法的优点是借助浮点数的指数部分可以表示出相当大范围的光强。缺点则是，通常并不需要这么大的范围，且浮点数比较占用空间，我们知道，半精度浮点数和单精度浮点数分别需要$\SI{16}{bit}$和$\SI{32}{bit}$，而一个像素RGB三个颜色就需要三个这样的浮点数来表示。
+    \item 低动态范围（LDR，Low Dynamic Range），这需要先指定一个最大光强$M$，随后将所有光强归一到$[0,1]$的范围内，使用一个整数作为分度值，例如用$\SI{8}{bit}$整数则所有可能取值为$0,(1/255),(2/255),(3/255),\cdots 1$。通常的图像就是采用$\SI{8}{bit}$，而专业相机拍摄的图像可能会具有$\SI{12}{bit}$或$\SI{14}{bit}$以取得更好的效果。另外应注意，当我们说$\SI{8}{bit}$图像是指一个颜色用$\SI{8}{bit}$表示，而RGB三个颜色则意味着需要三个$\SI{8}{bit}$来表示一个像素。
+\end{itemize}
+
+% \subsection{显示与伽马校正}
+若一个像素的值为$a\in[0,1]$，显示屏最大光强为$M$，显示屏该像素处的光强应当为
+\begin{Equation}
+    I=Ma
+\end{Equation}
+
+但实际上，并不是如此，因为显示屏的输入和输出之间存在非线性的关系！这种非线性关系可以近似为幂函数，幂函数的指数用$\gamma$表示，这是一个与显示屏特性有关的量
+\begin{Equation}
+    I=Ma^{\gamma}
+\end{Equation}
+
+\xref{fig:伽马值对显示的影响}展示了$\gamma$的影响，对于当下典型的显示屏，有$\gamma=2.2$。
+\begin{Figure}[伽马值对显示的影响]
+    \includegraphics[scale=0.8]{build/Chapter03B_07a.fig.pdf}
+\end{Figure}
+
+现在的问题是，我们如何测定一个显示屏的$\gamma$值？如\xref{fig:伽马值的测定方法}所示，我们令显示屏显示左侧这样的黑白相间的棋盘图案，假如这种图案足够密集，那从远处看就是灰色的，而且由于这种灰色是通过一半白一半黑直接在空间上混合出来的，我们可以确定其$I/M=0.5$。同时，我们在右侧显示一个值为$a$的纯色，调节$a$的值使左右看起来一致，此时有下式成立
+\begin{Equation}
+    a^{\gamma}=0.5
+\end{Equation}
+
+这样一来
+\begin{Equation}
+    \gamma=\frac{\ln 0.5}{\ln a}
+\end{Equation}
+
+\begin{Figure}[伽马值的测定方法]
+    \includegraphics[scale=0.8]{build/Chapter03B_03.fig.pdf}
+\end{Figure}
+
+假如我们已知知道$\gamma$，为了消除其影响，可以在输出之前通过$a'=a^{1/\gamma}$进行矫正。
+
+这里有一个问题，为什么显示屏不能设法令$\gamma=1$？在早期CRT显示器的年代，输出和输入确实是存在物理上的非线性关系，而现代的显示器其实是完全线性的，前面提到的$\gamma=2.2$其实是人为引入的！这样做的目的可以通过\xref{fig:灰度色阶的对比}所示的一个小实验理解，\xref{fig:校正前}是未校正的色阶，\xref{fig:校正后}是依照$\gamma=2.2$下$a'=a^{1/\gamma}$校正后的色阶，我们会注意到，校正后的灰度色阶人眼看起来反而没有那么均匀了，但如果我们用仪器测量光强，校正后的光强其实是线性分布的，这是怎么回事？实际上，人眼对于光强的感知是非线性的，简单来说，我们感知的其实是光强的数量级而不是绝对值。而显示屏$\gamma=2.2$恰恰就是为了补偿人眼的非线性，这个数值是通过大量试验得出的。所以如果目标是追求视觉上的适当，并不需要进行$a'=a^{1/\gamma}$的修正。
+
+\begin{Figure}[灰度色阶的对比]
+    \begin{FigureSub}[校正前]
+        \includegraphics[scale=0.8]{build/Chapter03B_01.fig.pdf}
+    \end{FigureSub}\\ \vspace{0.25cm}
+    \begin{FigureSub}[校正后]
+        \includegraphics[scale=0.8]{build/Chapter03B_02.fig.pdf}
+    \end{FigureSub}
+\end{Figure}
+
+\subsection{像素的颜色}
+图像的颜色系统是RGB，即所有的颜色都由不同比例的红、绿、蓝混合而成，具体来说，我们用$(r,g,b)$表示一个颜色，其中$r,g,b\in[0,1]$，若以$r,g,b$为空间坐标轴，那么所有颜色的坐标$(r,g,b)$的集合在该空间中构成了一个$[0,1]^3$的RGB立方体（RGB Color Cube）。
+
+\xref{fig:基本的RGB颜色}展示了一些最基本的RGB颜色
+\begin{itemize}
+    \item $(0,0,0)$是黑色（Black）。
+    \item $(1,1,1)$是白色（White）。
+    \item $(1,0,0)$是红色（Red）。
+    \item $(0,1,0)$是绿色（Green）。
+    \item $(0,0,1)$是蓝色（Blue）。
+    \item $(0,1,1)$是绿和蓝混合出的青色（Cyan）。
+    \item $(1,0,1)$是蓝和红混合出的紫色（Magenta），也称为品红色或洋红色。
+    \item $(1,1,0)$是红和率混合出的黄色（Yellow）。
+\end{itemize}
+
+\begin{Figure}[基本的RGB颜色]
+    \includegraphics[scale=0.8]{build/Chapter03B_06.fig.pdf}
+\end{Figure}
+
+由于最常用的是$\SI{8}{bit}$图像，故在$[0,1]$之外，也常用$0,1,2,\cdots,255$表示RGB的值。
+
+有时，我们需要考虑像素的透明度以更好处理两张图像叠加的表现，此时会在RGB的基础上引入一个额外的量$\alpha$表示透明度，这样的图像可以称为RGBA图像。讨论透明度的影响必须要有前景（Foreground）和背景（Background）两张图像，若我们记前景和后景的RGB中的某一颜色分量分别为$c_f$和$c_b$，且前景的透明度为$\alpha$，则该颜色分量叠加后的结果$c$为
+\begin{BoxFormula}[透明度时的叠加公式]
+    前后景叠加后的颜色可以表示为
+    \begin{Equation}
+        c=\alpha c_f+(1-\alpha)c_b
+    \end{Equation}
+\end{BoxFormula}
+
+特别的，若$\alpha=0$则表示完全透明（$c=c_b$），若$\alpha=1$则表示完全不透明（$c=c_f$）。
+
+在$\SI{8}{bit}$的RGBA图像中，RGBA各占$\SI{8}{bit}$使一个像素需要$\SI{32}{bit}$来存储，而$\SI{32}{bit}$恰好是许多计算机架构（32位硬件/系统）一个字的大小，这样对数据的读写是比较方便的。

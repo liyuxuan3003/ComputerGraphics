@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for file in *.jpg
+do
+    convert ${file} -gravity center -crop 1500x1500+0+38 build/Cube${file}
+done

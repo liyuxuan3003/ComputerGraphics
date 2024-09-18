@@ -1,0 +1,29 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}
+
+\draw[thin,dotted,gray] (-3,-3) grid[step=1cm] (3,3);
+
+\draw[-latex] (-3,0) -- (3,0) node[above left] {$x$} coordinate (X);
+\draw[-latex] (0,-3) -- (0,3) node[below right] {$y$} coordinate (Y);
+\path (0,0) coordinate (O);
+\path (1,1) coordinate (A);
+
+\draw[-latex,gray] (-2,-2) -- (2,2) node[right] {$x$};
+\draw[-latex,gray] (2,-2) -- (-2,2) node[left] {$y$};
+
+\fill[blue!50!white]   (0.0,0.0) -- ++ (45:0.5) -- ++ (135:0.5) -- ++ (225:0.5) -- ++ (315:0.5) -- cycle;
+\fill[yellow!50!white] (45:0.5)  -- ++ (45:0.5) -- ++ (135:0.5) -- ++ (225:0.5) -- ++ (315:0.5) -- cycle;
+\fill[red!50!white]    (135:0.5) -- ++ (45:0.5) -- ++ (135:0.5) -- ++ (225:0.5) -- ++ (315:0.5) -- cycle;
+\fill[green!50!white]  (90:0.707)-- ++ (45:0.5) -- ++ (135:0.5) -- ++ (225:0.5) -- ++ (315:0.5) -- cycle;
+\draw[thick] (0,0) -- ++ (45:1) -- ++ (135:1) -- ++ (225:1) -- ++ (315:1) -- cycle;
+
+\draw pic["$\phi$",angle eccentricity=1.75,angle radius=0.4cm,draw,-latex] {angle=X--O--A};
+ 
+\draw[ultra thin] (-3.2,-3.2) rectangle (3.2,3.2);
+
+
+
+\end{tikzpicture}
+\end{document}
