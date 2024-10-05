@@ -1,0 +1,24 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.65]
+
+\draw[-latex] (-2.0,0) -- (5.0,0) node[above] {$x$}; 
+\draw[-latex] (0,-2.0) -- (0,5.0) node[right] {$y$};
+
+\path (0,0) node[circ,scale=0.35] {} node[above right] {$(z)$};
+
+\draw[black,fill=gray,fill opacity=0.2] (-0.5,-0.5)  rectangle (3.5,3.5);
+
+\draw (-0.5,0) node[ocirc,scale=0.7] {} node[above left] {$-0.5$};
+\draw (3.5,0) node[ocirc,scale=0.7] {} node[above left] {$n_x-0.5$};
+
+\draw (0,-0.5) node[ocirc,scale=0.7] {} node[below right] {$-0.5$};
+\draw (0,3.5) node[ocirc,scale=0.7] {} node[below right] {$n_y-0.5$};
+
+\draw[rectangle,thick] (-2.25,-2.25) rectangle (5.5,5.5);
+
+\path (5.5,5.5) node[below left=0.05cm,draw,thin,fill=black!10!white] {(E) Screen Space};
+
+\end{tikzpicture}
+\end{document}

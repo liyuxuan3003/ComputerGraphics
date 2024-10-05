@@ -1,0 +1,48 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.65]
+
+\begin{scope}[3d view={140}{15}]
+
+\draw[dotted] (0,0,0) -- (1.5,0,0);
+\draw[dotted] (0,0,0) -- (0,1.5,0);
+\draw[dotted] (0,0,0) -- (0,0,1.5);
+\path (0,0,0) node[circ,scale=0.35] {};
+
+\draw[-latex] (1,0,0) -- (4,0,0) node[pos=1.1] {$z$};
+\draw[-latex] (0,1,0) -- (0,4,0) node[pos=1.1] {$x$};
+\draw[-latex] (0,0,1) -- (0,0,4) node[pos=1.1] {$y$};
+
+
+\fill[black,fill opacity=0.05] (-1,-1,-1) -- (1,-1,-1) -- (1,-1,1) -- (-1,-1,1);
+\fill[black,fill opacity=0.05] (-1,-1,-1) -- (1,-1,-1) -- (1,1,-1) -- (-1,1,-1);
+\fill[black,fill opacity=0.05] (-1,1,1) -- (-1,-1,1) -- (-1,-1,-1) -- (-1,1,-1) -- cycle;
+
+\fill[black,fill opacity=0.1] (1,1,1) -- (1,-1,1) -- (1,-1,-1) -- (1,1,-1) -- cycle;
+\fill[black,fill opacity=0.05] (1,1,1) -- (-1,1,1) -- (-1,1,-1) -- (1,1,-1) -- cycle;
+\fill[black,fill opacity=0.05] (1,1,1) -- (-1,1,1) -- (-1,-1,1) -- (1,-1,1) -- cycle;
+
+\path (1,0,0) node[ocirc,scale=0.7] {};
+\path (0,1,0) node[ocirc,scale=0.7] {};
+\path (0,0,1) node[ocirc,scale=0.7] {};
+
+
+\draw (1,1,1) -- (1,-1,1) -- (1,-1,-1) -- (1,1,-1) -- cycle;
+\draw (-1,-1,1) -- (-1,1,1) -- (-1,1,-1);
+\draw[dashed] (-1,-1,-1) -- (-1,-1,1);
+\draw[dashed] (-1,-1,-1) -- (-1,1,-1);
+\draw[] (1,1,1) -- (-1,1,1);
+\draw[] (1,-1,1) -- (-1,-1,1);
+\draw[] (1,1,-1) -- (-1,1,-1);
+\draw[dashed] (1,-1,-1) -- (-1,-1,-1);
+
+\draw (1,-1,1) node[above=0.25cm] {$[-1,1]^3$};
+
+\end{scope}
+
+\draw[rectangle,thick] (-3.875,-2.00) rectangle (4.0,5.75);
+\path (-3.875,5.75) node[below right=0.05cm,draw,thin,fill=black!10!white] {(D) Canonical View Volume};
+
+\end{tikzpicture}
+\end{document}

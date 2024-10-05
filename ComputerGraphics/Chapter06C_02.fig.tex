@@ -1,0 +1,23 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}
+
+\draw[thin,dotted,gray] (-4,-3) grid[step=1cm] (4,3);
+
+\draw[ultra thin] (-4.2,-3.2) rectangle (4.2,3.2);
+
+\draw[fill=black!50!white] (-2,-2) -- (2,0) -- (2,2) -- (-2,0) -- cycle;
+
+\draw[thick,-latex] (+2,+1) -- ++ (30:1.5) coordinate (nM);
+\draw[thick,-latex] (+2,+1) -- ++ (0:1.5) coordinate (nN);
+\path (nM) ++(-0.1,0) node[above] {$\vb{n}_M=\vb{M}\vb{n}$};
+\path (nN) ++(-0.3,0) node[below] {$\vb{n}_N=\vb{N}\vb{n}$};
+\draw[thick,-latex] (-2,-1) -- ++ (210:1.5);
+\draw[thick,-latex] (0,+1) -- (0,+2.5);
+\draw[thick,-latex] (0,-1) -- (0,-2.5);
+\draw[thick,-latex] (+2,1) -- ++ (0,-1.5) node[right] {$\vb{t}_M=\vb{M}\vb{t}$};
+\path (+2,1) node[ocirc] {};
+ 
+\end{tikzpicture}
+\end{document}

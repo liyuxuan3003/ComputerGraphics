@@ -1,0 +1,23 @@
+\section{正交投影变换}
+正交投影变换比较简单，只需要将$[x_l,x_r]\times[y_b,y_t]\times[z_n,z_f]$变化至$[-1,1]^3$即可。
+\begin{BoxFormula}[正交投影变换]
+    正交投影变换的变换矩阵$M_{orth}$是
+    \begin{Equation}
+        M_{orth}=\begin{pmatrix}
+            2/(x_r-x_l)&0&0&-(x_r+x_l)/(x_r-x_l)\\
+            0&2/(y_t-y_b)&0&-(y_t+y_b)/(y_t-y_b)\\
+            0&0&2/(z_n-z_f)&-(z_n+z_f)/(z_n-z_f)\\
+            0&0&0&1\\
+        \end{pmatrix}
+    \end{Equation}
+\end{BoxFormula}
+这里要解释的是为什么是$(z_n-z_f)$而不是$(z_f-z_n)$？这里缩放需要的是一个正数，而由于相机方向是沿$z$负方向的，表示近处（near）的$z_n$实际上比表示远处（far）的$z_f$更大。
+
+这里平移项有点费解，这是因为仿射变换是先做线性变换再做平移变换的缘故，可以展开来
+\begin{Gather}[6pt]
+    x'=\frac{2[x-(x_r+x_l)/2]}{x_r-x_l}\\
+    y'=\frac{2[y-(y_t+y_b)/2]}{y_t-y_b}\\
+    z'=\frac{2[z-(z_n+z_f)/2]}{z_n-z_f}
+\end{Gather}
+这样就比较清楚了，先对$x,y,z$做$-(x_r+x_l)/2,-(y_t+y_b)/2,-(z_n+z_f)/2$的平移，将长方体区域$[x_l,x_r]\times[y_b,y_t]\times[z_n,z_f]$的中点移动到坐标系原点，再缩放至$[-1,1]^3$的立方体中。
+

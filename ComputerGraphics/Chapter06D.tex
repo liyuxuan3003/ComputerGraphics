@@ -1,0 +1,138 @@
+\section{仿射变换与平移}
+通过前面几节，我们已经很清楚的认识到，在三维空间中的一个线性变换可以写成
+\begin{Equation}
+    \begin{pmatrix}
+        x'\\
+        y'\\
+        z'\\
+    \end{pmatrix}=
+    \begin{pmatrix}
+        m_{11}&m_{12}&m_{13}\\
+        m_{21}&m_{22}&m_{23}\\
+        m_{31}&m_{32}&m_{33}
+    \end{pmatrix}
+    \begin{pmatrix}
+        x\\
+        y\\
+        z\\
+    \end{pmatrix}
+\end{Equation}
+我们可以展开来写
+\begin{Gather}
+    x'=m_{11}x+m_{12}y+m_{13}z\\
+    y'=m_{21}x+m_{22}y+m_{23}z\\
+    z'=m_{31}x+m_{32}y+m_{33}z
+\end{Gather}
+我们通过不同的系数可以用上式表示缩放、剪切、旋转、反射等各种变换，但是，却无法表示最简单的平移！换言之，所有变换都是以$(0,0,0)$为中心进行的。若要考虑平移，则需有
+\begin{Gather}
+    x'=m_{11}x+m_{12}y+m_{13}z+x_t\\
+    y'=m_{21}x+m_{22}y+m_{23}z+y_t\\
+    z'=m_{31}x+m_{32}y+m_{33}z+z_t
+\end{Gather}
+诚然，我们可以将$\vb{r}'=\vb{M}\vb{r}$改写为$\vb{r}'=\vb{M}\vb{r}+\vb{r}_t$来单独处理平移的影响。然而这样做不够优雅，我们希望将平移也囊括在矩阵乘法内，这该怎么做呢？有一个极为巧妙的方法是引入齐次坐标（Homogeneous Coordinates）的概念，简单来说，它为每个向量多加了一个维度
+\begin{Equation}
+    \begin{pmatrix}
+        x\\
+        y\\
+        z\\
+        1\\
+    \end{pmatrix}\qquad
+    \begin{pmatrix}
+        x\\
+        y\\
+        z\\
+        0\\
+    \end{pmatrix}
+\end{Equation}
+这个新增的第四维度的元素可以被填充为$0$和$1$
+\begin{itemize}
+    \item 添加$1$，代表该向量是一个“位矢”，（绝对位置、方位）。
+    \item 添加$0$，代表该向量是一个“位移”，（相对位置、方向）。
+\end{itemize}
+这个设计是很合理且自然的，试想，两个“位置”的差就自然是一个“位矢”
+\begin{Equation}
+    \begin{pmatrix}
+        x_1\\
+        y_1\\
+        z_1\\
+        1\\
+    \end{pmatrix}-
+    \begin{pmatrix}
+        x_2\\
+        y_2\\
+        z_2\\
+        1\\
+    \end{pmatrix}=
+    \begin{pmatrix}
+        x_1-x_2\\
+        y_1-y_2\\
+        z_1-z_2\\
+        0\\
+    \end{pmatrix}
+\end{Equation}
+而有了齐次坐标的定义后，平移就可以通过矩阵乘一并处理了
+\begin{Equation}
+    \begin{pmatrix}
+        x'\\
+        y'\\
+        z'\\
+        1\\
+    \end{pmatrix}=
+    \begin{pmatrix}
+        m_{11}&m_{12}&m_{13}&x_t\\
+        m_{21}&m_{22}&m_{23}&y_t\\
+        m_{31}&m_{32}&m_{33}&z_t\\
+        0&0&0&1\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        x\\
+        y\\
+        z\\
+        1\\
+    \end{pmatrix}
+\end{Equation}
+
+要注意，这里是“\textbf{先做线性变换，后做平移变换}”，若拆分开来写，则先作用的在后
+\begin{Equation}
+    \begin{pmatrix}
+        x'\\
+        y'\\
+        z'\\
+        1\\
+    \end{pmatrix}=
+    \begin{pmatrix}
+        1&0&0&x_t\\
+        0&1&0&y_t\\
+        0&0&1&z_t\\
+        0&0&0&1\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        m_{11}&m_{12}&m_{13}&0\\
+        m_{21}&m_{22}&m_{23}&0\\
+        m_{31}&m_{32}&m_{33}&0\\
+        0&0&0&1\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        x\\
+        y\\
+        z\\
+        1\\
+    \end{pmatrix}
+\end{Equation}
+
+这种包含了平移变换的线性变换称为仿射变换（Affine Transformation）。这里可以看出齐次坐标最妙的一点，它不仅解决了平移，而且，倘若参与仿射变换的齐次坐标中的第四维度元素是$0$而不是$1$，即代表参与变换的是一个“位移”而不是“位矢”，则$x_t,y_t,z_t$代表的平移不会作用，且变换后该位置仍为$0$。这是合理的，因为相对距离不会在整体平移中发生变化！
+
+\begin{BoxDefinition}[仿射变换]
+    仿射变换矩阵为
+    \begin{Equation}
+        \vb{M}=
+        \begin{pmatrix}
+            m_{11}&m_{12}&m_{13}&x_t\\
+            m_{21}&m_{22}&m_{23}&y_t\\
+            m_{31}&m_{32}&m_{33}&z_t\\
+            0&0&0&1\\
+        \end{pmatrix}
+    \end{Equation}
+\end{BoxDefinition}
+
+仿射变换和齐次坐标极大的简化了变换的表示，之后我们还会进一步拓展齐次坐标的用途。

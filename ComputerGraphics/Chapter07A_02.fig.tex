@@ -1,0 +1,60 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.65]
+
+\begin{scope}[3d view={140}{15}]
+
+\draw[-latex] (0,0,0) -- (3,0,0) node[pos=1.1] {$z$};
+\draw[-latex] (0,0,0) -- (0,3,0) node[pos=1.1] {$x$};
+\draw[-latex] (0,0,0) -- (0,0,3) node[pos=1.1] {$y$};
+
+\draw[dotted,gray] (-8,+2,+2) -- (-10,+2.5,+2.5);
+\draw[dotted,gray] (-8,+2,-2) -- (-10,+2.5,-2.5);
+\draw[dotted,gray] (-8,-2,+2) -- (-10,-2.5,+2.5);
+\draw[dotted,gray] (-8,-2,-2) -- (-10,-2.5,-2.5);
+\draw[dotted,gray] (-4,0,0) -- (-10,0,0);
+
+\draw[fill opacity=0.1] (-4,1,1) -- (-4,1,-1) -- (-4,-1,-1) -- (-4,-1,1) -- cycle;
+\draw[] (-8,2,2) -- (-8,-2,2);
+\draw[] (-8,2,2) -- (-8,2,-2);
+\draw[dashed] (-8,-2,-2) -- (-8,-2,2);
+\draw[dashed] (-8,-2,-2) -- (-8,2,-2);
+
+\fill[black,fill opacity=0.05] (-4,-1,-1) -- (-4,-1,1) -- (-8,-2,2) -- (-8,-2,-2) -- cycle;
+\fill[black,fill opacity=0.05] (-4,-1,-1) -- (-4,1,-1) -- (-8,2,-2) -- (-8,-2,-2) -- cycle;
+\fill[black,fill opacity=0.1] (-8,-2,-2) -- (-8,-2,2) -- (-8,2,2) -- (-8,2,-2) --cycle;
+\fill[black,fill opacity=0.1] (-4,-1,-1) -- (-4,-1,1) -- (-4,1,1) -- (-4,1,-1) --cycle;
+\fill[black,fill opacity=0.05] (-4,1,1) -- (-8,2,2) -- (-8,2,-2) -- (-4,1,-1) -- cycle; 
+\fill[black,fill opacity=0.05] (-4,1,1) -- (-8,2,2) -- (-8,-2,2) -- (-4,-1,1) -- cycle; 
+
+\path (-4,-1,1) node[above] {$x_l$};
+\path (-4,1,1) node[above] {$x_r$};
+
+\path (-4,1,1) node[below right] {$y_t$};
+\path (-4,1,-1) node[below right] {$y_b$};
+
+\draw[] (-4,1,1) -- (-8,2,2);
+\draw[] (-4,1,-1) -- (-8,2,-2);
+\draw[] (-4,-1,1) -- (-8,-2,2);
+\draw[dashed] (-4,-1,-1) -- (-8,-2,-2);
+
+\draw[dotted,gray] (0,0,0) -- (-4,+1,+1);
+\draw[dotted,gray] (0,0,0) -- (-4,+1,-1);
+\draw[dotted,gray] (0,0,0) -- (-4,-1,+1);
+\draw[dotted,gray] (0,0,0) -- (-4,-1,-1);
+\draw[dotted,gray] (0,0,0) -- (-4,0,0);
+
+\path (-4,0,0) node[ocirc,scale=0.7] {} node[below] {$z_n$};
+\path (-8,0,0) node[ocirc,scale=0.7] {} node[below] {$z_f$};
+
+\path (0,0,0) node[circ,scale=0.35] {};
+
+\end{scope}
+
+\draw[thick] (-3,-1.5) rectangle (10,4.75);
+
+\path (-3,4.75) node[below right=0.05cm,draw,thin,fill=black!10!white] {(B) Camera Space (Perspective)};
+
+\end{tikzpicture}
+\end{document}

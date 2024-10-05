@@ -1,0 +1,27 @@
+\section{窗口变换}
+窗口变换本质上就是将规范观察体$[-1,1]^3$中的点沿$z$轴“压扁”再将$x,y$缩放至屏幕区域的$[-0.5,n_x-0.5]\times[-0.5,n_y-0.5]$中，当然，实际上我们不会真正丢弃$z$的数据，尽管屏幕是二维的，但$z$的数据仍然需要保留以供后续判断遮挡关系。因此，窗口变换可以表示为
+\begin{BoxFormula}[窗口变换]
+    窗口变换的变换矩阵$\vb{M}_{vp}$是
+    \begin{Equation}
+        \vb{M}_{vp}=\begin{pmatrix}
+            n_x/2&0&0&(n_x-1)/2\\
+            0&n_y/2&0&(n_y-1)/2\\
+            0&0&1&0\\
+            0&0&0&1\\
+        \end{pmatrix}
+    \end{Equation}
+\end{BoxFormula}
+这里也可以展开来写帮助我们理解
+\begin{Gather}[6pt]
+    x'=\frac{n_x(x+1)}{2}-\frac{1}{2}\\
+    y'=\frac{n_y(y+1)}{2}-\frac{1}{2}
+\end{Gather}
+这里的含义就是先将$[-1,1]^2$各平移加$1$并除$2$变换至$[0,1]^2$，随后分别乘$n_x,n_y$从而得到$[0,n_x]\times[0,n_y]$的屏幕大小，最后各平移减$1/2$得到$[-0.5,n_x-0.5]\times [-0.5,n_y-0.5]$。
+
+至此，视角变换的矩阵就可以用上述四个步骤的变换矩阵的乘积表示了！
+\begin{BoxFormula}[视角变换]
+    视角变换的变换矩阵可以表示为
+    \begin{Equation}
+        \vb{M}=\vb{M}_{vp}\vb{M}_{orth}\vb{M}_{pers}\vb{M}_{cam}
+    \end{Equation}
+\end{BoxFormula}

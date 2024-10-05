@@ -1,0 +1,175 @@
+\section{矩阵变换的分解}
+本节将研究这样一个问题，对于一般的变换矩阵$\vb{A}$，如何将其拆分为若干基本变换的叠加？
+
+在开始前，有必要说明一下几种特殊矩阵的定义。
+\begin{BoxDefinition}[对角矩阵]
+    对角矩阵（Diagonal Matrix）是指仅具有对角元素的矩阵
+    \begin{Equation}
+        \vb{A}=\mr{diag}(a_1,a_2)=\begin{pmatrix}
+            a_1&0\\
+            0&a_2\\
+        \end{pmatrix}
+    \end{Equation}
+\end{BoxDefinition}
+
+\begin{BoxDefinition}[对称矩阵]
+    对称矩阵（Symmetric Matrix）是指转置与自身相等的矩阵
+    \begin{Equation}
+        \vb{A}=\vb{A}^T
+    \end{Equation}
+\end{BoxDefinition}
+显然，对角矩阵一定是一个对称矩阵。
+
+\begin{BoxDefinition}[正交矩阵]
+    正交矩阵（Orthogonal Matrix）是指转置与自身的积为单位阵的矩阵
+    \begin{Equation}
+        \vb{A}^T\vb{A}=\vb{I}
+    \end{Equation}
+\end{BoxDefinition}
+这里有一个很重要的性质：若一个矩阵$\vb{A}$的列是由一组相互正交的单位向量组成，那么该矩阵一定是一个正交矩阵！试想，对于$\vb{A}^T\vb{A}$的乘积结果，其对角元素是一个单位向量与其自身的点积，因而是$1$，其非对角元素是两个正交向量的点积，因而是$0$，这样就有$\vb{A}^T\vb{A}=\vb{I}$。
+
+\subsection{特征值分解}
+在继续介绍特征值分解前，我们有必要先回顾一下特征值和特征向量的概念。
+
+对于一个矩阵$\vb{A}$，若能找到向量$\vb{a}$和数$\lambda$使
+\begin{Equation}
+    \vb{A}\vb{a}=\lambda\vb{a}
+\end{Equation}
+那么$\vb{a},\lambda$就称为$\vb{A}$的一组特征向量（Eigen Vector）和特征值（Eigen Value）。换言之，若矩阵作用在一个向量上却只会令这个向量伸长或压缩，那么这个向量就是矩阵的特征向量。
+
+很重要的问题是如何寻找特征向量和特征值？我们可以先加入一个$\vb{I}$\setpeq{求解特征向量和特征值}
+\begin{Equation}&[1]
+    \vb{A}\vb{a}=\lambda\vb{I}\vb{a}
+\end{Equation}
+移项至左侧
+\begin{Equation}&[2]
+    \vb{A}\vb{a}-\lambda\vb{I}\vb{a}=0
+\end{Equation}
+提出矩阵
+\begin{Equation}&[3]
+    (\vb{A}-\lambda\vb{I})\vb{a}=0
+\end{Equation}
+该方程成立唯一的条件是$\vb{A}-\lambda\vb{I}$是一个奇异阵，换言之，行列式为$0$。假设$\vb{A}$是$2\times 2$的
+\begin{Equation}&[4]
+    \begin{vmatrix}
+        a_{11}-\lambda&a_{12}\\
+        a_{21}&a_{22}-\lambda\\
+    \end{vmatrix}=0
+\end{Equation}
+即
+\begin{Equation}&[5]
+    \lambda^2-(a_{11}+a_{22})\lambda+(a_{11}a_{22}-a_{12}a_{21})=0
+\end{Equation}
+这是一个二次方程，故可以解出两个特征值$\lambda$。事实上，对于一个$n\times n$的矩阵，其具有$n$个特征值。由于四次以上的方程无系解析解，故对于$n>4$的矩阵，其特征值只有数值解。
+
+
+而对于某个已经求出的特征值$\lambda$，也很容易确定对应的特征向量$\vb{a}=(x,y)$，考虑\xrefpeq{4}
+\begin{Equation}
+    \begin{pmatrix}
+        a_{11}-\lambda&a_{12}\\
+        a_{21}&a_{22}-\lambda\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        x\\
+        y\\
+    \end{pmatrix}=
+    \begin{pmatrix}
+        0\\
+        0\\
+    \end{pmatrix}
+\end{Equation}
+这是一个齐次方程，有无穷多组非零$(x,y)$是方程的解，注意到
+\begin{Equation}
+    (a_{11}-\lambda)x+a_{12}y=a_{21}x+(a_{22}-\lambda)y
+\end{Equation}
+整理得到
+\begin{Equation}
+    (a_{11}-a_{21}-\lambda)x=(a_{22}-a_{12}-\lambda)y
+\end{Equation}
+因此，只要$x,y$符合下面的比例，那它就是$\lambda$对应的特征向量
+\begin{Equation}
+    \frac{y}{x}=\frac{a_{11}-a_{21}-\lambda}{a_{22}-a_{12}-\lambda}
+\end{Equation}
+这一点从特征值的定义$\vb{A}\vb{a}=\lambda \vb{a}$上看也很合理：若$\vb{a}$是特征向量，那么$\vb{a}$的任意倍也都是特征向量，毕竟这只不过是在方程两端同乘了一个相同的系数罢了。但通常，我们会选择那个长度为$1$的那个单位特征向量。除此之外，可以证明一个矩阵的特征向量是两两相互正交的。\goodbreak
+
+任何一个矩阵都具有特征向量和特征值，然而，若矩阵是满足对称矩阵，则矩阵自身可以直接用其特征向量和特征值表示出来，这就是所谓的特征值分解！它的具体形式如下
+\begin{BoxFormula}[特征值分解]
+    特征值分解（Eigen Value Decomposition, EVD）是指，对于对称矩阵$\vb{A}$，有
+    \begin{Equation}
+        \vb{A}=\vb{R}\vb{S}\vb{R}^T
+    \end{Equation}
+    矩阵$\vb{R}$是一个正交矩阵，由特征向量$\vb{r}_1,\vb{r}_2$构成
+    \begin{Equation}
+        \vb{R}=\qty(\vb{r}_1,\vb{r}_2)
+    \end{Equation}
+    矩阵$\vb{S}$是一个对角矩阵，由特征值$\lambda_1,\lambda_2$构成
+    \begin{Equation}
+        \vb{S}=\mr{diag}(\lambda_1,\lambda_2)
+    \end{Equation}
+\end{BoxFormula}
+
+现在我们来解读结果，不过再次之前，我们先要将特殊矩阵和矩阵变换联系起来
+\begin{itemize}
+    \item 对角矩阵$\vb{S}=\mr{diag}(\lambda_1,\lambda_2)$对应缩放变换，其中$\lambda_1,\lambda_2$代表沿$\vb{x},\vb{y}$的缩放比。
+    \item 正交矩阵$\vb{R}=(\vb{r}_1,\vb{r}_2)$对应旋转变换，其代表$\vb{x},\vb{y}$旋转至$\vb{r}_1,\vb{r}_2$方向，$\vb{R}^T$则相反。
+\end{itemize}
+
+特征值分解可以视为这样三步变换
+\begin{enumerate}
+    \item 旋转，矩阵$\vb{R}^T$作用，代表图形由$\vb{r}_1,\vb{r}_2$方向分别旋转至$\vb{x},\vb{y}$方向。
+    \item 缩放，矩阵\hspace{0.45em}$\vb{S}$\hspace{0.45em}作用，代表图形沿$\vb{x},\vb{y}$方向分别缩放$\lambda_1,\lambda_2$倍。
+    \item 旋转，矩阵$\vb{R}$作用，代表图形由$\vb{x},\vb{y}$方向分别旋转至$\vb{r}_1,\vb{r}_2$方向。
+\end{enumerate}
+特征值分解告诉我们，任何对称矩阵代表的变换，本质上都可以视为由“旋转--缩放--旋转”这样三步基本变换的组合变换。更进一步的说，由于缩放沿$\vb{x},\vb{y}$进行，且缩放前后的旋转分别是从特征向量方向旋转至$\vb{x},\vb{y}$再旋转回去，因此，对称矩阵的变换的效果其实就是在特征向量$\vb{r}_1,\vb{r}_2$的方向上分别进行特征值$\lambda_1,\lambda_2$倍的缩放！这是一个非常深刻且直观的几何理解。
+
+\subsection{奇异值分解}
+奇异值和奇异值分解的想法是从特征值分解延拓出来的。特征值分解存在一个明显的缺陷，即只有对角矩阵才能适用。奇异值分解期望将任何矩阵都拆分为“旋转--缩放--旋转”的形式，不过势必要做出一些让步，需要将$\vb{A}=\vb{R}\vb{S}\vb{R}^T$需改写为$\vb{A}=\vb{U}\vb{S}\vb{V}^T$，即首尾两个正交矩阵不再是同一个。将左侧$\vb{U}=(\vb{u}_1,\vb{u}_2)$和右侧$\vb{v}=(\vb{v}_1,\vb{v}_2)$中的向量分别称为左奇异向量和右奇异向量（Singular Vector），同时，将$\vb{S}=\mr{diag}(\sigma_1,\sigma_2)$中的数称为奇异值（Singular Value）。
+
+\begin{BoxFormula}[奇异值分解]
+    奇异值分解（Singular Value Decomposition, SVD）是指，对于矩阵$\vb{A}$，有
+    \begin{Equation}
+        \vb{A}=\vb{U}\vb{S}\vb{V}^T
+    \end{Equation}
+    矩阵$\vb{U},\vb{V}$是正交矩阵，由左奇异向量$\vb{u}_1,\vb{u}_2$和右奇异向量$\vb{v}_1,\vb{v}_2$构成
+    \begin{Equation}
+        \vb{U}=\qty(\vb{u}_1,\vb{u}_2)\qquad
+        \vb{V}=\qty(\vb{v}_1,\vb{v}_2)
+    \end{Equation}
+    矩阵$\vb{S}$是一个对角矩阵，由特征值$\sigma_1,\sigma_2$构成
+    \begin{Equation}
+        \vb{S}=\mr{diag}(\sigma_1,\sigma_2)
+    \end{Equation}
+\end{BoxFormula}
+
+奇异值分解可以视为这样三步变换
+\begin{itemize}
+    \item 旋转，矩阵$\vb{V}^T$作用，代表图形由$\vb{v}_1,\vb{v}_2$方向分别旋转至$\vb{x},\vb{y}$方向。
+    \item 缩放，矩阵\hspace{0.45em}$\vb{S}$\hspace{0.45em}作用，代表图形沿$\vb{x},\vb{y}$方向分别缩放$\sigma_1,\sigma_2$倍。
+    \item 旋转，矩阵$\vb{U}$作用，代表图形由$\vb{x},\vb{y}$方向分别旋转至$\vb{u}_1,\vb{u}_2$方向。
+\end{itemize}
+
+奇异值分解和特征值分解能如何联系在一起呢？考虑以下矩阵
+\begin{Equation}
+    \vb{M}=\vb{A}\vb{A}^T
+\end{Equation}
+代入$\vb{A}=\vb{U}\vb{S}\vb{V}^T$
+\begin{Equation}
+    \vb{M}=(\vb{U}\vb{S}\vb{V}^T)(\vb{U}\vb{S}\vb{V}^T)^T
+\end{Equation}
+若干矩阵乘积的转置，等于每个矩阵转置的逆序乘积
+\begin{Equation}
+    \vb{M}=(\vb{U}\vb{S}\vb{V}^T)(\vb{V}\vb{S}^T\vb{U}^T)
+\end{Equation}
+由于$\vb{S}$是对角矩阵，故$\vb{S}^T=\vb{S}$
+\begin{Equation}
+    \vb{M}=(\vb{U}\vb{S}\vb{V}^T)(\vb{V}\vb{S}\vb{U}^T)
+\end{Equation}
+应用矩阵乘法的分配律
+\begin{Equation}
+    \vb{M}=\vb{U}\vb{S}(\vb{V}^T\vb{V})\vb{S}\vb{U}^T
+\end{Equation}
+由于$\vb{V}$是对角矩阵，故$\vb{V}^T\vb{V}=\vb{I}$
+\begin{Equation}
+    \vb{M}=\vb{U}\vb{S}^2\vb{U}^T
+\end{Equation}
+这意味着$\vb{M}=\vb{A}^T\vb{A}$必然可以做特征值分解！且此时，特征向量是$\vb{A}$的左奇异向量，特征值是$\vb{A}$的奇异值的平方，因为$\vb{S}^2=\mr{diag}(\sigma_1^2,\sigma_2^2)$。由此可见，通过这种方式，奇异值的计算可以转换为特征值的计算。并且，$\vb{A}^T\vb{A}=\vb{U}\vb{S}^2\vb{U}^T$给出$\vb{U}$，类似的，$\vb{A}\vb{A}^T=\vb{V}\vb{S}^2\vb{V}^T$给出$\vb{V}$。

@@ -1,0 +1,25 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[xscale=1.5]
+
+\draw[-latex,gray] (0,-2.5) -- (0,2.5) node[right] {$y$};
+
+\draw[-latex,gray] (5,0) -- (-1,0) node[above] {$z$};
+
+\fill[black,fill opacity=0.1] (1.5,0.75) -- (4.0,2.0) -- (4.0,0.0) -- (1.5,0) -- cycle;
+
+\draw[thick] (0,0) -- (4.5,2.25);
+
+\draw (1.5,0.75) -- node[right] {$y'$} (1.5,0) node[below] {$z_n$};
+\draw (2.5,1.25) -- node[right] {$y$} (2.5,0) node[below] {$z$};
+\draw (4.0,2.00) -- (4.0,0) node[below] {$z_f$};
+
+\path (1.5,0.75) node[ocirc] {};
+\path (2.5,1.25) node[ocirc] {};
+\path (4,2.0) node[ocirc] {};
+
+\draw[ultra thin] (-1.25,-2.75) rectangle (5.25,2.75); 
+
+\end{tikzpicture}
+\end{document}

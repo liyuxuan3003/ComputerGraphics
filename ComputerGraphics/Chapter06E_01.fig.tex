@@ -1,0 +1,31 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.9]
+
+\draw[ultra thin] (-4,-4.2) rectangle (4,4.2);
+
+\begin{scope}[3d view]
+
+\draw[dotted,gray] (-4,0,0) -- (4,0,0) node[above] {\small $x$};
+\draw[dotted,gray] (0,-5,0) -- (0,5,0) node[above] {\small $y$};
+\draw[dotted,gray] (0,0,-4) -- (0,0,4) node[right] {\small $z$};
+
+\draw[thick,-latex] (0,0,0) -- (2,0,0) node[right] {$\vb{x}$};
+\draw[thick,-latex] (0,0,0) -- (0,2,0) node[left] {$\vb{y}$};
+\draw[thick,-latex] (0,0,0) -- (0,0,2) node[above] {$\vb{z}$};
+
+\draw[thick,-latex] (-2.5,0,-3) -- ++ (1.732,0,1) node[right] {$\vb{u}$};
+\draw[thick,-latex] (-2.5,0,-3) -- ++ (0,2,0) node[left] {$\vb{v}$};
+\draw[thick,-latex] (-2.5,0,-3) -- ++ (-1,0,1.732) node[above] {$\vb{w}$};
+\path (0,0,0) node[ocirc] {} node[below left] {$\vb{o}$};
+\path (-2.5,0,-3) node[ocirc] {} node[below] {$\vb{e}$};
+
+
+\path (-2,2,0.5) node[ocirc] {} node[left] {$\vb{p}$};
+
+
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

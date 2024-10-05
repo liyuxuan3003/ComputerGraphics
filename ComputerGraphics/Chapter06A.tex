@@ -1,4 +1,4 @@
-\section{矩阵变换的分类}
+\section{矩阵变换的类型}
 
 在本节，我们会讨论四种基本的二维矩阵变换：缩放、剪切、旋转、反射。当一个矩阵变换作用于一个二维图形时，实质上就是令矩阵与二维图形上每一个点对应的向量做矩阵乘法。
 
@@ -12,47 +12,47 @@
 \begin{BoxDefinition}[缩放变换]
     缩放变换定义为
     \begin{Equation}
-        \mathrm{scale}(s_x,s_y)=
+        \mr{scale}(s_x,s_y)=
         \begin{pmatrix}
             s_x&0\\
             0&s_y
         \end{pmatrix}
     \end{Equation}
 \end{BoxDefinition}
-其中$s_x,s_y$分别代表图形沿$x$轴和沿$y$轴的缩放比例，特别的$\mathrm{scale}(1,1)$即不变化。另外，通常我们认为在缩放变换中$s_x>0,s_y>0$均为正，对于负值的情况我们会将其视为反射。
+其中$s_x,s_y$分别代表图形沿$x$轴和沿$y$轴的缩放比例，特别的$\mr{scale}(1,1)$即不变化。另外，通常我们认为在缩放变换中$s_x>0,s_y>0$均为正，对于负值的情况我们会将其视为反射。
 
 \begin{Figure}[缩放变换]
     \includegraphics[scale=0.8]{build/Chapter06A_02.fig.pdf}
 \end{Figure}
-\xref{fig:缩放变换}中，展示了$\mathrm{scale}(2,2)$的效果，注意到图形整体被放大了两倍。
+\xref{fig:缩放变换}中，展示了$\mr{scale}(2,2)$的效果，注意到图形整体被放大了两倍。
 
 \subsection{剪切变换}
 \begin{BoxDefinition}[剪切变换]
     沿$x$方向的剪切变换定义为
     \begin{Equation}
-        \mathrm{shear}_x(s)=
+        \mr{shear}_x(d)=
         \begin{pmatrix}
-            1&s\\
+            1&d\\
             0&1    
         \end{pmatrix}
     \end{Equation}
     沿$y$方向的剪切变换定义为
     \begin{Equation}
-        \mathrm{shear}_y(s)=
+        \mr{shear}_y(d)=
         \begin{pmatrix}
             1&0\\
-            s&1\\
+            d&1\\
         \end{pmatrix}
     \end{Equation}
 \end{BoxDefinition}
-其中$s$代表剪切系数。剪切的意思是将一个东西向一侧挤压，最形象的例子莫过于想象我们拿着一幅叠好的扑克牌，用手搓一下，此时，最底部的扑克牌将保持不动，越靠上的扑克牌滑动越大，截面从正方形变为了一个平行四边形。也可以从数学上分析，考虑$\mathrm{shear}_x(s)$的作用
+其中$d$代表剪切系数。剪切的意思是将一个东西向一侧挤压，最形象的例子莫过于想象我们拿着一幅叠好的扑克牌，用手搓一下，此时，最底部的扑克牌将保持不动，越靠上的扑克牌滑动越大，截面从正方形变为了一个平行四边形。也可以从数学上分析，考虑$\mr{shear}_x(d)$的作用
 \begin{Equation}
     \begin{pmatrix}
         x'\\
         y'\\
     \end{pmatrix}=
     \begin{pmatrix}
-        1&s\\
+        1&d\\
         0&1
     \end{pmatrix}
     \begin{pmatrix}
@@ -60,13 +60,13 @@
         y\\
     \end{pmatrix}=
     \begin{pmatrix}
-        x+sy\\
+        x+dy\\
         y\\
     \end{pmatrix}
 \end{Equation}
-很明显的，变换时$y$越大的点变换后$x'=x+sy$在$x$方向上就会发生越大的偏移。
+很明显的，变换时$y$越大的点变换后$x'=x+dy$在$x$方向上就会发生越大的偏移。
 
-剪切最直观的理解就是矩形变为平行四边形，\xref{fig:剪切变换}展示了$\mathrm{shear}_x(1)$和$\mathrm{shear}_y(1)$的效果。
+剪切最直观的理解就是矩形变为平行四边形，\xref{fig:剪切变换}展示了$\mr{shear}_x(1)$和$\mr{shear}_y(1)$的效果。
 
 \begin{Figure}[剪切变换]
     \begin{FigureSub}[沿$x$方向的剪切]
@@ -78,14 +78,14 @@
     \end{FigureSub}
 \end{Figure}
 
-剪切也可以从另外一种角度理解，如果令$s=\tan\phi$，那么$\mathrm{shear}_x(s)$和$\mathrm{shear}_y(s)$可以分别解读为“仅令$y$轴顺时针旋转$\phi$”和“仅令$x$逆时针旋转$\phi$”，\xref{fig:剪切变换}中亦展现了这一点。
+剪切也可以从另外一种角度理解，如果令$d=\tan\phi$，那么$\mr{shear}_x(d)$和$\mr{shear}_y(d)$可以分别解读为“仅令$y$轴顺时针旋转$\phi$”和“仅令$x$逆时针旋转$\phi$”，\xref{fig:剪切变换}中亦展现了这一点。
 
 \subsection{旋转变换}
 
 \begin{BoxDefinition}[旋转变换]
     旋转变换定义为
     \begin{Equation}
-        \mathrm{rotate}(\phi)=
+        \mr{rotate}(\phi)=
         \begin{pmatrix}
             \cos\phi&-\sin\phi\\
             \sin\phi&\cos\phi\\
@@ -136,36 +136,36 @@
 \begin{Figure}[旋转变换]
     \includegraphics[scale=0.8]{build/Chapter06A_05.fig.pdf}
 \end{Figure}
-\xref{fig:旋转变换}中，展示了$\mathrm{rotate}(\pi/4)$的效果，注意到图形逆时针旋转了$\pi/4$。
+\xref{fig:旋转变换}中，展示了$\mr{rotate}(\pi/4)$的效果，注意到图形逆时针旋转了$\pi/4$。
 
 \subsection{反射变换}
 
 \begin{BoxDefinition}[反射变换]
-    沿$x$轴的反射变换定义为
+    以$x$轴为对称轴（翻转$y$轴）的反射变换定义为
     \begin{Equation}
-        \mathrm{reflect}_x=
+        \mr{reflect}_x=
         \begin{pmatrix}
             1&0\\
             0&-1\\
         \end{pmatrix}
     \end{Equation}
-    沿$y$轴的反射变换定义为
+    以$y$轴为对称轴（翻转$x$轴）的反射变换定义为
     \begin{Equation}
-        \mathrm{reflect}_y=
+        \mr{reflect}_y=
         \begin{pmatrix}
             -1&0\\
             0&1\\
         \end{pmatrix}
     \end{Equation}
 \end{BoxDefinition}
-从\xref{fig:反射变换}中可以看出$\mathrm{reflect}_x$和$\mathrm{reflect}_y$分别代表图形以$x$轴或以$y$轴进行翻转，也可以认为是另一轴变为指向负方向。特别注意这里的色块分布，反射变换不等价$\mp\pi/2$的旋转变换！
+从\xref{fig:反射变换}中可以看出$\mr{reflect}_x$和$\mr{reflect}_y$分别代表图形以$x$轴或以$y$轴进行对称，也可以认为是另一轴翻转为负方向。特别注意这里的色块分布，反射变换不等价$\mp\pi/2$的旋转变换！
 
 \begin{Figure}[反射变换]
-    \begin{FigureSub}[沿$x$轴的反射]
+    \begin{FigureSub}[以$x$轴为对称轴的反射]
         \includegraphics[scale=0.8]{build/Chapter06A_07.fig.pdf}
     \end{FigureSub}
     \hspace{1cm}
-    \begin{FigureSub}[沿$y$轴的剪切]
+    \begin{FigureSub}[以$y$轴为对称轴的剪切]
         \includegraphics[scale=0.8]{build/Chapter06A_06.fig.pdf}
     \end{FigureSub}
 \end{Figure}

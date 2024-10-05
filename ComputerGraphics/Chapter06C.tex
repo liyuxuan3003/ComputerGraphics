@@ -1,0 +1,188 @@
+\section{三维中的矩阵变换}
+三维中的矩阵变换和二维中的情形类似，我们将相关矩阵列举如下。
+\begin{BoxDefinition}[三维缩放变换]
+    三维缩放变换定义为
+    \begin{Equation}
+        \mr{scale}(s_x,s_y,s_z)=
+        \begin{pmatrix}
+            s_x&0&0\\
+            0&s_y&0\\
+            0&0&s_z\\
+        \end{pmatrix}
+    \end{Equation}
+\end{BoxDefinition}
+
+三维中的剪切有沿$x,y,z$三个方向的，每一种剪切都涉及另外两个方向的剪切系数。
+\begin{BoxDefinition}[三维剪切变换]
+    三维中，沿$x$方向的剪切变换定义为
+    \begin{Equation}
+        \mr{shear}_x(d_y,d_z)=
+        \begin{pmatrix}
+            1&d_y&d_z\\
+            0&1&0\\
+            0&0&1\\
+        \end{pmatrix}
+    \end{Equation}
+    三维中，沿$y$方向的剪切变换定义为
+    \begin{Equation}
+        \mr{shear}_y(d_z,d_x)=
+        \begin{pmatrix}
+            1&0&0\\
+            d_x&1&d_z\\
+            0&0&1\\
+        \end{pmatrix}
+    \end{Equation}
+    三维中，沿$z$方向的剪切变换定义为
+    \begin{Equation}
+        \mr{shear}_z(d_x,d_y)=
+        \begin{pmatrix}
+            1&0&0\\
+            0&1&0\\
+            d_x&d_y&1\\
+        \end{pmatrix}
+    \end{Equation}
+\end{BoxDefinition}
+
+三维中的旋转有一些不一样。我们知道，旋转是围绕一根轴在一个面内进行的，二维的旋转只能在二维平面上进行，故只有一种旋转矩阵，但在三维下旋转则可以绕$x,y,z$轴旋转。
+\begin{BoxDefinition}[三维旋转变换]*
+    三维中，绕$x$轴的旋转变换定义为
+    \begin{Equation}
+        \mr{rotate}_x(\phi)=
+        \begin{pmatrix}
+            1&0&0\\
+            0&\cos\phi&-\sin\phi\\
+            0&\sin\phi&\cos\phi\\
+        \end{pmatrix}
+    \end{Equation}
+    三维中，绕$y$轴的旋转变换定义为
+    \begin{Equation}
+        \mr{rotate}_y(\phi)=
+        \begin{pmatrix}
+            \cos\phi&0&\sin\phi\\
+            0&1&0\\
+            -\sin\phi&0&\cos\phi\\
+        \end{pmatrix}
+    \end{Equation}
+    三维中，绕$z$轴的旋转变换定义为
+    \begin{Equation}
+        \mr{rotate}_z(\phi)=
+        \begin{pmatrix}
+            \cos\phi&-\sin\phi&0\\
+            \sin\phi&\cos\phi&0\\
+            0&0&1\\
+        \end{pmatrix}
+    \end{Equation}
+\end{BoxDefinition}
+
+三维中的反射有翻转$x,y,z$轴三种，但下标记录的是以什么面进行对称。
+
+\begin{BoxDefinition}[三维旋转变换]*
+    三维中，以$y,z$平面为对称面（翻转$x$轴）的反射变换定义为
+    \begin{Equation}
+        \mr{reflect}_{yz}=
+        \begin{pmatrix}
+            -1&0&0\\
+            0&1&0\\
+            0&0&1\\
+        \end{pmatrix}
+    \end{Equation}
+    三维中，以$z,x$平面为对称面（翻转$y$轴）的反射变换定义为
+    \begin{Equation}
+        \mr{reflect}_{zx}=
+        \begin{pmatrix}
+            1&0&0\\
+            0&-1&0\\
+            0&0&1\\
+        \end{pmatrix}
+    \end{Equation}
+    三维中，以$x,y$平面为对称面（翻转$z$轴）的反射变换定义为
+    \begin{Equation}
+        \mr{reflect}_{xy}=
+        \begin{pmatrix}
+            1&0&0\\
+            0&1&0\\
+            0&0&-1\\
+        \end{pmatrix}
+    \end{Equation}
+\end{BoxDefinition}
+
+\subsection{法向量变换}
+
+在三维空间中，我们经常会用法向量表示一个面的方向，然而，法向量进行变换后往往不再是法向量。\xref{fig:法向量在三维变换中的问题}展示了这一问题，矩形经过变换矩阵$\vb{M}$的剪切变换后，法向量$\vb{n}$顺着剪切变为了斜向上的$\vb{M}\vb{n}$，但其实$\vb{M}\vb{n}$并不垂直于平面，此时，正确的法向量应是图中标出的$\vb{N}\vb{n}$。
+
+这就告诉我们，当图形通过矩阵$\vb{M}$变换时，法向量若也通过矩阵$\vb{M}$变换将得到不正确的结果，法向量需要另外一个不同的矩阵$\vb{N}$矩形进行变换。故现在的问题是怎么由$\vb{M}$求出$\vb{N}$？
+
+
+
+\begin{Figure}[法向量在三维变换中的问题]
+    \begin{FigureSub}[变换前;变换前--法向量在三维变换中的问题]
+        \includegraphics[scale=0.8]{build/Chapter06C_01.fig.pdf}
+    \end{FigureSub}
+    \quad
+    \begin{FigureSub}[变换后;变换后--法向量在三维变换中的问题]
+        \includegraphics[scale=0.8]{build/Chapter06C_02.fig.pdf}
+    \end{FigureSub}
+\end{Figure}
+首先，可以确定的是变换前法向量$\vb{n}$一定垂直于切向量$\vb{t}$\setpeq{法向量变换}
+\begin{Equation}&[1]
+    \vb{n}^T\vb{t}=0
+\end{Equation}
+
+我们将变换后的向量用$\vb{n}_N=\vb{N}\vb{n},~\vb{n}_M=\vb{M}\vb{n},~\vb{t}_M=\vb{M}\vb{t}$表示，我们要找到$\vb{N}$使下式成立
+\begin{Equation}&[2]
+    \vb{n}_N^T\vb{t}_M=0
+\end{Equation}
+我们可以在\xrefpeq{1}做一些变形，利用$\vb{M}^{-1}\vb{M}=\vb{I}$
+\begin{Equation}
+    \vb{n}^Tt=\vb{n}^T\vb{I}\vb{t}=\vb{n}^T\vb{M}^{-1}\vb{M}\vb{t}=0
+\end{Equation}
+应用矩阵乘法的分配律
+\begin{Equation}
+    (\vb{n}^T\vb{M}^{-1})(\vb{M}\vb{t})=0
+\end{Equation}
+注意到$\vb{M}\vb{t}$就是$\vb{t}_M$
+\begin{Equation}
+    (\vb{n}^T\vb{M}^{-1})\vb{t}_M=0
+\end{Equation}
+比照\xrefpeq{2}，即得
+\begin{Equation}
+    \vb{n}_N^T=\vb{n}^T\vb{M}^{-1}
+\end{Equation}
+两边转置
+\begin{Equation}
+    \vb{n}_N=(\vb{M}^{-1})^T\vb{n}
+\end{Equation}
+
+由此可见应有$\vb{N}=(\vb{M}^{-1})^T$，即适用法向量变换的$\vb{N}$是$\vb{M}$的逆矩阵的转置。
+\begin{BoxFormula}[法向量变换]
+    法向量的变换矩阵$\vb{N}$为
+    \begin{Equation}
+        \vb{N}=(\vb{M}^{-1})^T
+    \end{Equation}
+\end{BoxFormula}
+
+我们可以证明，这里$\vb{N}$可以写为
+\begin{Equation}
+    \vb{N}=
+    \begin{pmatrix}
+        m_{11}^c&m_{12}^c&m_{13}^c\\
+        m_{21}^c&m_{22}^c&m_{23}^c\\
+        m_{31}^c&m_{32}^c&m_{33}^c\\    
+    \end{pmatrix}
+\end{Equation}
+其中$m_{ij}^c$代表$\vb{M}$在$m_{ij}$处的代数余子式，完整展开的结果是
+\begin{Equation}
+    \vb{N}=
+    \begin{pmatrix}
+        m_{22}m_{33}-m_{23}m_{32}&
+        m_{23}m_{31}-m_{21}m_{33}&
+        m_{21}m_{32}-m_{22}m_{31}\\
+        m_{13}m_{32}-m_{12}m_{33}&
+        m_{11}m_{33}-m_{13}m_{31}&
+        m_{12}m_{31}-m_{11}m_{32}\\
+        m_{12}m_{23}-m_{13}m_{22}&
+        m_{13}m_{21}-m_{11}m_{23}&
+        m_{11}m_{22}-m_{12}m_{21}\\
+    \end{pmatrix}
+\end{Equation}
+实际上，严格来说上式还要再除以$\vb{M}$的行列式才是真正的$\vb{N}=(\vb{M}^{-1})^T$，但由于法向量并不关心长度（反正最终都要对$\vb{N}\vb{n}$归一化），计算$\vb{N}=(\vb{M}^{-1})^T$时省略除行列式不影响结果。

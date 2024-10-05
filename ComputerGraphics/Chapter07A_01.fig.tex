@@ -1,0 +1,27 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.65]
+
+\begin{scope}[3d view={140}{15}]
+
+\draw[-latex] (0,0,0) -- (3,0,0) node[pos=1.1] {$z$};
+\draw[-latex] (0,0,0) -- (0,3,0) node[pos=1.1] {$x$};
+\draw[-latex] (0,0,0) -- (0,0,3) node[pos=1.1] {$y$};
+\path (0,0,0) node[circ,scale=0.35] {};
+
+\draw (-7,1,2) coordinate (e) node[circ] {} node[above] {$\vb{e}$};
+
+\draw[thick,-latex] (e) -- node[pos=1.1] {$\vb{w}$} ++(-2,0,0);
+\draw[thick,-latex] (e) -- node[pos=1.2] {$\vb{v}$} ++(0,-1.732,-1);
+\draw[thick,-latex] (e) -- node[pos=1.1] {$\vb{u}$} ++(0,1,-1.732);
+
+\draw[thin,gray,dotted] (e) -- ++ (10,0,0);
+
+\end{scope}
+
+\draw[thick] (-3,-1.5) rectangle (10,4.75);
+\path (-3,4.75) node[below right=0.05cm,draw,thin,fill=black!10!white] {(A) World Space};
+
+\end{tikzpicture}
+\end{document}

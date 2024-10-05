@@ -1,0 +1,243 @@
+\section{坐标系变换}
+在这一节，我们讨论有关坐标系变换的问题，如\xref{fig:坐标系变换}所示。我们知道，在三维空间下的坐标系可以由其原点和三个基矢表征，$xyz$坐标系包含$\vb{o},\vb{x},\vb{y},\vb{z}$，$uvw$坐标系包含$\vb{e},\vb{u},\vb{v},\vb{w}$。假设空间中有一个点$\vb{p}$，在两个坐标系下的坐标分别是$(x_p,y_p,z_p)$和$(u_p,v_p,w_p)$，我们应该如何在两者间转换？首先，从$uvw$系到$xyz$系是很容易的，这基本上就是一些加法
+\begin{Equation}
+    \vb{p}=\vb{e}+u_p\vb{u}+v_p\vb{v}+w_p\vb{w}
+\end{Equation}
+
+我们可以用矩阵的方式来表示\setpeq{坐标系变换}
+\begin{Equation}&[1]
+    \begin{pmatrix}
+        x_p\\
+        y_p\\
+        z_p\\
+        1
+    \end{pmatrix}=
+    \begin{pmatrix}
+        x_u&x_v&x_w&x_e\\
+        y_u&y_v&y_w&y_e\\
+        z_u&z_v&z_w&z_e\\
+        0&0&0&1\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        u_p\\
+        v_p\\
+        w_p\\
+        1
+    \end{pmatrix}
+\end{Equation}
+
+我们可以更紧凑的写为
+\begin{Equation}&[2]
+    \vb{p}_{xyz}=\begin{pmatrix}
+        \vb{u}&\vb{v}&\vb{w}&\vb{e}\\
+        0&0&0&1\\
+    \end{pmatrix}
+    \vb{p}_{uvw}
+\end{Equation}
+
+现在的问题是，通常遇到的坐标变换问题并不是这个方向的。我们往往是期望从$xyz$坐标系变换到$uvw$坐标系，该过程是\xrefpeq{2}过程的逆过程，因此变换矩阵要变为对应的逆矩阵
+\begin{Equation}&[3]
+    \vb{p}_{uvw}=\begin{pmatrix}
+        \vb{u}&\vb{v}&\vb{w}&\vb{e}\\
+        0&0&0&1\\
+    \end{pmatrix}^{-1}
+    \vb{p}_{xyz}
+\end{Equation}
+然而一般矩阵求逆是很麻烦的，这里有一个更简单的办法，回到\xrefpeq{1}，拆开仿射矩阵
+\begin{Equation}&[4]
+    \begin{pmatrix}
+        x_p\\
+        y_p\\
+        z_p\\
+        1
+    \end{pmatrix}=
+    \begin{pmatrix}
+        1&0&0&x_e\\
+        0&1&0&y_e\\
+        0&0&1&z_e\\
+        0&0&0&1\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        x_u&x_v&x_w&0\\
+        y_u&y_v&y_w&0\\
+        z_u&z_v&z_w&0\\
+        0&0&0&1\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        u_p\\
+        v_p\\
+        w_p\\
+        1
+    \end{pmatrix}
+\end{Equation}
+现在我们求逆，我们知道$(\vb{A}\vb{B})^{-1}=\vb{B}^{-1}\vb{A}^{-1}$，因此分别求逆时要交换顺序。随后，平移变换矩阵求逆实际上就是将每一个平移分量变为对应负值，线性变换矩阵是一个正交矩阵（考虑到$\vb{u},\vb{v},\vb{w}$都是单位向量且相互垂直），而正交矩阵的逆矩阵就是其转置矩阵，因此有
+\begin{Equation}&[5]
+    \begin{pmatrix}
+        u_p\\
+        v_p\\
+        w_p\\
+        1
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        x_u&y_u&z_u&0\\
+        x_v&y_v&z_v&0\\
+        x_w&y_w&z_w&0\\
+        0&0&0&1\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        1&0&0&-x_e\\
+        0&1&0&-y_e\\
+        0&0&1&-z_e\\
+        0&0&0&1\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        x_p\\
+        y_p\\
+        z_p\\
+        1
+    \end{pmatrix}
+\end{Equation}
+注意，这里不能再合并回仿射矩阵的形式了，仿射一定是先线性变换再平移变换！
+\begin{Figure}[坐标系变换]
+    \includegraphics[scale=0.8]{build/Chapter06E_01.fig.pdf}
+\end{Figure}
+将该结论整理如下
+\begin{BoxFormula}[坐标系变换]
+    由$xyz$坐标系至$uvw$坐标系的变换矩阵可以表示为
+    \begin{Equation}
+        \vb{M}=
+        \begin{pmatrix}
+            x_u&y_u&z_u&0\\
+            x_v&y_v&z_v&0\\
+            x_w&y_w&z_w&0\\
+            0&0&0&1\\
+        \end{pmatrix}
+        \begin{pmatrix}
+            1&0&0&-x_e\\
+            0&1&0&-y_e\\
+            0&0&1&-z_e\\
+            0&0&0&1\\
+        \end{pmatrix}
+    \end{Equation}
+\end{BoxFormula}
+
+% 这一节，我们来考虑一个问题，如何从一个坐标系变换到另一个坐标系？具体来说，我们会考虑一个点$\vb{p}$，它在$xyz$坐标系和$uvw$坐标系下分别被记为$\vb{p}_{xyz}$和$\vb{p}_{uvw}$
+% \begin{Equation}
+%     \vb{p}_{xyz}=
+%     \begin{pmatrix}
+%         x_p\\
+%         y_p\\
+%         z_p\\
+%         1\\
+%     \end{pmatrix}\qquad
+%     \vb{p}_{uvw}=
+%     \begin{pmatrix}
+%         u_p\\
+%         y_p\\
+%         z_p\\
+%         1    
+%     \end{pmatrix}
+% \end{Equation}
+% 在$xyz$坐标系下，$xyz$坐标系的原点$\vb{o}$和基矢$\vb{x},\vb{y},\vb{z}$为
+% \begin{Equation}
+%     \vb{o}=
+%     \begin{pmatrix}
+%         0\\
+%         0\\
+%         0\\
+%         1\\
+%     \end{pmatrix}
+%     \qquad
+%     \vb{x}=
+%     \begin{pmatrix}
+%         1\\
+%         0\\
+%         0\\
+%         0\\
+%     \end{pmatrix}
+%     \qquad
+%     \vb{y}=
+%     \begin{pmatrix}
+%         0\\
+%         1\\
+%         0\\
+%         0\\
+%     \end{pmatrix}
+%     \qquad
+%     \vb{z}=
+%     \begin{pmatrix}
+%         0\\
+%         0\\
+%         1\\
+%         0\\
+%     \end{pmatrix}
+% \end{Equation}
+% 在$xyz$坐标系下，$uvw$坐标系的原点$\vb{e}$和基矢$\vb{u},\vb{v},\vb{w}$为
+% \begin{Equation}
+%     \vb{e}=
+%     \begin{pmatrix}
+%         x_e\\
+%         y_e\\
+%         z_e\\
+%         1\\
+%     \end{pmatrix}
+%     \qquad
+%     \vb{u}=
+%     \begin{pmatrix}
+%         x_u\\
+%         y_u\\
+%         z_u\\
+%         1\\
+%     \end{pmatrix}
+%     \qquad
+%     \vb{v}=
+%     \begin{pmatrix}
+%         x_v\\
+%         y_v\\
+%         z_v\\
+%         1\\
+%     \end{pmatrix}
+%     \qquad
+%     \vb{w}=
+%     \begin{pmatrix}
+%         x_w\\
+%         y_w\\
+%         z_w\\
+%         1\\
+%     \end{pmatrix}
+% \end{Equation}
+
+% 这样可以有
+% \begin{Equation}
+%     \vb{p}_{xyz}=\vb{o}+x_p\vb{x}+y_p\vb{y}+z_p\vb{z}=\vb{e}+u_p\vb{u}+v_p\vb{v}+w_p\vb{w}
+% \end{Equation}
+% 先解决一个问题，如何由$\vb{p}_{uvw}$得到$\vb{p}_{xyz}$？这很简单，只要代入$\vb{u},\vb{v},\vb{w},\vb{e}$就可以了
+% \begin{Equation}
+%     \begin{pmatrix}
+%         x_p\\
+%         y_p\\
+%         z_p\\
+%         1
+%     \end{pmatrix}=
+%     \begin{pmatrix}
+%         x_u&x_v&x_w&x_e\\
+%         y_u&y_v&y_w&y_e\\
+%         z_u&z_v&z_w&z_e\\
+%         0&0&0&1\\
+%     \end{pmatrix}
+%     \begin{pmatrix}
+%         u_p\\
+%         v_p\\
+%         w_p\\
+%         1
+%     \end{pmatrix}
+% \end{Equation}
+% 或者更紧凑的写为
+% \begin{Equation}
+%     \vb{p}_{xyz}=
+%     \begin{pmatrix}
+%         \vb{u}&\vb{v}&\vb{w}&\vb{e}
+%     \end{pmatrix}
+%     \vb{p}_{uvw}
+% \end{Equation}
