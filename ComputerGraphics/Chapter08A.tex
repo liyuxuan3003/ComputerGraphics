@@ -1,0 +1,36 @@
+\section{光栅化直线}
+
+在这一节，我们要研究的是如何光栅化一条直线，如\xref{fig:光栅化直线}所示。
+
+\begin{Figure}[光栅化直线]
+    \includegraphics[scale=0.8]{build/Chapter08A_01.fig}
+\end{Figure}
+
+直线的起点和终点用$\vb{p}_0$和$\vb{p}_1$表示
+\begin{Equation}
+    \vb{p}_0=(x_0,y_0)\qquad
+    \vb{p}_1=(x_1,y_1)
+\end{Equation}
+直线方程可以表示为
+\begin{Equation}
+    f(x,y)=(y_0-y_1)x+(x_1-x_0)y+x_0y_1-x_1y_0=0
+\end{Equation}
+应指出，这里$(x_0,y_0)$和$(x_1,y_1)$未必是整数，换言之，起点和终点可以在屏幕上的任意位置。
+
+第一步要做的是确定起点和终点临近的整数点
+\begin{Gather}
+    x_{\min}=\te{round}(x_0)\qquad y_{\min}=\te{round}(y_0)\\
+    x_{\max}=\te{round}(x_1)\qquad y_{\max}=\te{round}(y_1)
+\end{Gather}
+我们需要根据直线$f(x,y)$的斜率$m$进行分类讨论，其中斜率$m$可以表示为
+\begin{Equation}
+    m=\frac{y_1-y_0}{x_1-x_0}
+\end{Equation}
+
+我们这里重点讨论$m\in(0,1]$，这种情况下直线在$x$方向比$y$方向增加的更快。由于我们期望得到的是一条最细且无空隙的直线，在$m\in(0,1]$的条件下，这将意味着两点：每一列只能存在一个像素，每一行至少存在一个像素。故我们将一直向右绘制像素，并在有些情况下向上抬高一格绘制像素。换言之，若已绘制像素$(x,y)$，下一像素只有$(x+1,y)$或$(x+1,y+1)$两种情况。判断的方法在于计算两者的中点$(x+1,y+0.5)$是否位于直线$f(x,y)=0$上方
+\begin{itemize}
+    \item 若$f(x+1,y+0.5)>0$，则中点位于直线上方，应有$(x,y)\to (x+1,y)$。
+    \item 若$f(x+1,y+0.5)<0$，则中点位于直线下方，应有$(x,y)\to (x+1,y+1)$。
+\end{itemize}
+
+由此，我们就可以绘制出\xref{fig:光栅化直线}中的结果了。

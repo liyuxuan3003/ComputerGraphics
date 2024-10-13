@@ -1,0 +1,67 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.7]
+    
+\foreach \i in {0,1,2,...,10}
+{
+    \draw[thin,black!20!white] (-0.5,\i-0.5) -- (9.5,\i-0.5);
+    \draw[thin,black!20!white] (\i-0.5,-0.5) -- (\i-0.5,9.5);
+}
+
+\foreach \i in {0,1,2,...,9}
+{
+    \path (-0.5,\i) node[left] {\tiny $\i$};
+    \path (\i,-0.5) node[below] {\tiny $\i$};
+}
+
+\foreach \x in {0,1,2,...,9}
+{
+    \foreach \y in {0,1,2,...,9}
+    {
+        \draw (\x,\y) node[gray,circ,scale=0.1] {};
+    }
+}
+
+\draw[thin,-latex] (0,9.8) -- node[above] {$x$} (9,9.8);
+\draw[thin,-latex] (9.8,0) -- node[right] {$y$} (9.8,9);
+
+\def\xa{0.3}
+\def\xb{8.7}
+\def\ya{1.6}
+\def\yb{4.8}
+
+\draw[thick] (\xa,\ya) -- (\xb,\yb);
+
+\newcounter{y}
+\setcounter{y}{2}
+\let\y\they
+\foreach \x in {0,1,...,9}
+{
+    \fill[black,fill opacity=0.2] (\x-0.5,\y-0.5) rectangle (\x+0.5,\y+0.5);
+    \def\d{\fpeval{(\ya-\yb)*(\x+1)+(\xb-\xa)*(\y+0.5)+\xa*\yb-\xb*\ya<0}}
+    % \path (\x,0) node {\tiny \d};
+    \ifthenelse{\d=1}{\stepcounter{y}}{}
+}
+
+\foreach \x in {1,2,...,8}
+{
+    \path (\x,\fpeval{(\xb*\ya-\xa*\yb-\x*(\ya-\yb))/(\xb-\xa)}) node[ocirc,scale=0.5] {};
+}
+
+\draw[-latex] (-0.2,8) node[right=0.1cm,draw,fill=white,font=\footnotesize] {$(x_{\min},y_{\min})$} -- (-0.2,2.5) -- (0,2.1);
+
+\draw[-latex] (9.4,8) node[left=0.1cm,draw,fill=white,font=\footnotesize] {$(x_{\max},y_{\max})$} -- (9.4,5.5) -- (9,5.1);
+
+\path (\xa,\ya) node[left] {$\vb{p}_0$} node[ocirc] {} ++(1,-0.2) node[below,draw,fill=white,align=center,font=\footnotesize] {$\vb{p}_0=(x_0,y_0)$};
+
+\path (\xb,\yb) node[right] {$\vb{p}_1$} node[ocirc] {} ++(-0.9,1.6) node[below,draw,fill=white,align=center,font=\footnotesize] {$\vb{p}_1=(x_1,y_1)$};
+
+\path (3.5,5.0) node[draw,fill=white] {\footnotesize $m=(y_1-y_0)/(x_1-x_0)\in(0,1]$};
+
+\path (6.5,3.0) node {$f(x,y)$};
+
+\draw[ultra thin] (-1.7,-1.7) rectangle (10.7,10.7);
+
+\end{tikzpicture}
+\end{document}

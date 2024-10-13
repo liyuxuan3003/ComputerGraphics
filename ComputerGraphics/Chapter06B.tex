@@ -5,7 +5,7 @@
 \begin{BoxDefinition}[对角矩阵]
     对角矩阵（Diagonal Matrix）是指仅具有对角元素的矩阵
     \begin{Equation}
-        \vb{A}=\mr{diag}(a_1,a_2)=\begin{pmatrix}
+        \vb{A}=\te{diag}(a_1,a_2)=\begin{pmatrix}
             a_1&0\\
             0&a_2\\
         \end{pmatrix}
@@ -63,7 +63,7 @@
 这是一个二次方程，故可以解出两个特征值$\lambda$。事实上，对于一个$n\times n$的矩阵，其具有$n$个特征值。由于四次以上的方程无系解析解，故对于$n>4$的矩阵，其特征值只有数值解。
 
 
-而对于某个已经求出的特征值$\lambda$，也很容易确定对应的特征向量$\vb{a}=(x,y)$，考虑\xrefpeq{4}
+而对于某个已经求出的特征值$\lambda$，也很容易确定对应的特征向量$\vb{a}=(x,y)$，考虑\xrefpeq{3}
 \begin{Equation}
     \begin{pmatrix}
         a_{11}-\lambda&a_{12}\\
@@ -104,13 +104,13 @@
     \end{Equation}
     矩阵$\vb{S}$是一个对角矩阵，由特征值$\lambda_1,\lambda_2$构成
     \begin{Equation}
-        \vb{S}=\mr{diag}(\lambda_1,\lambda_2)
+        \vb{S}=\te{diag}(\lambda_1,\lambda_2)
     \end{Equation}
 \end{BoxFormula}
 
 现在我们来解读结果，不过再次之前，我们先要将特殊矩阵和矩阵变换联系起来
 \begin{itemize}
-    \item 对角矩阵$\vb{S}=\mr{diag}(\lambda_1,\lambda_2)$对应缩放变换，其中$\lambda_1,\lambda_2$代表沿$\vb{x},\vb{y}$的缩放比。
+    \item 对角矩阵$\vb{S}=\te{diag}(\lambda_1,\lambda_2)$对应缩放变换，其中$\lambda_1,\lambda_2$代表沿$\vb{x},\vb{y}$的缩放比。
     \item 正交矩阵$\vb{R}=(\vb{r}_1,\vb{r}_2)$对应旋转变换，其代表$\vb{x},\vb{y}$旋转至$\vb{r}_1,\vb{r}_2$方向，$\vb{R}^T$则相反。
 \end{itemize}
 
@@ -123,7 +123,7 @@
 特征值分解告诉我们，任何对称矩阵代表的变换，本质上都可以视为由“旋转--缩放--旋转”这样三步基本变换的组合变换。更进一步的说，由于缩放沿$\vb{x},\vb{y}$进行，且缩放前后的旋转分别是从特征向量方向旋转至$\vb{x},\vb{y}$再旋转回去，因此，对称矩阵的变换的效果其实就是在特征向量$\vb{r}_1,\vb{r}_2$的方向上分别进行特征值$\lambda_1,\lambda_2$倍的缩放！这是一个非常深刻且直观的几何理解。
 
 \subsection{奇异值分解}
-奇异值和奇异值分解的想法是从特征值分解延拓出来的。特征值分解存在一个明显的缺陷，即只有对角矩阵才能适用。奇异值分解期望将任何矩阵都拆分为“旋转--缩放--旋转”的形式，不过势必要做出一些让步，需要将$\vb{A}=\vb{R}\vb{S}\vb{R}^T$需改写为$\vb{A}=\vb{U}\vb{S}\vb{V}^T$，即首尾两个正交矩阵不再是同一个。将左侧$\vb{U}=(\vb{u}_1,\vb{u}_2)$和右侧$\vb{v}=(\vb{v}_1,\vb{v}_2)$中的向量分别称为左奇异向量和右奇异向量（Singular Vector），同时，将$\vb{S}=\mr{diag}(\sigma_1,\sigma_2)$中的数称为奇异值（Singular Value）。
+奇异值和奇异值分解的想法是从特征值分解延拓出来的。特征值分解存在一个明显的缺陷，即只有对角矩阵才能适用。奇异值分解期望将任何矩阵都拆分为“旋转--缩放--旋转”的形式，不过势必要做出一些让步，需要将$\vb{A}=\vb{R}\vb{S}\vb{R}^T$需改写为$\vb{A}=\vb{U}\vb{S}\vb{V}^T$，即首尾两个正交矩阵不再是同一个。将左侧$\vb{U}=(\vb{u}_1,\vb{u}_2)$和右侧$\vb{v}=(\vb{v}_1,\vb{v}_2)$中的向量分别称为左奇异向量和右奇异向量（Singular Vector），同时，将$\vb{S}=\te{diag}(\sigma_1,\sigma_2)$中的数称为奇异值（Singular Value）。
 
 \begin{BoxFormula}[奇异值分解]
     奇异值分解（Singular Value Decomposition, SVD）是指，对于矩阵$\vb{A}$，有
@@ -137,7 +137,7 @@
     \end{Equation}
     矩阵$\vb{S}$是一个对角矩阵，由特征值$\sigma_1,\sigma_2$构成
     \begin{Equation}
-        \vb{S}=\mr{diag}(\sigma_1,\sigma_2)
+        \vb{S}=\te{diag}(\sigma_1,\sigma_2)
     \end{Equation}
 \end{BoxFormula}
 
@@ -172,4 +172,4 @@
 \begin{Equation}
     \vb{M}=\vb{U}\vb{S}^2\vb{U}^T
 \end{Equation}
-这意味着$\vb{M}=\vb{A}^T\vb{A}$必然可以做特征值分解！且此时，特征向量是$\vb{A}$的左奇异向量，特征值是$\vb{A}$的奇异值的平方，因为$\vb{S}^2=\mr{diag}(\sigma_1^2,\sigma_2^2)$。由此可见，通过这种方式，奇异值的计算可以转换为特征值的计算。并且，$\vb{A}^T\vb{A}=\vb{U}\vb{S}^2\vb{U}^T$给出$\vb{U}$，类似的，$\vb{A}\vb{A}^T=\vb{V}\vb{S}^2\vb{V}^T$给出$\vb{V}$。
+这意味着$\vb{M}=\vb{A}^T\vb{A}$必然可以做特征值分解！且此时，特征向量是$\vb{A}$的左奇异向量，特征值是$\vb{A}$的奇异值的平方，因为$\vb{S}^2=\te{diag}(\sigma_1^2,\sigma_2^2)$。由此可见，通过这种方式，奇异值的计算可以转换为特征值的计算。并且，$\vb{A}^T\vb{A}=\vb{U}\vb{S}^2\vb{U}^T$给出$\vb{U}$，类似的，$\vb{A}\vb{A}^T=\vb{V}\vb{S}^2\vb{V}^T$给出$\vb{V}$。

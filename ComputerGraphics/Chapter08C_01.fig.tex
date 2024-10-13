@@ -1,0 +1,43 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.6]
+
+\draw[-latex] (-6.5,0) -- (6.5,0) node[above] {$z$};
+\draw[-latex] (0,-10) -- (0,2) node[right] {$z'$};
+
+\def\xn{-1}
+\def\xf{-3}
+
+\draw[thick,domain=0.55:6.0,samples=100] plot (\x,{\xn+\xf-(\xn*\xf)/\x});
+\draw[thick,domain=-6.0:-0.55,samples=100] plot (\x,{\xn+\xf-(\xn*\xf)/\x});
+
+\draw[dotted,very thin,fill=blue,fill opacity=0.1] (-1,-1) rectangle (-3,-3);
+
+\draw[dotted,very thin,fill=black,fill opacity=0.1] (-1,-1) rectangle (0,1.8);
+\draw[dotted,very thin,fill=black,fill opacity=0.1] (-3,-3) rectangle (-6.3,-4);
+\draw[dotted,very thin,fill=red,fill opacity=0.1] (0,-9.8) rectangle (6.3,-4);
+
+\draw[thin,gray,dashed] (-1,0) node[above,black] {$z_n$} |- (0,-1) node[right,black] {$z_n$};
+\draw[thin,gray,dashed] (-3,0) node[above,black] {$z_f$} |- (0,-3) node[right,black] {$z_f$};
+\draw[thin,gray,dashed] (-6,-4) -- (6,-4);
+\path (0,-4) node[below left] {$z_n+z_f$};
+
+\path (-1,-1) node[ocirc] {};
+\path (-3,-3) node[ocirc] {};
+
+\path (-4.5,-4) node[below] {\footnotesize Region 2};
+\path (0,1) node[right] {\footnotesize Region 3};
+\path (-3,-1.5) node[left] {\footnotesize Region 1};
+\path (3.25,-4) node[above] {\footnotesize Region 4};
+
+% \path (-1,0) node[ocirc] {};
+% \path (-3,0) node[ocirc] {};
+
+% \path (0,-1) node[ocirc] {};
+% \path (0,-3) node[ocirc] {};
+
+\draw[ultra thin] (-6.9,-10.4) rectangle (6.9,2.4);
+
+\end{tikzpicture}
+\end{document}

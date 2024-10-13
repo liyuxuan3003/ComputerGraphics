@@ -1,0 +1,88 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=0.7]
+    
+\foreach \i in {0,1,2,...,10}
+{
+    \draw[thin,black!20!white] (-0.5,\i-0.5) -- (9.5,\i-0.5);
+    \draw[thin,black!20!white] (\i-0.5,-0.5) -- (\i-0.5,9.5);
+}
+
+\foreach \i in {0,1,2,...,9}
+{
+    \path (-0.5,\i) node[left] {\tiny $\i$};
+    \path (\i,-0.5) node[below] {\tiny $\i$};
+}
+
+\draw[thin,-latex] (0,9.8) -- node[above] {$x$} (9,9.8);
+\draw[thin,-latex] (9.8,0) -- node[right] {$y$} (9.8,9);
+
+\foreach \x in {0,1,2,...,9}
+{
+    \foreach \y in {0,1,2,...,9}
+    {
+        \draw (\x,\y) node[gray,circ,scale=0.1] {};
+    }
+}
+
+\def\xa{0.5}
+\def\ya{1.5}
+
+\def\xb{8.0}
+\def\yb{2.5}
+
+\def\xc{6.0}
+\def\yc{7.5}
+
+\def\xd{8.7}
+\def\yd{6.8}
+
+\draw[thick,rounded corners=0.01cm] (\xa,\ya) -- (\xb,\yb) -- (\xc,\yc) -- cycle;
+
+\draw[thin,fill=black,fill opacity=0.05] (-0.5,0.5) rectangle (8.5,8.5);
+
+\foreach \x in {0,1,...,9}
+{
+    \foreach \y in {0,1,...,9}
+    {
+        \def\xalpha{\fpeval{((\yb-\yc)*\x+(\xc-\xb)*\y+\xb*\yc-\xc*\yb)/((\yb-\yc)*\xa+(\xc-\xb)*\ya+\xb*\yc-\xc*\yb)}}
+        \def\xbeta{\fpeval{((\yc-\ya)*\x+(\xa-\xc)*\y+\xc*\ya-\xa*\yc)/((\yc-\ya)*\xb+(\xa-\xc)*\yb+\xc*\ya-\xa*\yc)}}
+        \def\xgamma{\fpeval{((\ya-\yb)*\x+(\xb-\xa)*\y+\xa*\yb-\xb*\ya)/((\ya-\yb)*\xc+(\xb-\xa)*\yc+\xa*\yb-\xb*\ya)}}
+        \def\cond{\fpeval{\xalpha>=0 && \xbeta>=0 && \xgamma>=0}}
+        \ifthenelse{\cond=1}{\fill[fill={rgb,1:red,\xalpha; green,\xbeta; blue,\xgamma},fill opacity=0.5] (\x-0.5,\y-0.5) rectangle (\x+0.5,\y+0.5);}{}
+    }
+}
+
+\draw[dashed,gray] (\xb,\yb) -- (\xd,\yd);
+\draw[dashed,gray] (\xc,\yc) -- (\xd,\yd);
+\path (\xd,\yd) node[ocirc] {} node[right] {$\vb{p}_0'$};
+
+\path (\xa,\ya) node[left] {$\vb{p}_0$} node[ocirc] {} ++(0.7,-0.3) node[below,draw,fill=white,align=center,font=\footnotesize] {$\vb{p}_0=(x_0,y_0)$\\$\vb{c}_0=(1,0,0)$};
+
+\path (\xb,\yb) node[right] {$\vb{p}_1$} node[ocirc] {} ++(0,-0.3) node[below,draw,fill=white,align=center,font=\footnotesize] {$\vb{p}_1=(x_1,y_1)$\\ $\vb{c}_1=(0,1,0)$};
+
+\path (\xc,\yc) node[above] {$\vb{p}_2$} node[ocirc] {} ++(1.75,0.1) node[above,draw,fill=white,align=center,font=\footnotesize] {$\vb{p}_2=(x_2,y_2)$\\ $\vb{c}_2=(0,0,1)$};
+
+\path (\xb,\yb) -- node[below left,pos=0.3] {$\alpha$}  (\xc,\yc);
+\path (\xc,\yc) -- node[below right,pos=0.43] {$\beta$}  (\xa,\ya);
+\path (\xa,\ya) -- node[above,pos=0.45] {$\gamma$}  (\xb,\yb);
+
+\path (\xb,\yb) -- node[right,pos=0.8] {$f_{12}(x,y)$}  (\xc,\yc);
+\path (\xc,\yc) -- node[above left,pos=0.6] {$f_{20}(x,y)$}  (\xa,\ya);
+\path (\xa,\ya) -- node[below,pos=0.67] {$f_{01}(x,y)$}  (\xb,\yb);
+
+\draw[very thin,black!20!white] (-0.5,-0.5) rectangle (-1.5,-1.5);
+\path (-1,-1) node[gray,circ,scale=0.1] {};
+
+\path (-0.5,-1.2) node[right,font=\footnotesize] {off-screen point~$(-1,-1)$};
+
+\draw[dashed] (6.5,4.5) rectangle ++(1,1);
+\path (7,5) node[ocirc,scale=0.5] {};
+
+\path (-0.5,8.5) node[below right=0.1cm,draw,fill=white,font=\footnotesize] {$[x_{\min},x_{\max}]\times [y_{\min},y_{\max}]$};
+
+\draw[ultra thin] (-1.7,-1.7) rectangle (10.7,10.7);
+
+\end{tikzpicture}
+\end{document}

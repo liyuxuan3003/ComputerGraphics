@@ -3,7 +3,7 @@
 \begin{BoxDefinition}[三维缩放变换]
     三维缩放变换定义为
     \begin{Equation}
-        \mr{scale}(s_x,s_y,s_z)=
+        \te{scale}(s_x,s_y,s_z)=
         \begin{pmatrix}
             s_x&0&0\\
             0&s_y&0\\
@@ -16,7 +16,7 @@
 \begin{BoxDefinition}[三维剪切变换]
     三维中，沿$x$方向的剪切变换定义为
     \begin{Equation}
-        \mr{shear}_x(d_y,d_z)=
+        \te{shear}_x(d_y,d_z)=
         \begin{pmatrix}
             1&d_y&d_z\\
             0&1&0\\
@@ -25,7 +25,7 @@
     \end{Equation}
     三维中，沿$y$方向的剪切变换定义为
     \begin{Equation}
-        \mr{shear}_y(d_z,d_x)=
+        \te{shear}_y(d_z,d_x)=
         \begin{pmatrix}
             1&0&0\\
             d_x&1&d_z\\
@@ -34,7 +34,7 @@
     \end{Equation}
     三维中，沿$z$方向的剪切变换定义为
     \begin{Equation}
-        \mr{shear}_z(d_x,d_y)=
+        \te{shear}_z(d_x,d_y)=
         \begin{pmatrix}
             1&0&0\\
             0&1&0\\
@@ -47,7 +47,7 @@
 \begin{BoxDefinition}[三维旋转变换]*
     三维中，绕$x$轴的旋转变换定义为
     \begin{Equation}
-        \mr{rotate}_x(\phi)=
+        \te{rotate}_x(\phi)=
         \begin{pmatrix}
             1&0&0\\
             0&\cos\phi&-\sin\phi\\
@@ -56,7 +56,7 @@
     \end{Equation}
     三维中，绕$y$轴的旋转变换定义为
     \begin{Equation}
-        \mr{rotate}_y(\phi)=
+        \te{rotate}_y(\phi)=
         \begin{pmatrix}
             \cos\phi&0&\sin\phi\\
             0&1&0\\
@@ -65,7 +65,7 @@
     \end{Equation}
     三维中，绕$z$轴的旋转变换定义为
     \begin{Equation}
-        \mr{rotate}_z(\phi)=
+        \te{rotate}_z(\phi)=
         \begin{pmatrix}
             \cos\phi&-\sin\phi&0\\
             \sin\phi&\cos\phi&0\\
@@ -79,7 +79,7 @@
 \begin{BoxDefinition}[三维旋转变换]*
     三维中，以$y,z$平面为对称面（翻转$x$轴）的反射变换定义为
     \begin{Equation}
-        \mr{reflect}_{yz}=
+        \te{reflect}_{yz}=
         \begin{pmatrix}
             -1&0&0\\
             0&1&0\\
@@ -88,7 +88,7 @@
     \end{Equation}
     三维中，以$z,x$平面为对称面（翻转$y$轴）的反射变换定义为
     \begin{Equation}
-        \mr{reflect}_{zx}=
+        \te{reflect}_{zx}=
         \begin{pmatrix}
             1&0&0\\
             0&-1&0\\
@@ -97,7 +97,7 @@
     \end{Equation}
     三维中，以$x,y$平面为对称面（翻转$z$轴）的反射变换定义为
     \begin{Equation}
-        \mr{reflect}_{xy}=
+        \te{reflect}_{xy}=
         \begin{pmatrix}
             1&0&0\\
             0&1&0\\
@@ -134,7 +134,7 @@
 \end{Equation}
 我们可以在\xrefpeq{1}做一些变形，利用$\vb{M}^{-1}\vb{M}=\vb{I}$
 \begin{Equation}
-    \vb{n}^Tt=\vb{n}^T\vb{I}\vb{t}=\vb{n}^T\vb{M}^{-1}\vb{M}\vb{t}=0
+    \vb{n}^T\vb{t}=\vb{n}^T\vb{I}\vb{t}=\vb{n}^T\vb{M}^{-1}\vb{M}\vb{t}=0
 \end{Equation}
 应用矩阵乘法的分配律
 \begin{Equation}

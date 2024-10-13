@@ -68,16 +68,16 @@ k=10^(3);
 M=10^(6);
 
 
-xzn=1
-xzf=5
+xzn=-1
+xzf=-5
 xzpx=zn+zf-(zn zf)/z
 
 
 ff1=xzpx//.{zn->xzn,zf->xzf};
-fig1=Plot[ff1,{z,1,5},
+fig1=Plot[ff1,{z,-5,-1},
 PlotStyle->Black,
-FrameTicks->{xTicks[{1,5,1},{2,1}],xTicks[{1,5,1},{2,1}]},
-Epilog->{Text[xLaTeX["z_n=1.0",0.8],{1.4,1.2}],Text[xLaTeX["z_f=5.0",0.8],{4.7,4.7}]},
+FrameTicks->{xTicks[{-5,-1,1},{2,1}],xTicks[{-5,-1,1},{2,1}]},
+Epilog->{Text[xLaTeX["z_n=-1.0",0.8],{-1.4,-1.2}],Text[xLaTeX["z_f=-5.0",0.8],{-4.7,-4.7}]},
 Evaluate@xFigLabel["z","z'"],
 Evaluate@xFigConfig]
 
