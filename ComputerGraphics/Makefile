@@ -26,6 +26,15 @@ ${OUTPUT}: ${TEXS} ${FIGS_PDF} ${OCTS_PDF} ${WLSS_PDF} ${ASCS_PDF} ${STYS} ${CLS
 	latexmk ${FLAGS} ${PROJECT}.tex
 	touch $@
 
+${BUILD_DIR}/Chapter07A_06.fig.pdf: Chapter07A_06.fig.tex \
+${BUILD_DIR}/Chapter07A_01.fig.pdf \
+${BUILD_DIR}/Chapter07A_02.fig.pdf \
+${BUILD_DIR}/Chapter07A_03.fig.pdf \
+${BUILD_DIR}/Chapter07A_04.fig.pdf \
+${BUILD_DIR}/Chapter07A_05.fig.pdf
+	latexmk ${FLAGS} $<
+	touch $@
+
 ${BUILD_DIR}/%.fig.pdf:%.fig.tex ${STYS} ${CLSS}
 	latexmk ${FLAGS} $<
 	touch $@

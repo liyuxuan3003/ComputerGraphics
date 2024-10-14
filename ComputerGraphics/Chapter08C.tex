@@ -1,0 +1,28 @@
+\section{剪裁}
+
+若某一点位于\xref{fig:视角变换流程}中所示的由$x_l,x_r,y_b,y_t,z_n,z_f$划定的观察范围之外，此时应该怎么做？我们或许会想直接移除这些点，然而，我们必须要考虑到这些点是某个三角面的顶点而该三角面的其他顶点尚且位于观察范围内。不过，实际上溢出$x,y$边界的情况没有那么要紧，这仅仅意味着绘制三角形时有些像素位于屏幕范围外，简单的忽略这些像素即可。真正的麻烦来自于溢出$z$边界的情况，如\xref{fig:透视变换对$z$的非线性作用的问题}所示，\xref{sec:透视投影变换}中使用的非线性投影变换使$z$需要划分为四种情况
+\begin{enumerate}
+    \item $z$位于$z_n,z_f$之间，位于观察范围内，这是正常情况，$z'$同样位于$z_n,z_f$间。
+    \item $z$远于$z_f$，此时$z'$会随之变远，但最终不会超过$z_n+z_f$。
+    \item $z$近于$z_n$，此时$z'$会随之变近，且迅速移至相机后并趋于相机后无穷远。
+    \item $z$在相机后，此时$z'$将反常的映射至比$z_n+z_f$更远处，这是严重异常的。
+\end{enumerate}
+
+\begin{Figure}[透视变换对$z$的非线性作用的问题]
+    \includegraphics[scale=0.8]{build/Chapter08C_01.fig.pdf}
+\end{Figure}
+
+
+上述第四种情况是必须处理的，因为它造成了深度信息不再保序，这意味着原本在后方的图形可能会突然跑到前方，造成渲染的混乱。因此，一定要实施的是$z=z_n$的剪裁（Clip）。
+
+在\xref{fig:剪裁的方法}中展示了剪裁一个三角面的具体方法。显然，三角面若与剪裁面相交则至少有两条边会与之产生共两个交点。这里有一种情况需要处理，如\xref{fig:剪裁情况2}所示，注意到原先的三角形在剪裁后变成了一个四边形（由两个顶点和两个交点构成），我们需要将其拆分为两个三角形。
+
+\begin{Figure}[剪裁的方法]
+    \begin{FigureSub}[情况1;剪裁情况1]
+        \includegraphics[scale=0.8]{build/Chapter08C_02.fig.pdf}
+    \end{FigureSub}
+    \hspace{0.5cm}
+    \begin{FigureSub}[情况2;剪裁情况2]
+        \includegraphics[scale=0.8]{build/Chapter08C_03.fig.pdf}
+    \end{FigureSub}
+\end{Figure}
