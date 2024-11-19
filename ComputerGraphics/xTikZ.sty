@@ -8,6 +8,7 @@
 
 \usetikzlibrary{quotes}
 \usetikzlibrary{angles}
+\usetikzlibrary{perspective}
 
 \usetikzlibrary{graphs}
 
@@ -47,26 +48,6 @@
 \ctikzset{amplifiers/scale=0.7}
 \ctikzset{logic ports/scale=0.65}
 \ctikzset{tripoles/mos style/arrows}
-
-% mnm color
-\definecolor{mnmP}{HTML}{FF0000}
-\definecolor{mnmN}{HTML}{0000FF}
-\colorlet{mnmP0}{mnmP!95!white}
-\colorlet{mnmN0}{mnmN!95!white}
-\colorlet{mnmP1}{mnmP!65!white}
-\colorlet{mnmN1}{mnmN!65!white}
-\colorlet{mnmP2}{mnmP!40!white}
-\colorlet{mnmN2}{mnmN!40!white}
-\colorlet{mnmP3}{mnmP!20!white}
-\colorlet{mnmN3}{mnmN!20!white}
-\colorlet{mnmSiO2}{yellow!30!white}
-\colorlet{mnmSi3N4}{cyan!30!yellow!30!white}
-\colorlet{mnmLig}{brown}
-\colorlet{mnmPolySi}{purple!70!white}
-\colorlet{mnmTiSi2}{cyan!70!white}
-\colorlet{mnmAl}{black!80!white}
-\colorlet{mnmW}{black!80!yellow}
-\colorlet{mnmDep}{black!30!white}
 
 % x-draw system
 \def\xEval#1{\expandafter\csname#1\endcsname}%
