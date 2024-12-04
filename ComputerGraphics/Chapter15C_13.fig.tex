@@ -1,0 +1,34 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.5]
+
+\draw[dotted,gray,very thin,step=0.5cm] (-1,-1) grid (3,3);
+\draw[very thin,gray] (-1,-1) grid (3,3);
+
+\draw[very thick,domain=0:1,smooth,variable=\u] plot ({0.5+(3-2*\u)*\u^2+1.5*\u*(1.5+\u*(-2.5+1*\u))},{(6+1.5*(-1+\u)-4*\u)*\u^2});
+
+\path (0,2) coordinate (P0) node[left] {$\vb{p}_0$} node[below right,inner sep=0.07cm] {\scalebox{0.5}{$(0,2)$}};
+\path (0.5,0) coordinate (P1) node[below] {$\vb{p}_1=f(0)$} node[left,inner sep=0.07cm] {\scalebox{0.5}{$(0.5,0)$}};
+\path (1.5,2) coordinate (P2) node[above right] {$\vb{p}_2=f(1)$} node[below right,inner sep=0.07cm] {\scalebox{0.5}{$(1.5,2)$}};
+\path (0,1) coordinate (P3) node[left] {$\vb{p}_3$} node[above right,inner sep=0.07cm] {\scalebox{0.5}{$(0,1)$}};
+
+\draw[thin,red,dashed,-latex] (P0) -- node[above] {\scalebox{0.5}{$2,0\to 1'$}} (P2);
+\draw[thin,blue,dashed,-latex] (P1) -- node[right] {\scalebox{0.5}{$3,1\to 2'$}} (P3);
+
+\draw[thick,red,-latex] (P1) -- ++(2.25/4,0) node[right,inner sep=0cm] {$f'(0)=\beta(\vb{p_2}-\vb{p}_0)$};
+\draw[thick,blue,-latex] (P2) -- ++(-0.75/4,1.5/4) node[above left,inner sep=0cm] {$f'(1)=\beta(\vb{p_3}-\vb{p}_1)$};
+
+\foreach \x in {0,1,2,3}
+{
+    \path (P\x) node[ocirc] {};
+}
+
+\path (-1.2,3.2) node[below right=0.1cm,fill=white,draw,thick,fill=black!10!white] {$\alpha=-2$};
+
+\path (1,-0.75) node {$\beta=(1-\alpha)/2$};
+
+\draw[ultra thin] (-1.2,-1.2) rectangle (3.2,3.2);
+
+\end{tikzpicture}
+\end{document}

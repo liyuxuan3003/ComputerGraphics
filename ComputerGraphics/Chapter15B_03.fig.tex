@@ -1,0 +1,19 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.5]
+
+\draw[dotted,gray,very thin,step=0.5cm] (-1,-1) grid (3,3);
+\draw[very thin,gray] (-1,-1) grid (3,3);
+
+\draw[very thick,domain=0:1,smooth,variable=\u] plot ({2*\u^2+4*(\u-\u^2)},{2*\u^2});
+
+\draw[red,thick,-latex] (0,0) -- ++ (1,0) node[below] {$\vb{p}_1=f'(0)$} node[above right,inner sep=0.01cm] {\scalebox{0.5}{$(4,0)$}};
+
+\path (0,0) node[ocirc] {} node[above] {$\vb{p}_0=f(0)$} node[below left,inner sep=0.07cm] {\scalebox{0.5}{$(0,0)$}};
+\path (2,2) node[ocirc] {} node[above] {$\vb{p}_2=f(1)$} node[below right,inner sep=0.07cm] {\scalebox{0.5}{$(2,2)$}};
+
+\draw[ultra thin] (-1.2,-1.2) rectangle (3.2,3.2);
+
+\end{tikzpicture}
+\end{document}
