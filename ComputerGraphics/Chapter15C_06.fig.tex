@@ -18,15 +18,20 @@
     (6,-2) coordinate (P3)
     (8,0)  coordinate (P4);
 
-\path (P0) node[above right] {$(0,2)$};
-\path (P1) node[above] {$(2,4)$};
-\path (P2) node[above right] {$(4,2)$};
-\path (P3) node[above left] {$(6,0)$};
-\path (P4) node[above right] {$(8,2)$};
+\foreach \x/\d in {0/left,1/below,2/left,3/above left,4/left}
+{
+    \path (P\x) node[\d] {$\x$};
+}
 
-\draw[thick,red,-latex] (P0) -- ++(0,1) node[below left,inner sep=0.05cm] {$(0,4)$};
+\path (P0) node[above right] {\scalebox{0.5}{$(0,2)$}};
+\path (P1) node[above] {\scalebox{0.5}{$(2,4)$}};
+\path (P2) node[above right] {\scalebox{0.5}{$(4,2)$}};
+\path (P3) node[below right] {\scalebox{0.5}{$(6,0)$}};
+\path (P4) node[above right] {\scalebox{0.5}{$(8,2)$}};
 
-\draw[thick,blue,-latex] (P0) -- ++(1.75,-1) node[right,inner sep=0.05cm] {$(7,-4)$};
+\draw[thick,red,-latex] (P0) -- ++(0,1) node[below left,inner sep=0.05cm] {\scalebox{0.5}{$(0,4)$}};
+
+\draw[thick,blue,-latex] (P0) -- ++(1.75,-1) node[right,inner sep=0.05cm] {\scalebox{0.5}{$(7,-4)$}};
 
 \foreach \x in {P0,P1,P2,P3,P4}
 {

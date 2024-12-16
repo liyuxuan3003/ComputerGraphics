@@ -1,0 +1,112 @@
+\section{曲线的基本概念}
+
+\subsection{曲线的方程表示}
+曲线有两种典型的表示方式：隐式曲线（Implict Curve）、参数曲线（Parametric Curve）。
+
+\begin{BoxDefinition}[隐式曲线]
+    隐式曲线由隐函数方程定义
+    \begin{Equation}
+        f(x,y)=0
+    \end{Equation}
+\end{BoxDefinition}
+
+\begin{BoxDefinition}[参数曲线]
+    参数曲线由参数方程定义
+    \begin{Equation}
+        (x,y)=\vb{f}(t)
+    \end{Equation}
+\end{BoxDefinition}
+
+例如，单位圆可以用隐式曲线和参数曲线分别表示为
+\begin{Gather}
+    x^2+y^2-1=0\\
+    (x,y)=(\cos t,\sin t)\quad t\in[0,2\pi)
+\end{Gather}
+
+在计算机图形学中，我们主要使用参数曲线。这是因为，参数曲线$(x,y)=\vb{f}(t)$中我们可以很容易的通过对参数$t$进行采样得到一组曲线上的点，隐式曲线$f(x,y)=0$则较难绘制，需要遍历相当范围内的$(x,y)$点，通过判断每一个点是否令等式成立来确定该点是否位于曲线上。
+
+有趣的是，对于同一条曲线，可以存在无穷多种参数方程表示。
+
+下述方程均为$(0,0)$至$(1,1)$的线段，但$t$的取值范围不同
+\begin{Gather}
+    (x,y)=(t,t)\quad t\in[0,1)\\
+    (x,y)=(2t,2t)\quad t\in[0,0.5)
+\end{Gather}
+下述方程均为$(0,0)$至$(1,1)$的线段，但$t$变化时点在曲线上的移动速率不同
+\begin{Gather}
+    (x,y)=(t,t)\quad t\in[0,1)\\
+    (x,y)=(t^2,t^2)\quad t\in[0,1)\\
+    (x,y)=(t^5,t^5)\quad t\in[0,1)
+\end{Gather}
+习惯上对于参数方程的参数符号有以下惯例
+\begin{itemize}
+    \item 若参数符号为$t$\hspace{0.2em}，则代表参数没有特别要求。
+    \item 若参数符号为$u$，则代表参数的定义域是$[0,1)$。
+    \item 若参数符号为$s$\hspace{0.1em}，则代表参数变化时，曲线的弧长是均匀变化的。
+\end{itemize}
+关于参数符号$s$的要求，我们可以将其用数学表达为
+\begin{Equation}
+    \abs{\dv{\vb{f}(s)}{s}}=c
+\end{Equation}
+对于一般的参数方程$(x,y)=\vb{f}(t)$，通过以下方程可得到$t$转换为$s$的关系式
+\begin{Equation}
+    s(t)=\Int[0][t]\abs{\dv{\vb{f}(\tau)}{\tau}}\dd{\tau}
+\end{Equation}
+在接下来的内容中，我们主要运用$u$和$t$作为参数方程的参数符号。
+
+\subsection{曲线的拼接}
+在计算机图形学中，一条曲线往往是被分段的参数方程表示的。试图用单一方程表示一条复杂曲线往往难以取得良好效果。因此，如何将两段曲线拼接起来是一个很重要的问题。
+
+我们设共有$n$个节点（Knot），连接了$n-1$条曲线，已知其方程分别为
+\begin{Equation}
+    \vb{f}_0(u),\vb{f}_1(u),\cdots,\vb{f}_{n-2}(u)=(x,y)
+\end{Equation}
+我们现在希望将其拼接为一个新方程
+\begin{Equation}
+    \vb{f}(u)=(x,y)
+\end{Equation}
+向量$\vb{u}$记录了$n$个节点在新方程$\vb{f}(u)$的自变量$u$的位置，称为节点向量（Knot Vector）
+\begin{Equation}
+    \vb{u}=\qty(u_0,u_1,\cdots,u_{n-1})\quad u_0=0, u_{n-1}=1
+\end{Equation}
+
+向量$\vb{u}$中，节点应当是递增的。简单起见，节点可以直接取均匀分布
+\begin{Equation}
+    \vb{u}=\qty(0,1,\cdots,n-1)/(n-1)
+\end{Equation}
+这样一来，我们就可以将$\vb{f}(u)$写作
+\begin{BoxFormula}[参数曲线的拼接]
+    参数曲线可以按照如下方式拼接
+    \begin{Equation}
+        \vb{f}(u)=\vb{f}_i\qty(\frac{u-u_i}{u_{i+1}-u_i})\quad\mathrm{if}\ u\in[u_{i},u_{i+1})\quad \forall i\in\qty{0,1,\cdots,n-2}
+    \end{Equation}
+\end{BoxFormula}
+这一拼接公式看上去比较复杂，但其实很好理解。当参述处于$u\in[u_i,u_{i+1})$即分配给$\vb{f}_i$的区间上时，此时，我们需要提供给$\vb{f}_i$一个能在$[0,1)$上变化的变量作为其参数，这里我们构造的变量是$(u-u_i)/(u_{i+1}-u_i)$，显然，当$u=u_i$和$u=u_{i+1}$时，该变量分别取值为$0,1$。
+
+或许一个简单的例子更有助于理解
+\begin{Equation}
+    \vb{f}(u)=\begin{cases}
+        \vb{f}_0(2u),&u\in[0.0,0.5)\\
+        \vb{f}_1(2u-1),&u\in[0.5,1.0)
+    \end{cases}
+\end{Equation}
+这里设$n=3$即拼接两段曲线$\vb{f}_0(u),\vb{f}_1(u)$，此时$\vb{u}=(0.0,0.5,1.0)$。
+
+\subsection{曲线的连续性}
+现在的问题是，两段曲线在拼接时，节点处曲线是否是连续的？更进一步的，节点处曲线的连接具有何种程度的光滑？为此，设两段曲线分别为$\vb{f}_0(u),\vb{f}_1(u)$，引入下面两个定义
+
+\begin{BoxDefinition}[参数连续]
+    定义$n$阶参数连续（Parametric Continuity）$C^n$为
+    \begin{Equation}
+        \vb{f}_0^{(n)}(1)=\vb{f}_1^{(n)}(0)\quad n=0,1,\cdots
+    \end{Equation}
+\end{BoxDefinition}
+
+\begin{BoxDefinition}[几何连续]
+    定义$n$阶几何连续（Geometric Continuity）$G^n$为
+    \begin{Equation}
+        \vb{f}_0^{(n)}(1)=\lambda\vb{f}_1^{(n)}(0)\quad \lambda\in\R \quad n=1,2,\cdots
+    \end{Equation}
+\end{BoxDefinition}
+
+例如，$C^0$代表两段曲线在节点处是连接在一起的（而不是“断开”的），$C^1,C^2$连续则代表斜率和曲率的连续。然而，参数连续$C^n$有时候过于严格。试想，曲线随参数$u$的变化速率可能是不尽相同的，我们可以通过一些简单的变换在不改变曲线形状的情况下调节曲线随参数$u$的变化速率，这会导致看起来一阶导连续（视觉上光滑连接）的两段曲线$\vb{f}_0,\vb{f}_1$实际上可能$\vb{f}_0'(1)=\vb{f}_1'(0)$也可能$\vb{f}_0'(1)\neq\vb{f}_1'(0)$。因此，问题的关键其实在于一阶导的方向一致而非一阶导相等！几何连续$G^n$就是为此需求引入的，例如，$G^1$就将条件放宽至$\vb{f}_0'(1)=\lambda\vb{f}_1'(0)$即可。

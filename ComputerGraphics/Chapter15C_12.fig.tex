@@ -19,17 +19,22 @@
     (10,2)  coordinate (P5)
     (12,0)  coordinate (P6);
 
-\path (P0) node[below] {$(0,0)$};
-\path (P1) node[above right] {$(2,2)$};
-\path (P2) node[below right] {$(4,0)$};
-\path (P3) node[above] {$(6,2)$};
-\path (P4) node[below left] {$(8,0)$};
-\path (P5) node[above left] {$(10,2)$};
-\path (P6) node[below] {$(12,0)$};
+\path (P0) node[below] {\scalebox{0.5}{$(0,0)$}};
+\path (P1) node[above right] {\scalebox{0.5}{$(2,2)$}};
+\path (P2) node[below right] {\scalebox{0.5}{$(4,0)$}};
+\path (P3) node[above] {\scalebox{0.5}{$(6,2)$}};
+\path (P4) node[below left] {\scalebox{0.5}{$(8,0)$}};
+\path (P5) node[above left] {\scalebox{0.5}{$(10,2)$}};
+\path (P6) node[below] {\scalebox{0.5}{$(12,0)$}};
 
 \foreach \x in {0,1,...,6}
 {
     \path (P\x) node[ocirc] {};
+}
+
+\foreach \x/\d in {0/above left,1/left,2/above,3/below,4/above,5/right,6/above right}
+{
+    \draw (P\x) node[\d] {$\x$}; 
 }
 
 \draw[ultra thin] (-1.2,-1.2) rectangle (13.2,5.2);

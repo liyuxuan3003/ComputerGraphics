@@ -22,17 +22,22 @@
     (10,2)  coordinate (P5)
     (12,0)  coordinate (P6);
 
-\path (P0) node[below] {$(0,0)$};
-\path (P1) node[above] {$(2,2)$};
-\path (P2) node[below] {$(4,0)$};
-\path (P3) node[above] {$(6,2)$};
-\path (P4) node[below] {$(8,0)$};
-\path (P5) node[above] {$(10,2)$};
-\path (P6) node[below] {$(12,0)$};
+\path (P0) node[below] {\scalebox{0.5}{$(0,0)$}};
+\path (P1) node[above] {\scalebox{0.5}{$(2,2)$}};
+\path (P2) node[below] {\scalebox{0.5}{$(4,0)$}};
+\path (P3) node[above] {\scalebox{0.5}{$(6,2)$}};
+\path (P4) node[below] {\scalebox{0.5}{$(8,0)$}};
+\path (P5) node[above] {\scalebox{0.5}{$(10,2)$}};
+\path (P6) node[below] {\scalebox{0.5}{$(12,0)$}};
 
 \foreach \x in {0,1,...,6}
 {
     \path (P\x) node[ocirc] {};
+}
+
+\foreach \x/\d in {0/above,1/below,2/above,3/below,4/above,5/below,6/above}
+{
+    \draw (P\x) node[\d] {$\x$}; 
 }
 
 \path (-1,3) node[below right=0.1cm,fill=white,draw,thick,fill=black!10!white] {$\alpha=\a$};
