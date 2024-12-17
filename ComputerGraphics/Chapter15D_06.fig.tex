@@ -1,0 +1,31 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.0]
+
+\draw[dotted,gray,very thin,step=0.5cm] (-1,-1) grid (5,5);
+\draw[very thin,gray] (-1,-1) grid (5,5);
+
+\draw[very thick,domain=0:1,smooth,black!20!white,variable=\u] plot ({4*\u},{(-8*(-1+\u))*\u});
+
+\path (0,0) coordinate (P0);
+\path (2,4) coordinate (P1);
+\path (4,0) coordinate (P2);
+
+\draw[very thick] (P0)--(P1);
+\draw[very thick] (P1)--(P2);
+
+\foreach \p in {0.025,0.050,...,0.976}
+{
+    \draw[red!\fpeval{100*\p}!blue,ultra thin] ($(P0)!\p!(P1)$) -- ($(P1)!\p!(P2)$);
+}
+
+\foreach \n/\pos in {0/below,1/above,2/below}
+{
+    \path (P\n) node[ocirc] {} node[\pos] {$\vb{p}_\n$};
+}
+
+\draw[ultra thin] (-1.2,-1.2) rectangle (5.2,5.2);
+
+\end{tikzpicture}
+\end{document}

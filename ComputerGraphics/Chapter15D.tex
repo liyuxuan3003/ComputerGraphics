@@ -1,1 +1,258 @@
 \section{近似曲线}
+在开始之前，有必要讨论一下上一节和本节的标题名称：插值曲线（Interpolating Curve）和近似曲线（Approximating Curve）。到目前为止，我们控制一条曲线的方式，概括起来说，都是指定一系列点，并令曲线经过所有这些点，即所谓的插值。然而，要求曲线经过所有控制点有时会过于严格，不够灵活。本节，我们会尝试另外一种思路，控制点会影响曲线的形状，但是，控制点本身未必再位于曲线上，这就是近似曲线的含义。需要特别强调的是，这里近似并非是“不精确”或“对另一曲线的模仿”的含义，单纯是指曲线不再经过所有控制点的特征。
+
+% 这一节中，我们将研究两类近似曲线：贝塞尔曲线、基样条曲线（B样条）。
+
+\subsection{贝塞尔曲线}
+贝塞尔曲线（Bezier Curve）是计算机图形学中最常用的曲线，被广泛应用于计算机绘图和矢量字体设计。需要说明的是，数学物理方法中由柱坐标给出的贝塞尔函数与该处的贝塞尔曲线没有任何关系，前者是Friedrich Wilhelm Bessel，后者是Pierre Bezier，两位相差近一百年。
+
+贝塞尔曲线有以下特点
+\begin{itemize}
+    \item 贝塞尔曲线可以是任意次的，对于$n$个控制点，贝塞尔曲线将是$d=n-1$次的。
+    \item 贝塞尔曲线会经过第一个和最后一个控制点，形状受中间控制点影响。
+\end{itemize}
+
+在计算机图形学中，最常用的是三次贝塞尔曲线。
+
+\subsubsection{贝塞尔曲线的引入}
+贝塞尔曲线可以由这样一种朴素的想法引入。有一个控制点会这样影响起点和终点处曲线的方向：曲线在起点处向控制点的方向出发，曲线在终点处会自控制点的方向到达。当然，也可以有两个控制点，使起点处的方向和终点处的方向能分别被两个控制点独立控制。上述这种想法，分别给出了二次贝塞尔曲线和三次贝塞尔曲线的定义，如\xref{fig:二次贝塞尔曲线}和\xref{fig:三次贝塞尔曲线}所示。
+\begin{Figure}[贝塞尔曲线]
+    \begin{FigureSub}[二次贝塞尔曲线]
+        \includegraphics[scale=0.8]{build/Chapter15D_03.fig.pdf}
+    \end{FigureSub}
+    \hspace{1cm}
+    \begin{FigureSub}[三次贝塞尔曲线]
+        \includegraphics[scale=0.8]{build/Chapter15D_02.fig.pdf}
+    \end{FigureSub}
+\end{Figure}
+
+三次贝塞尔曲线的定义如下
+\begin{Gather}
+    f(0)=\vb{p}_0\\
+    f(1)=\vb{p}_3\\
+    f'(0)=3(\vb{p}_1-\vb{p}_0)\\
+    f'(1)=3(\vb{p}_3-\vb{p}_2)
+\end{Gather}
+% 三次贝塞尔曲线仍然是厄米三次曲线指定$f(0),f(1),f'(0),f'(1)$的模式，但$f'(0),f'(1)$改由中间两个控制点和起点和终点的相对位置来定义。这里的系数$3$是出于推广目的添加的。
+
+二次贝塞尔曲线的定义如下
+\begin{Gather}
+    f(0)=\vb{p}_0\\
+    f(1)=\vb{p}_2\\
+    f'(0)=2(\vb{p}_1-\vb{p}_0)\\
+    f'(1)=2(\vb{p}_2-\vb{p}_1)
+\end{Gather}
+二次贝塞尔曲线的定义中$\vb{p}_1$在$f'(0),f'(1)$出现了两次，因为其确实可以同时控制起点和终点的曲线方向，然而，这是否意味着它被过约束了？实际上，通过计算可以知道，若$\vb{p}_1$能满足$f'(0)=2(\vb{p}_1-\vb{p}_0)$则一定也满足$f'(1)=2(\vb{p}_2-\vb{1})$，故不矛盾。除此之外，由于二次和三次贝塞尔曲线$f'(0),f'(1)$中的系数$2,3$的不同，二次贝塞尔曲线并不等价于一条两个控制点重合的三次贝塞尔曲线。由于贝塞尔曲线存在通式，故下面的分析我们以三次贝塞尔曲线进行。
+
+我们可以求出
+\begin{Gather}
+    \vb{p}_0=\vb{a}_0\\
+    \vb{p}_1=\vb{a}_0+\vb{a}_1(1/3)\\
+    \vb{p}_2=\vb{a}_0+\vb{a}_1(2/3)+\vb{a}_2(1/3)\\
+    \vb{p}_3=\vb{a}_0+\vb{a}_1+\vb{a}_2+\vb{a}_3
+\end{Gather}
+约束矩阵$\vb{C}$为
+\begin{BoxFormula}[三次贝塞尔曲线的约束矩阵]
+    三次贝塞尔曲线的约束矩阵为
+    \begin{Equation}
+        \vb{C}=\begin{pmatrix}
+            1&0&0&0\\
+            1&1/3&0&0\\
+            1&2/3&1/3&0\\
+            1&1&1&1\\
+        \end{pmatrix}
+    \end{Equation}
+\end{BoxFormula}
+偏置矩阵$\vb{B}=\vb{C}^{-1}$为
+\begin{BoxFormula}[三次贝塞尔曲线的偏置矩阵]
+    三次贝塞尔曲线的偏置矩阵为
+    \begin{Equation}
+        \vb{B}=\begin{pmatrix}
+            1&0&0&0\\
+            -3&3&0&0\\
+            3&-6&3&0\\
+            -1&3&-3&1\\
+        \end{pmatrix}
+    \end{Equation}
+\end{BoxFormula}
+混合函数$\vb{b}(u)$为（其中$b_{0,3},b_{1,3},b_{2,3},b_{3,3}$的第二下标$3$代表$3$次）
+\begin{BoxFormula}[三次贝塞尔曲线的混合函数]
+    三次贝塞尔曲线的混合函数为
+    \begin{Gather}
+        b_{0,3}(u)=1-3u+3u^2-u^3\\
+        b_{1,3}(u)=3u-6u^2+3u^3\\
+        b_{2,3}(u)=3u^2-3u^3\\
+        b_{3,3}(u)=u^3
+    \end{Gather}
+\end{BoxFormula}\goodbreak
+
+\xref{fig:三次贝塞尔曲线的混合函数}展示了三次贝塞尔曲线的混合函数
+\begin{Figure}[三次贝塞尔曲线的混合函数]
+    \includegraphics[scale=0.8]{build/Chapter15B_01f.fig.pdf}
+\end{Figure}
+
+\subsubsection{贝塞尔曲线的一般形式}
+其实，我们可以看出，三次贝塞尔曲线和基数三次曲线一样，本质上都是仿照厄米三次曲线在定义$f(0),f(1),f'(0),f'(1)$，只不过用了$f'(0),f'(1)$是用控制点间的相对距离间接表示。贝塞尔曲线的一个重要优势是，它的形式可以从三次很轻松的扩展到任意$d$次！根据\xref{fml:三次贝塞尔曲线的混合函数}
+\begin{Gather}
+    b_{0,3}(u)=1-3u+3u^2-u^3\\
+    b_{1,3}(u)=3u-6u^2+3u^3\\
+    b_{2,3}(u)=3u^2-3u^3\\
+    b_{3,3}(u)=u^3
+\end{Gather}
+我们可以将其整理为
+\begin{Gather}
+    b_{0,3}(u)=(1-u)^3\\
+    b_{1,3}(u)=3u(1-u)^2\\
+    b_{2,3}(u)=3u^2(1-u)\\
+    b_{3,3}(u)=u^3
+\end{Gather}
+注意到这实际上就是二项式分布！因此，对于$d$次贝塞尔曲线的第$i$个混合函数，有
+\begin{BoxFormula}[贝塞尔曲线的混合函数]
+    贝塞尔曲线的混合函数为
+    \begin{Equation}
+        b_{i,d}(u)=C(d,i)u^i(1-u)^{d-i}
+    \end{Equation}
+    其中$C(d,i)$是二项式系数
+    \begin{Equation}
+        C(d,i)=\frac{d!}{i!\cdot(d-i)!}
+    \end{Equation}
+    贝塞尔曲线的混合函数称为伯恩斯坦多项式（Bernstein Polynomial）。
+\end{BoxFormula}
+
+\xref{fig:贝塞尔曲线的混合函数}展示了$n=7$个控制点下$d=6$次贝塞尔曲线的混合函数
+\begin{Figure}[贝塞尔曲线的混合函数]
+    \includegraphics[scale=0.8]{build/Chapter15D_01c.fig.pdf}
+\end{Figure}
+
+\xref{fig:贝塞尔曲线的效果}展示了$d=6$的高次贝塞尔曲线的实际效果，这揭示了贝塞尔曲线的几个重要性质
+\begin{itemize}
+    \item 贝塞尔曲线具有变差减弱性质（Variation Diminishing Property）。通俗的说，即贝塞尔曲线一定会比其控制点组成的折线段显得更为平滑，具有更少的弯曲。这一点可以用任意直线与贝塞尔曲线的交点数一定少于该直线与控制点折线段的交点数来严格定义。
+    \item 贝塞尔曲线被其控制点的凸包（Convex Hull）所包围，不会出现超出该范围的过冲（例如\xref{fig:拉格朗日形式插值多项式的效果}的插值多项式显然不满足该性质）。控制点的凸包即控制点所能围成的最大闭合多边形，形象的说，可以想象将一个橡皮筋套在所有点外，此时橡皮筋的形状就是凸包。
+\end{itemize}
+\begin{Figure}[贝塞尔曲线的效果]
+    \includegraphics[scale=0.8]{build/Chapter15D_07.fig.pdf}
+\end{Figure}
+
+\subsubsection{贝塞尔曲线的分段拼接}
+尽管贝塞尔曲线可以扩展到高次，但一般使用时，仍然是以分段拼接三次贝塞尔曲线为主，因此一般也认为贝塞尔曲线是一种样条曲线。当分段拼接贝塞尔曲线时，如何确保连续性呢？
+\begin{itemize}
+    \item 前后两段贝塞尔曲线需共用终点和起点，确保$C^0$连续。
+    \item 前后两段贝塞尔曲线的共用点、前段的第二控制点、后段的第一控制点，需要满足三点共线，确保$G^1$连续，假如共用点恰好位于两个控制点的中点处，则可以有$C^1$连续。
+\end{itemize}
+
+\begin{Figure}[贝塞尔曲线的分段拼接]
+    \includegraphics[scale=0.8]{build/Chapter15D_10.fig.pdf}
+\end{Figure}
+
+在\xref{fig:贝塞尔曲线的分段拼接}中，展示了一个拼接两段贝塞尔曲线的例子，$2,3,4$共线确保了$G^1$连续。
+
+\subsubsection{贝塞尔曲线的德卡斯特里奥算法}
+
+我们或许曾经尝试过如\xref{fig:贝塞尔曲线与“以直代曲”}所示的这种“以直代曲”的数学小游戏，在折线$\vb{p}_0,\vb{p}_1,\vb{p}_2$的两条线段上，等距的取一系列点，随后将$\vb{p}_0,\vb{p}_1$和$\vb{p}_1,\vb{p}_2$上相同比例位置处的点用直线连接起来，其包络线就会呈现一条相当漂亮的曲线。实际上，这条曲线就是以$\vb{p}_0,\vb{p}_1,\vb{p}_2$组成的二次贝塞尔曲线！这相当有趣，然而，如果我们期望能有一种快速绘制出贝塞尔曲线的算法，仅仅知道这些信息是不够的。第一，我们需要精确的知道贝塞尔曲线可以由哪些点连接的折线段近似。第二，我们需要找到一种办法能将上述想法推广至更高次情形，尤其是三次贝塞尔曲线。
+
+\begin{Figure}[贝塞尔曲线与“以直代曲”]
+    \includegraphics[scale=0.8]{build/Chapter15D_06.fig.pdf}
+\end{Figure}
+
+德卡斯特里奥算法（De Casteljau Algorithm）是一个相当有效的贝塞尔曲线的近似算法。
+
+对于二次贝塞尔曲线，上述“以直代曲”的朴素想法已经非常接近算法的思想了，只需要再加上小小的一步。如\xref{fig:二次贝塞尔曲线DeC算法}所示，在对$\vb{p}_0,\vb{p}_1$和$\vb{p}_1,\vb{p}_2$等距的在比例$1/4,2/4,/3/4$取点并连线后，对于每一比例的连线，在该连线相同比例的位置再取一点，这一点恰好会落在贝塞尔曲线上。连接起点、终点、所有求出的中间点即可得到一条近似的贝塞尔曲线，增加取点密度可以提高曲线质量。对于三次贝塞尔曲线，只需要在上述基础上多迭代一轮即可。如\xref{fig:三次贝塞尔曲线DeC算法}所示，对$\vb{p}_0,\vb{p}_1$和$\vb{p}_1,\vb{p}_2$和$\vb{p}_2,\vb{p}_3$三条线段等距取点，对于每一比例，这会连接出两条线段。在这两条线段上按该比例取点连线，在这条新连线上该比例处的点将位于三次贝塞尔曲线上。
+
+\begin{Figure}[贝塞尔曲线的德卡斯特里奥算法图示]
+    \begin{FigureSub}[二次贝塞尔曲线;二次贝塞尔曲线DeC算法]
+        \includegraphics[scale=0.8]{build/Chapter15D_04.fig.pdf}
+    \end{FigureSub}\hspace{1cm}
+    \begin{FigureSub}[三次贝塞尔曲线;三次贝塞尔曲线DeC算法]
+        \includegraphics[scale=0.8]{build/Chapter15D_05.fig.pdf}
+    \end{FigureSub}
+\end{Figure}
+
+\subsection{基样条曲线}
+基样条曲线（B-Spline, Basis Spline）或B样条的一个特点是，其提供了一种构建具有$n$个控制点的任意$d$次曲线，但与贝塞尔函数$d=n-1$不同的是，基样条曲线的次数$d$可以与控制点数目$n$无关！从而我们可以根据应用的实际需要，灵活平衡曲线的连续性和复杂性。
+
+基样条曲线的想法类似于\xref{fml:基数三次曲线构成的分段曲线的混合函数}，我们曾研究过基数三次曲线构成的分段曲线作为一个整体的混合函数，这样的混合函数本身也是一个三次的分段函数。这就提示我们，假如能找到一种方法，能对于任意$d$次，产生一个恰当的$d$次的分段函数作为混合函数，这个混合函数就应当是某个$d$次单一曲线构成的分段曲线的混合函数，且不需要了解这个单一曲线的性质。
+
+% 下面，我们首先给出一次、二次、三次的基样条曲线的表达式，随后再讨论一般情况。
+
+\subsubsection{基样条曲线的引入}
+在\xref{fml:一次基样条曲线的混合函数}、\xref{fml:二次基样条曲线的混合函数}、\xref{fml:三次基样条曲线的混合函数}中直接给出了一次、二次、三次基样条的混合函数
+\begin{itemize}
+    \item $d$次基样条曲线的混合函数由$d$次多项式构成。
+    \item $d$次基样条曲线的混合函数是$d+1$分段（因为单一曲线有$d+1$个控制点）。
+\end{itemize}
+
+\begin{BoxFormula}[三次基样条曲线的混合函数]*
+    三次基样条曲线的混合函数为
+    \begin{Equation}
+        b_i(u)=\begin{cases}
+            (v^3)/6,&u\in[u_{i+0},u_{i+1})\quad v=(u-u_{i+0})/(u_{i+1}-u_{i+0})\\
+            (-3v^3+3v^2+3v+1)/6,&u\in[u_{i+1},u_{i+2})\quad v=(u-u_{i+1})/(u_{i+2}-u_{i+1})\\
+            (3v^3-6v^2+4)/6,&u\in[u_{i+2},u_{i+3})\quad v=(u-u_{i+2})/(u_{i+3}-u_{i+2})\\
+            (-v^3+3v^2-3v+1)/6,&u\in[u_{i+3},u_{i+4})\quad v=(u-u_{i+3})/(u_{i+4}-u_{i+3})\\
+            0,&\mathrm{otherwise}
+        \end{cases}
+    \end{Equation}
+\end{BoxFormula}
+
+\begin{BoxFormula}[二次基样条曲线的混合函数]*
+    二次基样条曲线的混合函数为
+    \begin{Equation}
+        \qquad
+        b_i(u)=\begin{cases}
+            (v^2)/2,&u\in[u_{i+0},u_{i+1})\quad v=(u-u_{i+0})/(u_{i+1}-u_{i+0})\\
+            (-2v^2+2v+1)/2,&u\in[u_{i+1},u_{i+2})\quad v=(u-u_{i+1})/(u_{i+2}-u_{i+1})\\
+            (v^2-2v+1)/2,&u\in[u_{i+2},u_{i+3})\quad v=(u-u_{i+2})/(u_{i+3}-u_{i+2})\\
+            0,&\mathrm{otherwise}
+        \end{cases}
+        \qquad
+    \end{Equation}
+\end{BoxFormula}
+
+\begin{BoxFormula}[一次基样条曲线的混合函数]*
+    一次基样条曲线的混合函数为
+    \begin{Equation}
+        \qquad\qquad
+        b_i(u)=\begin{cases}
+            v,&u\in[u_{i+0},u_{i+1})\quad v=(u-u_{i+0})/(u_{i+1}-u_{i+0})\\
+            1-v,&u\in[u_{i+1},u_{i+2})\quad v=(u-u_{i+1})/(u_{i+2}-u_{i+1})\\
+            0,&\mathrm{otherwise}
+        \end{cases}
+        \qquad\qquad
+    \end{Equation}
+\end{BoxFormula}
+
+\xref{fig:基样条曲线的混合函数示例}展示了一次、二次、三次基样条曲线的混合函数。我们注意到，随着次数$d$的增加，相应基样条曲线的混合函数的峰值会越来越低，从$d=1$的$1.0$下降到$d=2,3$的$0.75,0.67$。
+
+\begin{Figure}[基样条曲线的混合函数示例]
+    \begin{FigureSub}[一次基样条曲线]
+        \includegraphics[scale=0.8]{build/Chapter15D_09a.fig.pdf}
+    \end{FigureSub}\\ \vspace{0.1cm}
+    \begin{FigureSub}[二次基样条曲线]
+        \includegraphics[scale=0.8]{build/Chapter15D_09b.fig.pdf}
+    \end{FigureSub}\hspace*{-1.5cm}
+    \begin{FigureSub}[三次基样条曲线]
+        \includegraphics[scale=0.8]{build/Chapter15D_09c.fig.pdf}
+    \end{FigureSub}
+\end{Figure}
+
+\xref{fig:基样条曲线的混合函数}展示了$n=7$个控制点下$d=3$次基样条曲线的混合函数。和\xref{fig:基数三次曲线构成的分段曲线的混合函数}一致，这种情况下会有$n+d+1$个节点，但只有中央$n-d+1$个节点是有效范围，首末$d$个节点在定义域外。
+\begin{Figure}[基样条曲线的混合函数]
+    \includegraphics[scale=0.8]{build/Chapter15D_01d.fig.pdf}
+\end{Figure}
+
+\xref{fig:基样条曲线的效果}展示了$d=3$次基样条曲线的实际效果
+\begin{Figure}[基样条曲线的效果]
+    \includegraphics[scale=0.8]{build/Chapter15D_08.fig.pdf}
+\end{Figure}
+
+基样条曲线也满足贝塞尔曲线的两条性质：曲线满足变差减弱、曲线被控制点凸包包围。
+
+\subsubsection{基样条曲线的德布尔算法}
+基样条曲线具有德布尔算法（De Boor Algorithm）用于递推生成高次的混合函数。
+\begin{BoxFormula}[基样条曲线的递推公式]
+    基样条曲线的混合函数可以通过以下递推公式由$d-1$次推算$d$次
+    \begin{Equation}
+        b_{i,d}(u)=\frac{u-u_{i}}{u_{i+d}-u_{i}}b_{i,d-1}(u)-\frac{u-u_{i+d+1}}{u_{i+d+1}-u_{i+1}}b_{i+1,d-1}(u)
+    \end{Equation}
+\end{BoxFormula}
+递推可以从$d=0$开始，零次基样条曲线的混合函数是一个$u_{i}$至$u_{i+1}$高为$1$的门函数。

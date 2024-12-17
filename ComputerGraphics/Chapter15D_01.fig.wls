@@ -69,13 +69,13 @@ funcCardinal=Evaluate[{
 	1+(beta-3)u^2+(2-beta)u^3,
 	beta u+(3-2beta)u^2+(beta-2)u^3,
 	-beta u^2+beta u^3}//.{beta->xbeta,alpha->xalpha}];
-deltau=1/6;
+deltau=1/10;
 xu=Function[{n},If[n>=0,If[n<=6,n/6,1],0]];
 xub=Function[{n},If[n>=0,If[n<=10,n/10,1],0]];
 
 
 func1=FullSimplify@Table[
-	Piecewise[Join[Table[{funcCardinal[[pw+1]]/.{u->(u-xu[n-pw+1])/deltau},xu[n-pw+1]<=u<xu[n-pw+2]},{pw,0,3}],{{Indeterminate,True}}]]
+	Piecewise[Join[Table[{funcCardinal[[4-pw]]/.{u->((u-xub[n+pw])/(0.1))},xub[n+pw]<=u<xub[n+pw+1]},{pw,0,3}],{{Indeterminate,True}}]]
 ,{n,0,6}];
 
 
@@ -84,16 +84,16 @@ xConfig1={
 	ImageSize->Automatic->500,
 	PlotStyle->MyColor,
 	AspectRatio->1/3,
-	FrameTicks->{Table[{n/6,xLaTeX["u_"<>ToString[n],0.6]},{n,0,6}],xTicks[{-0.2,1.2,0.2},{2,1}]},
+	FrameTicks->{Table[{n/10,xLaTeX["u_{"<>ToString[n]<>"}",0.6]},{n,0,10}],xTicks[{-0.2,1.2,0.2},{2,1}]},
 	Prolog->{
-		{Black,Opacity[0.04],Rectangle[{0,1.0},{1/6,1.3}]},
-		{Black,Opacity[0.04],Rectangle[{5/6,1.0},{1,1.3}]}
+		{Black,Opacity[0.04],Rectangle[{0,1.0},{3/10,1.3}]},
+		{Black,Opacity[0.04],Rectangle[{7/10,1.0},{1,1.3}]}
 	},
 	Epilog->{
-		{Black,Opacity[0.04],Rectangle[{0,-0.3},{1/6,1.0}]},
-		{Black,Opacity[0.04],Rectangle[{5/6,-0.3},{1,1.0}]},
-		Red,Text[xText["Invaild Region",7],{0.5/6,-0.13}],
-		Blue,Text[xText["Invaild Region",7],{5.5/6,-0.13}]
+		{Black,Opacity[0.04],Rectangle[{0,-0.3},{3/10,1.0}]},
+		{Black,Opacity[0.04],Rectangle[{7/10,-0.3},{1,1.0}]},
+		Red,Text[xText["Invaild Region",7],{1.5/10,-0.13}],
+		Blue,Text[xText["Invaild Region",7],{8.5/10,-0.13}]
 	},
 	PlotLegends->xLegend[Table[xLaTeX["b_"<>ToString[n]<>"(u)",0.7],{n,0,6}],{"Row",1},{Center,Top}],
 	Evaluate@xFigLabel["u","b(u)"],
@@ -112,7 +112,7 @@ xConfig2={
 	ImageSize->Automatic->500,
 	PlotStyle->MyColor,
 	AspectRatio->1.875/3,
-	FrameTicks->{Table[{n/6,xLaTeX["u_"<>ToString[n],0.6]},{n,0,6}],xTicks[{-1.19,1.61,0.2},{2,1}]},
+	FrameTicks->{Table[{n/6,xLaTeX["u_{"<>ToString[n]<>"}",0.6]},{n,0,6}],xTicks[{-1.19,1.61,0.2},{2,1}]},
 	PlotLegends->xLegend[Table[xLaTeX["b_"<>ToString[n]<>"(u)",0.7],{n,0,6}],{"Row",1},{Center,Top}],
 	Evaluate@xFigLabel["u","b(u)"],
 	Evaluate@xFigConfig
@@ -156,6 +156,16 @@ xConfig4={
 	ImageSize->Automatic->500,
 	PlotStyle->MyColor,
 	AspectRatio->1/3,
+	Prolog->{
+		{Black,Opacity[0.04],Rectangle[{0,1.0},{3/10,1.3}]},
+		{Black,Opacity[0.04],Rectangle[{7/10,1.0},{1,1.3}]}
+	},
+	Epilog->{
+		{Black,Opacity[0.04],Rectangle[{0,-0.3},{3/10,1.0}]},
+		{Black,Opacity[0.04],Rectangle[{7/10,-0.3},{1,1.0}]},
+		Red,Text[xText["Invaild Region",7],{1.5/10,-0.13}],
+		Blue,Text[xText["Invaild Region",7],{8.5/10,-0.13}]
+	},
 	FrameTicks->{Table[{n/10,xLaTeX["u_{"<>ToString[n]<>"}",0.6]},{n,0,10}],xTicks[{-0.2,1.2,0.2},{2,1}]},
 	PlotLegends->xLegend[Table[xLaTeX["b_"<>ToString[n]<>"(u)",0.7],{n,0,6}],{"Row",1},{Center,Top}],
 	Evaluate@xFigLabel["u","b(u)"],

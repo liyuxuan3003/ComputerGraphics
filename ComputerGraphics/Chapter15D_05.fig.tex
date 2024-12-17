@@ -1,0 +1,54 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.0]
+
+\draw[dotted,gray,very thin,step=0.5cm] (-1,-1) grid (5,5);
+\draw[very thin,gray] (-1,-1) grid (5,5);
+
+\draw[very thick,domain=0:1,smooth,black!20!white,variable=\u] plot ({4*(3-2*\u)*\u^2},{-12*(-1+\u)*\u});
+
+\path (0,0) coordinate (P0);
+\path (0,4) coordinate (P1);
+\path (4,4) coordinate (P2);
+\path (4,0) coordinate (P3);
+
+\draw[very thick] (P0)--(P1);
+\draw[very thick] (P1)--(P2);
+\draw[very thick] (P2)--(P3);
+
+\foreach \n/\c in {2/green,1/red,3/blue}
+{
+    \draw[\c] 
+        ($(P0)!\n*0.25!(P1)$) coordinate (L\n) --
+        ($(P1)!\n*0.25!(P2)$) coordinate (C\n) --
+        ($(P2)!\n*0.25!(P3)$) coordinate (R\n);
+    \foreach \p/\pos in {L/left,C/above,R/right}
+    {
+        \path (\p\n) node[circ,color=\c] {} node[\pos,\c] {\footnotesize $\n/4$};
+    }
+
+    \draw[\c,dashed]
+        ($(L\n)!\n*0.25!(C\n)$) coordinate (LC\n) --
+        ($(C\n)!\n*0.25!(R\n)$) coordinate (RC\n);
+
+    \foreach \p in {LC,RC}
+    {
+        \draw (\p\n) node[circ,color=\c] {};
+        \draw (\p\n) node[circ,scale=0.75,color=\c!20!white] {};
+    }
+
+    \path ($(LC\n)!\n*0.25!(RC\n)$) coordinate (X\n);
+    \path (X\n) node[ocirc,color=\c] {};
+}
+
+\foreach \n/\pos in {0/below,1/above,2/above,3/below}
+{
+    \path (P\n) node[ocirc] {} node[\pos] {$\vb{p}_\n$};
+}
+
+
+\draw[ultra thin] (-1.2,-1.2) rectangle (5.2,5.2);
+
+\end{tikzpicture}
+\end{document}

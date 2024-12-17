@@ -1,0 +1,32 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.5]
+
+\draw[dotted,gray,very thin,step=0.5cm] (-1,-1) grid (3,3);
+\draw[very thin,gray] (-1,-1) grid (3,3);
+
+\draw[very thick,domain=0:1,smooth,variable=\u] plot ({2*\u},{(4-3*\u)*\u});
+
+\foreach \n/\x/\y/\t/\tpos/\cpos in {0/0/0/=f(0)/below/above left,1/1.0/2//above/right,2/2/1/=f(1)/below left/above right}
+{
+    \path (\x,\y) coordinate (P\n) node[\tpos] {$\vb{p}_{\n}\t$} node[\cpos,inner sep=0.07cm] {\scalebox{0.5}{$(\x,\y)$}};
+}
+
+\draw[dashed,red] (P0) -- (P1);
+\draw[dashed,blue] (P1) -- (P2);
+
+\draw[thick,red,-latex] (P0) -- node[pos=2.5,left] {$f'(0)=2(\vb{p}_1-\vb{p}_0)$} ++ (2/4,4/4) coordinate (P0x) node[above left,inner sep=0.07cm] {\scalebox{0.5}{$(2,4)$}};
+
+\draw[thick,blue,-latex] (P2) -- ++ (2/4,-2/4) coordinate (P2x) node[right,inner sep=0.07cm] {\scalebox{0.5}{$(2,-2)$}};
+\path[blue] (P2x) ++(-0.5,0) node[below] {$f'(1)=2(\vb{p}_2-\vb{p}_1)$};
+
+\foreach \x in {0,1,2}
+{
+    \path (P\x) node[ocirc] {};
+}
+
+\draw[ultra thin] (-1.2,-1.2) rectangle (3.2,3.2);
+
+\end{tikzpicture}
+\end{document}
