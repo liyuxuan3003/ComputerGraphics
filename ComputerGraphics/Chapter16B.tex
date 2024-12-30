@@ -1,0 +1,77 @@
+\section{隐式函数的混合}
+
+当然，除了最简单的加法混合，还有更复杂的混合方式，本节我们将讨论更多混合。
+
+\begin{BoxFormula}[最大值混合]
+    最大值混合是指
+    \begin{Equation}
+        f(\vb{p})=\max(f_A(\vb{p})+f_B(\vb{p}))
+    \end{Equation}
+\end{BoxFormula}
+
+\begin{BoxFormula}[最小值混合]
+    最小值混合是指
+    \begin{Equation}
+        f(\vb{p})=\min(f_A(\vb{p})+f_B(\vb{p}))
+    \end{Equation}
+\end{BoxFormula}
+
+在\xref{fig:最大值混合}和\xref{fig:最小值混合}中，我们直观看出两者的几何意义是
+\begin{itemize}
+    \item 最大值混合下$f(\vb{p})=\te{iso}$代表取$f_A(\vb{p})=\te{iso},f_B(\vb{p})=\te{iso}$的并集（并集混合）。
+    \item 最小值混合下$f(\vb{p})=\te{iso}$代表取$f_A(\vb{p})=\te{iso},f_B(\vb{p})=\te{iso}$的交集（交集混合）。
+\end{itemize}
+
+在本节的示意图中，坐标$(\pm 0.4,0,0)$，取$r=1，\te{iso}=0.5$，采用Soft Objects，由于其恰好满足$g_d(0.5)=0.5$，这意味着$f_A(\vb{p}),f_B(\vb{p})=\te{iso}$均为半径$0.5$的球，在$(\pm 0.1,0,0)$内重叠。
+
+\begin{Figure}[最大值混合]
+    \includegraphics[scale=0.8]{build/Chapter16A_03e.fig.pdf}
+\end{Figure}
+
+\begin{Figure}[最小值混合]
+    \includegraphics[scale=0.8]{build/Chapter16A_03d.fig.pdf}
+\end{Figure}
+
+最大值混合和最小值混合的特点是，其构成的曲面具有不光滑的过渡，我们可以很轻易的看到两个部分的分界线。不过有些情况下这是有用的。例如，构造实体几何（Constructive Solid Geometry, CSG）的核心思想是，应用简单几何体，通过布尔运算，形成复杂几何体。隐式建模不仅可以通过$f_i(\vb{p})=\te{iso}$构成曲面，也可以通过$f_i(\vb{p})\geq\te{iso}$构成几何实体，适用于CSG。
+
+\begin{BoxFormula}[Ricci混合]
+    Ricci混合的定义是
+    \begin{Equation}
+        f(\vb{p})=\qty(f_A^n(\vb{p})+f_B^n(\vb{p}))^{1/n}
+    \end{Equation}
+\end{BoxFormula}
+Ricchi混合也称为超椭圆混合（Super Elliptic Blend），它有一些好的性质。
+
+当$n=1$时，Ricchi混合会退化为加法混合
+\begin{Equation}
+    f_A(\vb{p})+f_B(\vb{p})=\qty(f_A^n(\vb{p})+f_B^n(\vb{p}))^{1/n}|_{n=1}
+\end{Equation}
+当$n\to\pm\infty$时，Ricchi混合会分别趋于最大值混合和最小值混合
+\begin{Gather}
+    \max(f_A(\vb{p}),f_B(\vb{p}))=\lim_{n\to+\infty}\qty(f_A^n(\vb{p})+f_B^n(\vb{p}))^{1/n}\\
+    \min(f_A(\vb{p}),f_B(\vb{p}))=\lim_{n\to-\infty}\qty(f_A^n(\vb{p})+f_B^n(\vb{p}))^{1/n}
+\end{Gather}
+
+因此，如\xref{fig:Ricci混合}，当$n\in[1,\infty)$，Ricchi混合提供了从相加混合到并集混合的连续过渡。
+\begin{Figure}[Ricci混合]
+    \begin{FigureSub}[$n=1$;Ricci n=1]
+        \includegraphics[scale=0.8]{build/Chapter16A_03a.fig.pdf}
+    \end{FigureSub}\\ \vspace{0.25cm}
+    \begin{FigureSub}[$n=2$;Ricci n=2]
+        \includegraphics[scale=0.8]{build/Chapter16A_03b.fig.pdf}
+    \end{FigureSub}
+    \begin{FigureSub}[$n=4$;Ricci n=4]
+        \includegraphics[scale=0.8]{build/Chapter16A_03c.fig.pdf}
+    \end{FigureSub}
+\end{Figure}
+
+Pasko混合中$\alpha\in[-1,1]$给出从交集至并集的过渡（存疑），而$m$决定了曲面是$C^m$连续的。
+\begin{BoxFormula}[Pasko混合]
+    Pasko混合的定义是
+    \begin{Equation}
+        \qquad\qquad
+        f(\vb{p})=\qty(f_A(\vb{p})+f_B(\vb{p})+\alpha\sqrt{f_A^2(\vb{p})+f_B^2(\vb{p})})\qty(f_A^2(\vb{p})+f_B^2(\vb{p}))^{m/2}
+        \qquad\qquad
+    \end{Equation}
+\end{BoxFormula}
+

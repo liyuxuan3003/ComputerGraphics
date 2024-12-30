@@ -1,0 +1,80 @@
+\section{隐式函数的构成}
+通常来说，我们可以将一个隐式函数$f_i(\vb{p})$拆分为两部分
+\begin{BoxDefinition}[隐式函数的构成]
+    隐式函数可以拆分为衰减滤波函数和距离函数的复合
+    \begin{Equation}
+        f_i(\vb{p})=g_i(d)\circ d_i(\vb{p})
+    \end{Equation}
+\end{BoxDefinition}
+在\xref{def:隐式函数的构成}中
+\begin{itemize}
+    \item 距离函数（Distance Function）$d_i(\vb{p})$代表空间中一点$\vb{p}$到第$i$个骨架（Skeleton）元素的距离。隐式曲面往往是围绕一些简单几何图形组成的骨架生成的，试想，球面就是由球心所在点生成的。最简单的骨架就是点集，此时，对于其中第$i$个点$(x_i,y_i,z_i)$，距离函数就是$\vb{p}=(x,y,z)$和该点的距离$d_i(\vb{p})=\sqrt{(x-x_i)^2+(y-y_i)^2+(z-z_i)^2}$。更复杂的骨架除了点，还可以包含直线段、圆环、圆盘等元素，此时距离函数$d_i(\vb{p})$会更复杂。
+    \item 衰减滤波函数（Fall-Off Fliter Function）$g_i(d)$可以将距离映射到$[0,1]$的范围内，特别的，其要保证$\vb{p}$在骨架上时$g_i(0)=1$，且随着$d$的增大$g_i(d)$逐渐减小，即所谓“衰减”。
+\end{itemize}
+那么现在的问题是，有哪些可用的衰减滤波函数呢？常用的有以下这些。
+\begin{BoxFormula}[Blinn衰减滤波函数]
+    Blinn衰减滤波函数为
+    \begin{Equation}
+        g(d)=\exp(-rd^2)
+    \end{Equation}
+\end{BoxFormula}
+
+\begin{BoxFormula}[Metaballs衰减滤波函数]
+    Metaballs衰减滤波函数为
+    \begin{Equation}
+        g(d)=\begin{cases}
+            1-3\qty(\dfrac{d}{r})^2,&0\leq d\leq r/3\\[5mm]
+            \dfrac{3}{2}\qty(1-\dfrac{d}{r})^2,&r/3\leq d\leq r
+        \end{cases}
+    \end{Equation}
+\end{BoxFormula}
+
+\begin{BoxFormula}[Soft Objects衰减滤波函数]
+    Soft Objects衰减滤波函数为
+    \begin{Equation}
+        g(d)=\qty(1-\frac{4d^6}{9r^6}+\frac{17d^4}{9r^4}-\frac{22d^2}{9r^2})
+    \end{Equation}
+\end{BoxFormula}
+
+\begin{BoxFormula}[Wyvill衰减滤波函数]
+    Wyvill衰减滤波函数为
+    \begin{Equation}
+        g(d)=\qty(1-\frac{d^2}{r^2})^3
+    \end{Equation}
+\end{BoxFormula}
+
+在\xref{fig:衰减滤波函数}中，我们列出了上述四种衰减滤波函数的图像，取$r=1$，这里$r$可用认为是一个与半径有关的参数。Metaballs，Soft Objects，Wyvill都仅适用于$d\in[0,r]$的范围，故对于它们而言，半径$r$代表了其最大作用范围。Blinn使用了指数函数，适用于$d\in[0,\infty)$的范围。
+\begin{Figure}[衰减滤波函数]
+    \includegraphics[scale=0.8]{build/Chapter16A_01a.fig.pdf}
+\end{Figure}
+
+这里的问题是，我们引入衰减滤波函数$g_i(d)$的意义是什么？相较$f_i(\vb{p})=g_i(d_i(\vb{p}))$，为何不能直接将距离函数作为隐函数$f_i(\vb{p})=d_i(\vb{p})$？这其实是为了方便将多个骨架单元的隐函数混合在一起。混合（Blending）是指，对于两个骨架单元的隐函数$f_A(\vb{p}),f_B(\vb{p})$，如何构建一个$f(\vb{p})$能将$f_A(\vb{p}),f_B(\vb{p})$所代表的隐式曲面以一定方式连接在一起，作为整个骨架的隐式曲面。\goodbreak
+
+这里先给出最简单的混合方法，即简单的将两个函数相加\nopagebreak
+\begin{BoxFormula}[加法混合]
+    加法混合是指
+    \begin{Equation}
+        f(\vb{p})=f_A(\vb{p})+f_B(\vb{P})
+    \end{Equation}
+\end{BoxFormula}
+
+我们知道，对于一个隐函数$f_i(\vb{p})$，可以通过以下方式定义一个相关的隐式曲面。其中$\te{iso}$的含义是等值曲面（Isosurface），由于衰减滤波函数的限制，这里$\te{iso}$的取值范围为$\te{iso}\in(0,1)$。
+\begin{BoxDefinition}[隐式曲面]
+    隐式曲面可由下式定义
+    \begin{Equation}
+        f_i(\vb{p})=\te{iso}
+    \end{Equation}
+\end{BoxDefinition}
+
+我们在\xref{tab:两个逐渐靠近的点构成的曲面}中展示了两个逐渐靠近的点产生的曲面，取$r=1$，采用Soft Objects衰减滤波函数，令$\te{iso}=0.2$。观察到随着距离靠近，原本独立的两个球面逐渐相互吸引并融合在一起。
+\begin{Tablex}[两个逐渐靠近的点构成的曲面]{|Y|Y|Y|}
+    $(\pm 1.0,0,0)$&$(\pm 0.8,0,0)$&$(\pm 0.6,0,0)$\\ \hlinelig
+    \xcell<c>[1ex][-3ex]{\includegraphics[scale=0.68]{build/Chapter16A_02a.fig.pdf}}&
+    \xcell<c>[1ex][-3ex]{\includegraphics[scale=0.68]{build/Chapter16A_02b.fig.pdf}}&
+    \xcell<c>[1ex][-3ex]{\includegraphics[scale=0.68]{build/Chapter16A_02c.fig.pdf}}\\
+    \hlinemid
+    $(\pm 0.4,0,0)$&$(\pm 0.2,0,0)$&$(\pm 0.0,0,0)$\\ \hlinelig
+    \xcell<c>[1ex][-3ex]{\includegraphics[scale=0.68]{build/Chapter16A_02d.fig.pdf}}&
+    \xcell<c>[1ex][-3ex]{\includegraphics[scale=0.68]{build/Chapter16A_02e.fig.pdf}}&
+    \xcell<c>[1ex][-3ex]{\includegraphics[scale=0.68]{build/Chapter16A_02f.fig.pdf}}\\
+\end{Tablex}

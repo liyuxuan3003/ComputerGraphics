@@ -1,0 +1,64 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}
+
+\xSetX
+
+\xValDefine{xvDis}[0.5]
+\xValDefine{xvDiss}[0.3]
+
+\xValDefine{xL}[-5]
+\xValDefine{xR}[+5]
+\xValMiddle{xC}{xL}{xR}
+\xValOffset{xGPCL}{xL}[+\xvDis]
+\xValOffset{xGPCR}{xR}[-\xvDis]
+\xValDefine{xvGPC}[\fpeval{(\xGPCR-\xGPCL-\xvDis)/2}]
+\xValDefine{xvRAS}[\fpeval{\xvGPC-2*\xvDiss}]
+\xValDefine{xvSM}[\fpeval{(\xvGPC-5*\xvDiss)/4}]
+
+\xSetY
+
+\xValDefine{yvDis}[0.5]
+\xValDefine{yvDiss}[0.3]
+\xValDefine{yvRAS}[0.60]
+\xValDefine{yvCache}[1.0]
+
+\xValDefine{yB}[-11.5]
+\xValDefine{yA}[+11.5]
+\xValOffset{yCacheB}{yB}[\yvDis]
+\xValOffset{yCacheA}{yCacheB}[\yvCache]
+
+\xValOffset{yGPCA}{yA}[\fpeval{-2*\yvDis}]
+\xValOffset{yGPCB}{yCacheA}[\fpeval{\yvDis}]
+
+\xValDefine{yvGPC}[\fpeval{(\yGPCA-\yGPCB-\yvDis)/2}]
+\xValDefine{yvSM}[\fpeval{\yvGPC-\yvRAS-4*\yvDiss}]
+
+\draw[thick] (xL|-yB) rectangle (xR|-yA);
+\path (xC|-yA) node[below=0.15cm] {\Large GPU};
+
+\draw (xGPCL|-yCacheB) rectangle node {L2 Cache} (xGPCR|-yCacheA);
+
+\foreach \i in {0,1}
+{
+    \foreach \j in {0,1}
+    {
+        \path (\fpeval{\xGPCL+\i*(\xvGPC+\xvDis)},\fpeval{\yGPCA-\j*(\yvGPC+\yvDis)}) coordinate (GPC\i\j);
+
+        \draw (GPC\i\j) rectangle ++(\xvGPC,-\yvGPC);
+        \draw (GPC\i\j) ++ (\fpeval{0.5*\xvGPC},0) node[below] {GPC};
+
+        \draw ($(GPC\i\j)+(\xvDiss,-\yvGPC+\yvDiss)$) rectangle node {Raster Engine} ++ (\xvRAS,\yvRAS);
+
+        \foreach \k in {0,1,2,3}
+        {
+            \draw ($(GPC\i\j)+(\xvDiss,-2*\yvDiss)$) ++ (\fpeval{\k*(\xvSM+\xvDiss)},0) rectangle node {SM} ++ (\xvSM,-\yvSM);
+        }
+    }
+}
+
+\xValBorder{xL}{xR}{yB}{yA}*
+
+\end{tikzpicture}
+\end{document}

@@ -99,7 +99,7 @@
 
 %设定part格式
 \titleformat{\part}[display]
-{\raggedright\bfseries\fontsize{40}{60}}
+{\raggedright\bfseries\fontsize{38}{55}}
 {\Huge 第\chinese{part}部分\mdseries\hfill\dag\arabic{part}}
 {0em}{\vspace{1ex}\titlerule\vspace{2ex}}
 \let\partold=\part

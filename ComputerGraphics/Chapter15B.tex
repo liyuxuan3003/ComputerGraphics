@@ -29,7 +29,7 @@
     \vb{f}(u)=\vb{u}\vb{a}
 \end{Equation}
 整理如下
-\begin{BoxFormula}[曲线的标准形式]
+\begin{BoxDefinition}[曲线的标准形式]
     曲线的标准形式为
     \begin{Equation}
         \vb{f}(u)=\vb{u}\vb{a}
@@ -38,29 +38,29 @@
     \begin{Equation}
         \vb{f}(u)=\Sum[k=0][n-1]u^k\vb{a}_k
     \end{Equation}
-\end{BoxFormula}
+\end{BoxDefinition}
 
 引入向量$\vb{p}$，它包含了所有的控制点
 \begin{Equation}
     \vb{p}=(\vb{p}_0,\vb{p}_1,\vb{p}_2,\cdots,\vb{p}_{n-1})
 \end{Equation}
-由于控制点$\vb{p}_0,\vb{p}_1,\cdots,\vb{p}_{n-1}$均定义为$\vb{f}(u)$及其导数在某一位置的值，而$d$次曲线$\vb{f}(u)$可以先用\xref{fml:曲线的标准形式}的标准形式写出来，因此，根据控制点的定义，可以写出$\vb{p}$和$\vb{a}$间的关系式
+由于控制点$\vb{p}_0,\vb{p}_1,\cdots,\vb{p}_{n-1}$均定义为$\vb{f}(u)$及其导数在某一位置的值，而$d$次曲线$\vb{f}(u)$可以先用\xref{def:曲线的标准形式}的标准形式写出来，因此，根据控制点的定义，可以写出$\vb{p}$和$\vb{a}$间的关系式
 \begin{Equation}
     \vb{p}=\vb{C}\vb{a}
 \end{Equation}
 这里矩阵$\vb{C}$称为约束矩阵（Constraint Matrix），它是控制点的约束方式的数学表达。
-\begin{BoxFormula}[约束矩阵]
+\begin{BoxDefinition}[约束矩阵]
     约束矩阵$\vb{C}$描述了$\vb{p}$相对于$\vb{a}$的关系
     \begin{Equation}
         \vb{C}:\ \vb{p}=\vb{C}\vb{a}
     \end{Equation}
-\end{BoxFormula}
+\end{BoxDefinition}
 假如需要反过来将$\vb{a}$用$\vb{p}$表示，则需要对$\vb{C}$求逆
 \begin{Equation}
     \vb{a}=\vb{C}^{-1}\vb{p}=\vb{B}\vb{p}
 \end{Equation}
 这里矩阵$\vb{B}$称为偏置矩阵（Basis Matrix），它是约束矩阵的逆矩阵。
-\begin{BoxFormula}[偏置矩阵]
+\begin{BoxDefinition}[偏置矩阵]
     偏置矩阵$\vb{B}$描述了$\vb{a}$相对于$\vb{p}$的关系，偏置矩阵$\vb{B}$是约束矩阵$\vb{C}$的逆矩阵
     \begin{Equation}
         \vb{B}:\ \vb{a}=\vb{B}\vb{p}\qquad \vb{B}=\vb{C}^{-1}
@@ -69,8 +69,8 @@
     % \begin{Equation}
     %     \vb{B}=\vb{C}^{-1}
     % \end{Equation}
-\end{BoxFormula}
-在\xref{fml:曲线的标准形式}的标准形式$\vb{f}=\vb{u}\vb{a}$中代入\xref{fml:偏置矩阵}给出的$\vb{a}=\vb{B}\vb{p}$，即可得到
+\end{BoxDefinition}
+在\xref{def:曲线的标准形式}的标准形式$\vb{f}=\vb{u}\vb{a}$中代入\xref{def:偏置矩阵}给出的$\vb{a}=\vb{B}\vb{p}$，即可得到
 \begin{Equation}[]
     \vb{f}(u)=\vb{u}\vb{B}\vb{p}
 \end{Equation}
@@ -82,12 +82,12 @@
 \end{Equation}
 这就告诉我们，曲线上每一个点都可以视为曲线控制点的线性组合。当然，在不同的$u$处，控制点线性组合的比例是不同的，上式引入的$\vb{b}(u)$称为混合函数（Blending Function），其分量$b_k(u)$即代表控制点$\vb{p}_k$在曲线取值为$u$处的权重。混合函数很容易写出，例如$b_k(u)$就是关于$1,u,u^2,\cdots,u^{n-1}$的多项式，而各项前的系数则由偏置矩阵$\vb{B}$的第$k$列逐行给出。
 
-\begin{BoxFormula}[混合函数]
+\begin{BoxDefinition}[混合函数]
     混合函数$\vb{b}(u)$定义为
     \begin{Equation}
         \vb{b}(u)=\vb{u}\vb{B}
     \end{Equation}
-\end{BoxFormula}
+\end{BoxDefinition}
 
 \begin{BoxFormula}[曲线和控制点]
     曲线可以由其控制点表示为
