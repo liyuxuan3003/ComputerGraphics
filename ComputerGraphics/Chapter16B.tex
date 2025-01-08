@@ -2,6 +2,7 @@
 
 当然，除了最简单的加法混合，还有更复杂的混合方式，本节我们将讨论更多混合。
 
+\subsection{最大值与最小值混合}
 \begin{BoxFormula}[最大值混合]
     最大值混合是指
     \begin{Equation}
@@ -34,13 +35,15 @@
 
 最大值混合和最小值混合的特点是，其构成的曲面具有不光滑的过渡，我们可以很轻易的看到两个部分的分界线。不过有些情况下这是有用的。例如，构造实体几何（Constructive Solid Geometry, CSG）的核心思想是，应用简单几何体，通过布尔运算，形成复杂几何体。隐式建模不仅可以通过$f_i(\vb{p})=\te{iso}$构成曲面，也可以通过$f_i(\vb{p})\geq\te{iso}$构成几何实体，适用于CSG。
 
+\subsection{Ricchi混合}
+Ricchi混合也称为超椭圆混合（Super Elliptic Blend），它有一些好的性质。
 \begin{BoxFormula}[Ricci混合]
     Ricci混合的定义是
     \begin{Equation}
         f(\vb{p})=\qty(f_A^n(\vb{p})+f_B^n(\vb{p}))^{1/n}
     \end{Equation}
 \end{BoxFormula}
-Ricchi混合也称为超椭圆混合（Super Elliptic Blend），它有一些好的性质。
+
 
 当$n=1$时，Ricchi混合会退化为加法混合
 \begin{Equation}
@@ -59,12 +62,13 @@ Ricchi混合也称为超椭圆混合（Super Elliptic Blend），它有一些好
     \end{FigureSub}\\ \vspace{0.25cm}
     \begin{FigureSub}[$n=2$;Ricci n=2]
         \includegraphics[scale=0.8]{build/Chapter16A_03b.fig.pdf}
-    \end{FigureSub}
+    \end{FigureSub}\hspace{1cm}
     \begin{FigureSub}[$n=4$;Ricci n=4]
         \includegraphics[scale=0.8]{build/Chapter16A_03c.fig.pdf}
     \end{FigureSub}
 \end{Figure}
 
+\subsection{Pasko混合}
 Pasko混合中$\alpha\in[-1,1]$给出从交集至并集的过渡（存疑），而$m$决定了曲面是$C^m$连续的。
 \begin{BoxFormula}[Pasko混合]
     Pasko混合的定义是

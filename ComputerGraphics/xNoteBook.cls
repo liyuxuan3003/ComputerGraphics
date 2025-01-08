@@ -95,7 +95,7 @@
 \setcounter{secnumdepth}{5}
 
 %设定目录读取至subsubsection
-\setcounter{tocdepth}{3}
+\setcounter{tocdepth}{2}
 
 %设定part格式
 \titleformat{\part}[display]
