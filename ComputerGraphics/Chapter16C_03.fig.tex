@@ -1,0 +1,82 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.2]
+
+\draw[ultra thin] (-2.3,-0.7) rectangle (3.4,4.6);
+
+\begin{scope}[3d view]
+
+\def\len{3}
+
+\path (0,0,0) coordinate (P0);
+\path (\len,0,0) coordinate (P1);
+\path (0,\len,0) coordinate (P2);
+\path (\len,\len,0) coordinate (P3);
+
+\path (0,0,\len) coordinate (P4);
+\path (\len,0,\len) coordinate (P5);
+\path (0,\len,\len) coordinate (P6);
+\path (\len,\len,\len) coordinate (P7);
+
+% \draw[red,-latex] (P0) -- ++(1,0,0);
+% \draw[green,-latex] (P0) -- ++(0,1,0);
+% \draw[blue,-latex] (P0) -- ++(0,0,1);
+
+
+\draw[thick] (P2) -- (P0) -- (P1);
+\draw[dashed] (P1) -- (P3) -- (P2);
+\draw[dashed] (P7) -- (P3);
+\draw[thick] (P6) -- (P2);
+
+\draw[fill=red,fill opacity=0.1] 
+    ($(P4)!0.67!(P0)$) --
+    ($(P4)!0.50!(P6)$) -- 
+    ($(P5)!0.67!(P7)$);
+
+% \draw[fill=red,fill opacity=0.1] 
+%     ($(P4)!0.67!(P0)$) --
+%     ($(P5)!0.88!(P1)$) -- 
+%     ($(P5)!0.67!(P7)$);
+
+\draw[fill=blue,fill opacity=0.1] 
+    ($(P4)!0.67!(P0)$) --
+    ($(P5)!0.33!(P1)$) -- 
+    ($(P5)!0.67!(P7)$);
+
+\draw[dotted] ($(P5)!0.67!(P7)$) -- node[pos=0.7,above left] {?} ($(P4)!0.67!(P0)$);
+
+\draw[thick] (P5) -- (P7) -- (P6); 
+\draw[thick] (P5) -- (P1);
+\draw[thick] (P6) -- (P4) -- (P5); 
+\draw[thick] (P4) -- (P0);
+
+\foreach \x in {0,1,...,7}
+{
+    \path (P\x) node[ocirc] {};
+}
+
+\foreach \x/\s in {0/-0.1,1/-0.4,2/-0.1,3/-0.1}
+{
+    \path (P\x) node[below] {$V_\x$} node[above right] {\scalebox{0.5}{$\s$}};
+}
+
+\foreach \x/\s in {4/+0.2,5/+0.2}
+{
+    \path (P\x) node[above] {$V_\x$} node[below right] {\scalebox{0.5}{$\s$}};
+}
+
+\foreach \x/\s in {6/-0.2}
+{
+    \path (P\x) node[above] {$V_\x$} node[left] {\scalebox{0.5}{$\s$}};
+}
+
+\foreach \x/\s in {7/-0.1}
+{
+    \path (P\x) node[above] {$V_\x$} node[right] {\scalebox{0.5}{$\s$}};
+}
+
+\end{scope}
+
+\end{tikzpicture}
+\end{document}
