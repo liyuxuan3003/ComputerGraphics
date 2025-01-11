@@ -67,7 +67,7 @@ xfC=(1/2)Piecewise[{{-3(1-Abs[x])^3+4(1-Abs[x])^2+(1-Abs[x]),0<=Abs[x]<1},{(2-Ab
 xfM=(1/3)xfB+(2/3)xfC;
 
 
-Table[NumberForm[N[xfGauss[1]],{5,4}],{x,-3,3}]
+ToString@Table[NumberForm[N[xfGauss[1]],{5,4}],{x,-3,3}]
 
 
 xf2=Function[{fliter},(fliter/.{x->x})(fliter/.{x->y})];
@@ -76,7 +76,7 @@ xf2=Function[{fliter},(fliter/.{x->x})(fliter/.{x->y})];
 xf2Gauss=xf2[xfGauss[1]];
 
 
-Table[Table[NumberForm[N[xf2Gauss],{5,4}],{x,-3,3}],{y,-3,3}]
+ToString@Table[Table[NumberForm[N[xf2Gauss],{5,4}],{x,-3,3}],{y,-3,3}]
 
 
 xUnit=Image[ImageData[#]/Sum[y,{y,Sum[x,{x,ImageData[#]}]}]]&;

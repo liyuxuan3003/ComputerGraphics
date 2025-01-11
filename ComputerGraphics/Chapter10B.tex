@@ -153,7 +153,8 @@ Box卷积核产生矩形波，矩形波的电平高度有相邻两个采样点�
         b_2[i,j]=b_1[i]b_1[j]
     \end{Equation}
 \end{BoxFormula}
-请注意，由于$b_1[0]$未必等于$1$，在大部分情况下$b_2[i,0]\neq b_1[i]$及$b_2[0,j]\neq b_1[j]$，即通过上述方式构造出的二维卷积核，沿着$x$轴或$y$轴得到的，并不一定是构造其的一维卷积核！
+在\xref{fig:二维卷积核}中，我们展示了\xref{subsec:卷积核列表}中提到的所有卷积核对应的二维卷积核的图像。
+% 请注意，由于$b_1[0]$未必等于$1$，在大部分情况下$b_2[i,0]\neq b_1[i]$及$b_2[0,j]\neq b_1[j]$，即通过上述方式构造出的二维卷积核，沿着$x$轴或$y$轴得到的，并不一定是构造其的一维卷积核！
 
 \begin{Figure}[二维卷积核]
     \begin{FigureSub}[Box]
@@ -161,13 +162,13 @@ Box卷积核产生矩形波，矩形波的电平高度有相邻两个采样点�
     \end{FigureSub}\hspace{0.5cm}
     \begin{FigureSub}[Tent]
         \includegraphics[scale=0.8]{build/Chapter10B_03b.fig.pdf}\hspace*{0.5cm}
-    \end{FigureSub}\\
+    \end{FigureSub}\\ \vspace{0.1cm}
     \begin{FigureSub}[Gaussian]
         \includegraphics[scale=0.8]{build/Chapter10B_03c.fig.pdf}\hspace*{0.5cm}
     \end{FigureSub}\hspace{0.5cm}
     \begin{FigureSub}[B-Spline Cubic]
         \includegraphics[scale=0.8]{build/Chapter10B_03f.fig.pdf}\hspace*{0.5cm}
-    \end{FigureSub}\\
+    \end{FigureSub}\\ \vspace{0.1cm}
     \begin{FigureSub}[Mitchell-Netravali Cubic]
         \includegraphics[scale=0.8]{build/Chapter10B_03e.fig.pdf}\hspace*{0.5cm}
     \end{FigureSub}\hspace{0.5cm}
@@ -175,7 +176,51 @@ Box卷积核产生矩形波，矩形波的电平高度有相邻两个采样点�
         \includegraphics[scale=0.8]{build/Chapter10B_03d.fig.pdf}\hspace*{0.5cm}
     \end{FigureSub}
 \end{Figure}
-在\xref{fig:二维卷积核}中，我们展示了\xref{subsec:卷积核列表}中提到的所有卷积核对应的二维卷积核的图像。
+在\xref{fig:离散Gaussian卷积核}中，我们展示了离散化的$\sigma=1,r=3$的一维和二维的Gaussian卷积核。
 
+\begin{Figure}[离散Gaussian卷积核]
+    \begin{FigureSub}[一维离散Gaussian卷积核]
+        \hspace*{2cm}
+        \includegraphics[scale=0.8]{build/Chapter10B_05.fig.pdf}
+        \hspace*{2cm}
+    \end{FigureSub}\hspace{1cm}
+    \begin{FigureSub}[二维离散Gaussian卷积核]
+        \includegraphics[scale=0.8]{build/Chapter10B_06.fig.pdf}
+    \end{FigureSub}
+\end{Figure}
 
-% 通过以下公式可以缩放一个卷积核。
+通过这样的方式生成的二维卷积核称为“可分离的”。可分离的二维卷积核对于二维卷积计算而言，如\xref{fig:可分离的二维卷积核的优化计算}所示，若采用一定的优化算法，可以将计算复杂度从正比于$(2r+1)^2$降低至正比于$2(2r+1)$，即从$O(r^2)$降低到$O(r)$！这一提升对于半径较大的核而言是非常可观的。
+\begin{Figure}[可分离的二维卷积核的优化计算]
+    \begin{FigureSub}[普通计算方法]
+        \includegraphics[scale=0.8]{build/Chapter10B_07.fig.pdf}
+    \end{FigureSub}\\ \vspace{0.5cm}
+    \begin{FigureSub}[优化计算方法（第一步）]
+        \includegraphics[scale=0.8]{build/Chapter10B_08.fig.pdf}
+    \end{FigureSub}\hspace{1cm}
+    \begin{FigureSub}[优化计算方法（第二步）]
+        \includegraphics[scale=0.8]{build/Chapter10B_09.fig.pdf}
+    \end{FigureSub}
+\end{Figure}
+
+普通的二维卷积计算方法如下
+\begin{Equation}
+    c_2[i,j]=(a_2*b_2)[i,j]=\Sum[i'=i-r][i+r]\Sum[j'=j-r][j+r]a_2[i',j']b_2[i-i',j-j']
+\end{Equation}
+若$b_2$是可分离的，根据\xref{fml:可分离的二维卷积核}
+\begin{Equation}
+    c_2[i,j]=(a_2*b_2)[i,j]=\Sum[i'=i-r][i+r]\Sum[j'=j-r][j+r]a_2[i',j']b_1[i-i']b_1[j-j']
+\end{Equation}
+这里$b_1[i-i']$与$j'$无关，可以提出内层求和中
+\begin{Equation}
+    c_2[i,j]=(a_2*b_2)[i,j]=\Sum[i'=i-r][i+r]b_1[i-i']\Sum[j'=j-r][j+r]a_2[i',j']b_1[j-j']
+\end{Equation}
+
+不妨构造如下$s_2[i,j]$
+\begin{Equation}
+    s_2[i,j]=\Sum[j'=j-r][j+r]a_2[i,j']b_1[j-j']
+\end{Equation}
+此时$c_2[i,j]$就可以表示为
+\begin{Equation}
+    c_2[i,j]=\Sum[i'=i-r][i+r]s_2[i',j]b_1[i-i']
+\end{Equation}
+即当二维卷积核可分离时，可用两次$(2r+1)$的一维卷积替代一次$(2r+1)^2$的二维卷积！
