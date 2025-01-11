@@ -1,0 +1,18 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}
+
+\newcounter{i}{0}
+\def\len{0.7}
+
+\foreach \x in {0.0044,0.0540,0.2420,0.3989,0.2420,0.0540,0.0044}
+{
+    \path (0,\thei*\len) node[draw,fill=blue!\fpeval{1.5*sqrt(\x)*100}!white,minimum width=\len cm,minimum height=\len cm,inner sep=0cm] (P\thei) {\scalebox{0.5}{$\x$}};
+    \stepcounter{i}
+}
+
+\draw[ultra thin] ($(P0.south west)+(-0.2,-0.2)$) rectangle ($(P6.north east)+(0.2,0.2)$);
+
+\end{tikzpicture}
+\end{document}

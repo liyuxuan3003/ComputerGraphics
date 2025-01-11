@@ -1,0 +1,36 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}
+
+\def\len{0.3}
+\foreach \i in {0,1,...,20}
+{
+    \foreach \j in {0,1,...,20}
+    {
+        \path (\i*\len,\j*\len) node[draw=gray,ultra thin,fill=black!3!white,minimum width=\len cm,minimum height=\len cm,inner sep=0cm] (P\i x\j) {};
+    }
+}
+
+\foreach \i/\xi in {2/0.0044,3/0.0540,4/0.2420,5/0.3989,6/0.2420,7/0.0540,8/0.0044}
+{
+    \foreach \j/\xj in {3/0.0044,4/0.0540,5/0.2420,6/0.3989,7/0.2420,8/0.0540,9/0.0044}
+    {
+        \path (\i*\len,\j*\len) node[draw,fill=blue!\fpeval{1.5*sqrt(\xi*\xj)*100}!white,minimum width=\len cm,minimum height=\len cm,inner sep=0cm] (B\i x\j) {};
+    }
+}
+
+\path (P5x9.north) node[above=0.1cm,draw,fill=white,minimum width=1.6cm,minimum height=0.4cm] {\scalebox{1}{$b_2[i,j]$}};
+
+\path (P20x0.south east) node[above left=0.1cm,draw,fill=white,minimum width=1.6cm,minimum height=0.4cm] {\scalebox{1}{$a_2[i,j]$}};
+
+\path (P10x20.north) node[below=0.1cm,draw,fill=white,align=center] {$c_2[i,j]=(a_2*b_2)[i,j]$\\[2mm] $=\mal{{\Sum[i'=i-r][i+r]\Sum[j'=j-r][j+r]}a_2[i',j']b_2[i-i',j-j']}$};
+
+\draw[ultra thin,latex-latex] (P2x2.west) -- node[below] {$2r+1$} (P8x2.east);
+
+\draw[ultra thin,latex-latex] (P9x3.south) -- node[right=0.1cm] {$2r+1$} (P9x9.north);
+
+\draw[ultra thin] ($(P0x0.south west)+(-0.1,-0.1)$) rectangle ($(P20x20.north east)+(0.1,0.1)$);
+
+\end{tikzpicture}
+\end{document}

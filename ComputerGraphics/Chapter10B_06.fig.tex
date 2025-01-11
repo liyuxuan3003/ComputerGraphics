@@ -1,0 +1,27 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}
+
+\newcounter{i}{0}
+\newcounter{j}{0}
+\def\len{0.7}
+
+\foreach \x in {%
+    0.0000, 0.0002, 0.0011, 0.0018, 0.0011, 0.0002, 0.0000,%
+    0.0002, 0.0029, 0.0131, 0.0215, 0.0131, 0.0029, 0.0002,%
+    0.0011, 0.0131, 0.0585, 0.0965, 0.0585, 0.0131, 0.0011,%
+    0.0018, 0.0215, 0.0965, 0.1592, 0.0965, 0.0215, 0.0018,%
+    0.0011, 0.0131, 0.0585, 0.0965, 0.0585, 0.0131, 0.0011,% 
+    0.0002, 0.0029, 0.0131, 0.0215, 0.0131, 0.0029, 0.0002,%
+    0.0000, 0.0002, 0.0011, 0.0018, 0.0011, 0.0002, 0.0000}
+{
+    \path (\thei*\len,\thej*\len) node[draw,fill=blue!\fpeval{1.5*sqrt(\x)*100}!white,minimum width=\len cm,minimum height=\len cm,inner sep=0cm] (P\thei\thej) {\scalebox{0.5}{$\x$}};
+    \stepcounter{i}
+    \ifthenelse{\equal{\thei}{7}}{\setcounter{i}{0}\stepcounter{j}}{}
+}
+
+\draw[ultra thin] ($(P00.south west)+(-0.2,-0.2)$) rectangle ($(P66.north east)+(0.2,0.2)$);
+
+\end{tikzpicture}
+\end{document}

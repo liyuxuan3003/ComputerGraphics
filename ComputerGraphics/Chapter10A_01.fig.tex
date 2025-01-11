@@ -1,0 +1,65 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.0]
+
+\def\len{1.0}
+
+\foreach \x in {-2,-1,11,12}
+{
+    \draw (\x*\len,0) node[draw,thick,gray,anchor=center,minimum width=\len cm,minimum height=\len cm] (A\x) {};
+}
+\foreach \x in {0,1,...,10}
+{
+    \draw (\x*\len,0) node[draw,thick,anchor=center,minimum width=\len cm,minimum height=\len cm,inner sep=0cm] (A\x) {\scalebox{1.0}{$a[\x]$}};
+
+    \draw (\x*\len,-8) node[draw,thick,anchor=center,minimum width=\len cm,minimum height=\len cm,inner sep=0cm] (C\x) {\scalebox{1.0}{$c[\x]$}};
+}
+
+\foreach \x in {-2,-1,0,1,2}
+{
+    \draw (\x*\len,-4) node[draw,thick,anchor=center,minimum width=\len cm,minimum height=\len cm,inner sep=0cm] (B\x) {\scalebox{1.0}{$b[\fpeval{\x}]$}};
+}
+
+\foreach \x in {5,6,7,8,9}
+{
+    \draw (\x*\len,-4) node[draw,thick,anchor=center,minimum width=\len cm,minimum height=\len cm,inner sep=0cm] (B\x) {\scalebox{1.0}{$b[\fpeval{\x-7}]$}};
+}
+
+\foreach \x in {0,7}
+{
+    \draw (\x*\len,-6) node[draw,circle,thick,anchor=center,minimum width=\len cm,minimum height=\len cm,inner sep=0cm] (S\x) {\scalebox{1.0}{$\sum$}};
+}
+
+\foreach \xa/\xb in {-2/2,-1/1,0/0,1/-1,2/-2}
+{
+    \draw[red,-latex] (A\xa.south) -- (B\xb.north);
+    \draw[red,-latex] (B\xb.south) -- (S0);
+    \draw[red,-latex] (S0) -- (C0.north);
+}
+
+\foreach \xa/\xb in {5/9,6/8,7/7,8/6,9/5}
+{
+    \draw[blue,-latex] (A\xa.south) -- (B\xb.north);
+    \draw[blue,-latex] (B\xb.south) -- (S7);
+    \draw[blue,-latex] (S7) -- (C7.north);
+}
+
+\draw[thick,-latex] ($(B2.east)+(0.1,0)$) -- ($(B5.west)+(-0.1,0)$);
+
+\path ($(A0.south)!0.75!(B0.north)$) coordinate (yM1) ++(0,0.2) coordinate (yM1x);
+\path ($(A0.south)!0.75!(B0.north)$) coordinate (yM2) ++(0,0.2) coordinate (yM2x);
+
+\draw[ultra thin] (B-2.north west) -- (B-2.north west|-yM1x);
+\draw[ultra thin] (B2.north east) -- (B2.north east|-yM1x);
+\draw[ultra thin,latex-latex] (B-2.north west|-yM1) -- node[above,pos=0.8] {$2r+1$} (B2.north east|-yM1);
+
+\draw[ultra thin] (B8.north west) -- (B8.north west|-yM2x);
+\draw[ultra thin] (B9.north east) -- (B9.north east|-yM2x);
+\draw[ultra thin,latex-latex] (B8.north west|-yM2) -- node[above,pos=0.8] {$r$} (B9.north east|-yM2);
+
+\draw[ultra thin] ($(A-2.west|-C0.south)+(-0.2,-0.2)$) rectangle ($(A12.north east)+(0.2,0.2)$);
+
+
+\end{tikzpicture}
+\end{document}
