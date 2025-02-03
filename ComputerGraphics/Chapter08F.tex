@@ -5,7 +5,29 @@
     \item 设想$A,B,C$三个三角面，$A$部分遮挡$B$，$B$部分遮挡$C$，$C$部分遮挡$A$。
 \end{itemize}
 
+\begin{Figure}[三角面的相互遮挡]
+    \begin{FigureSub}[两个三角面相互穿过]
+        \includegraphics[width=6.5cm]{image/RasterizationIOW/TrianglesA.png}
+    \end{FigureSub}
+    \hspace{0.5cm}
+    \begin{FigureSub}[三个三角面循环遮挡]
+        \includegraphics[width=6.5cm]{image/RasterizationIOW/TrianglesB.png}
+    \end{FigureSub}
+\end{Figure}
+
 通过$z$-buffer可以更简单的解决该问题，它为每个像素在RGB颜色外增加了一个$z$分量，它代表该像素目前为止来自多近的物体。当光栅化一个三角面时，我们可以通过和RGB颜色一样的方法，通过三角面顶点处的$z$值插值出每个像素出的$z$值。随后，我们会就该三角面每个像素的$z$值与$z$-buffer中存储的值进行比较。若当前的$z$值更大，则说明之前已经有比当前三角面更近的三角面绘制了该像素，换言之，当前三角面在该像素位置是被遮挡的，应当跳过这一像素的绘制。若当前的$z$值更小，应当覆盖绘制这一像素并更新$z$-buffer中的存储值。
+
+\xref{fig:$z$-buffer的效果}展示了$z$-buffer的实际效果，将其用一张灰度图可视化，越亮代表与相机距离越近。
+
+\begin{Figure}[$z$-buffer的效果]
+    \begin{FigureSub}[渲染图像]
+        \includegraphics[width=6.5cm]{image/RasterizationIOW/SphereRing.png}
+    \end{FigureSub}\\
+    \vspace{0.5cm}
+    \begin{FigureSub}[渲染图像的$z$-buffer]
+        \includegraphics[width=6.5cm]{image/RasterizationIOW/SphereRingZbuff.png}
+    \end{FigureSub}
+\end{Figure}
 
 这里有一个问题，由于$z$是和RGB颜色一并处理的，我们通常会用整数而不是浮点数来存储$z$值。这可能造成精度问题，我们需要判断什么情况下该问题不会影响前后关系的判断。
 
@@ -21,7 +43,6 @@
 \begin{Equation}&[3]
     \delt{z}'=\frac{z_f-z_n}{2^b}
 \end{Equation}
-
 
 结合\xrefpeq{2}和\xrefpeq{3}可以得到
 \begin{Equation}

@@ -1,7 +1,6 @@
 \section{抗锯齿}
 抗锯齿（Antialiasing）是一种优化光栅化图形边沿的方法。\xref{fig:抗锯齿的效果对比}展示了对三角形抗锯齿的效果。抗锯齿的核心思想就是，每个像素并不一定是“非黑即白”，对于那些位于三角形边沿的像素，我们可以视其被三角形覆盖情况，赋予不同深度的黑色，从而改善边沿效果。如果距离远一些，我们可以明显的看出经过抗锯齿的\xref{fig:抗锯齿后}相较\xref{fig:抗锯齿前}的边沿更为连贯和自然。
 
-
 \begin{Figure}[抗锯齿的效果对比]
     \begin{FigureSub}[抗锯齿前]
         \includegraphics[scale=0.8]{build/Chapter08E_03.fig.pdf}
@@ -13,8 +12,23 @@
 
 抗锯齿是通过超采样的方式实现的，如\xref{fig:抗锯齿与超采样}所示，对于这里$10\times 10$的图像，我们要先在$20\times 20$的图像上绘制，换言之，我们为每个像素设置了$4$个子像素，即$4$倍超采样。随后，通过计算每个像素的子像素有$1,2,3,4$个被三角形覆盖，为该像素绘制$25\%,50\%,75\%,100\%$的黑色。
 
+而更为一般的说，对于$n^2$倍超采样，我们实际要先正常渲染一张比期望得到的图像长宽各扩大$n$倍的超采图像，随后，期望图像中每个像素由超采图像中对应$n^2$个子像素的平均给出。
+
 \begin{Figure}[抗锯齿与超采样]
     \includegraphics[scale=0.8]{build/Chapter08E_01.fig.pdf}
 \end{Figure}
+
+\xref{fig:抗锯齿的实际效果}展示了抗锯齿的实际效果，可以看出抗锯齿对整体观感提升是极为显著的。
+
+\begin{Figure}[抗锯齿的实际效果]
+    \begin{FigureSub}[无抗锯齿]
+        \includegraphics[width=6.5cm]{build/SphereRing1x.fig.pdf}
+    \end{FigureSub}
+    \hspace{0.5cm}
+    \begin{FigureSub}[有抗锯齿]
+        \includegraphics[width=6.5cm]{build/SphereRing2x.fig.pdf}
+    \end{FigureSub}
+\end{Figure}
+
 
 抗锯齿中使用的超采样会极大的增加开销。由于通常边沿是来自三维物体的边沿而非三维物体在着色时的颜色突变，因此，我们可以在判断可见性时使用比着色时更高的超采样频率。
