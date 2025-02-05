@@ -1,0 +1,31 @@
+\documentclass{xStandalone}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.25]
+    
+\path (0,0) coordinate (Light);
+
+\path (Light) ++ (-120:2*2/1.732) coordinate (A2);
+
+\path (Light) ++ (-30:2) coordinate (B1) ++ (-30:2) coordinate (A1);
+
+\draw[thick,fill=black!20!white] ($(A2)+(-1.5,0)$) rectangle ($(A1)+(1.5,-1.0)$);
+
+\draw[thick,fill=black!20!white] ($(B1)+(-1,0)$) rectangle ($(B1)+(1,-0.5)$);
+
+\path (Light) node[circ] {} node[above] {Light};
+
+\path (A2) node[ocirc] (A2c) {} node[above left] {$d=2.00$};
+\path (A1) node[ocirc] (A1c) {} node[above right,gray] {$d=3.46$};
+\path (B1) node[ocirc] (B1c) {} node[above right] {$d=1.73$};
+
+\draw[-latex,thick] (Light) -- node[pos=0.3,left,red] {$d_{map}=2.00$} (A2c);
+\draw[-latex,thick] (Light)  -- node[pos=0.2,right=0.2cm,red] {$d_{map}=1.73$} (B1c);
+\draw[dotted,thick] (B1c) -- (A1c);
+
+\path (B1) node[below=0.6cm] {Shadow};
+
+\draw [ultra thin] ($(A2)+(-1.7,-1.2)$) rectangle ($(Light-|A1)+(1.7,0.5)$);
+
+\end{tikzpicture}
+\end{document}
