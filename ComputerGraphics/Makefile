@@ -51,7 +51,7 @@ ${BUILD_DIR}/%.fig.pdf:%.fig.py
 ${BUILD_DIR}:
 	mkdir -p ${BUILD_DIR}
 
-run:default
+run: default
 	start ${OUTPUT}
 
 output:
