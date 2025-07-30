@@ -3,7 +3,7 @@
 在这一章中，我们将重点研究三次曲线。三次曲线是计算机图形学中最为常用的，它在连续性和曲线的复杂性上提供了一个良好的平衡。除此之外，本章还会在最后介绍插值多项式。
 
 三次曲线的通式及其一阶和二阶导数为
-\begin{Gather}
+\begin{Gather}{3}
     \vb{f}(u)=\vb{a}_0+u\vb{a}_1+u^2\vb{a}_2+u^3\vb{a}_3\\
     \vb{f}'(u)=\vb{a}_1+2u\vb{a}_2+3u^2\vb{a}_3\\
     \vb{f}''(u)=2\vb{a}_2+6u\vb{a}_3
@@ -11,12 +11,12 @@
 这一结论需要在本节有关三次曲线的计算中反复使用。
 
 \subsection{自然三次曲线}
-自然三次曲线（Natural Cubic）的约束方式如\xref{fig:自然三次曲线}所示。
+自然三次曲线（Natural Cubic）的约束方式如\cref{fig:自然三次曲线}所示。
 \begin{Figure}[自然三次曲线]
-    \includegraphics[scale=0.8]{build/Chapter15C_03.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15C_03.fig.pdf}
 \end{Figure}
 自然三次曲线中，控制点$\vb{p}_0,\vb{p}_1,\vb{p}_2,\vb{p}_3$分别代表$\vb{f}(0),\vb{f}'(0),\vb{f}''(0),\vb{f}(1)$
-\begin{Gather}
+\begin{Gather}{3}
     \vb{p}_0=f(0)=\vb{a}_0\\
     \vb{p}_1=f'(0)=\vb{a}_1\\
     \vb{p}_2=f''(0)=2\vb{a}_2\\
@@ -33,8 +33,9 @@
             1&1&1&1\\
         \end{pmatrix}
     \end{Equation}
-\end{BoxFormula}\goodbreak
-偏置矩阵$\vb{B}=\vb{C}^{-1}$为\nopagebreak
+\end{BoxFormula}
+
+偏置矩阵$\vb{B}=\vb{C}^{-1}$为
 \begin{BoxFormula}[自然三次曲线的偏置矩阵]
     自然三次曲线的偏置矩阵为
     \begin{Equation}
@@ -46,10 +47,11 @@
         \end{pmatrix}
     \end{Equation}
 \end{BoxFormula}
+
 混合函数$\vb{b}(u)$为
 \begin{BoxFormula}[自然三次曲线的混合函数]
     自然三次曲线的混合函数为
-    \begin{Gather}
+    \begin{Gather}{3}
         b_0(u)=1-u^3\\
         b_1(u)=u-u^3\\
         b_2(u)=0.5u^2-0.5u^3\\
@@ -57,20 +59,16 @@
     \end{Gather}
 \end{BoxFormula}
 
-\xref{fig:自然三次曲线的混合函数}展示了自然三次曲线的混合函数
+\cref{fig:自然三次曲线的混合函数}展示了自然三次曲线的混合函数
 \begin{Figure}[自然三次曲线的混合函数]
-    \includegraphics[scale=0.8]{build/Chapter15B_01c.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15B_01c.fig.pdf}
 \end{Figure}
-现在我们来研究曲线拼接。如\xref{fig:自然三次曲线构成的分段曲线}所示，我们试着用分段的自然三次曲线连接$5$个点，这需要$p=4$条曲线。具体如何从数学上完成拼接已经在\xref{fml:参数曲线的拼接}中阐述了，现在的问题是，理论上，每一条三次曲线需要$4$个控制点，这是否意味着$p$条三次曲线即需要提供$n=4p$个控制点？答案显然是否定的，因为前后两段曲线会共用相当一部分控制点，使$n$远远低于$4p$。
-
+现在我们来研究曲线拼接。如\cref{fig:自然三次曲线构成的分段曲线}所示，我们试着用分段的自然三次曲线连接$5$个点，这需要$p=4$条曲线。具体如何从数学上完成拼接已经在\cref{fml:参数曲线的拼接}中阐述了，现在的问题是，理论上，每一条三次曲线需要$4$个控制点，这是否意味着$p$条三次曲线即需要提供$n=4p$个控制点？答案显然是否定的，因为前后两段曲线会共用相当一部分控制点，使$n$远远低于$4p$。
 
 \begin{Figure}[自然三次曲线构成的分段曲线]
-    \begin{FigureSub}[设定1;自然设定1]
-        \includegraphics[scale=0.8]{build/Chapter15C_06.fig.pdf}
-    \end{FigureSub}\\ \vspace{0.25cm}
-    \begin{FigureSub}[设定2;自然设定2]
-        \includegraphics[scale=0.8]{build/Chapter15C_07.fig.pdf}
-    \end{FigureSub}
+    \figuresub[设定1;自然设定1]{\includegraphics[scale=0.8]{Chapter15C_06.fig.pdf}}
+
+    \figuresub[设定2;自然设定2]{\includegraphics[scale=0.8]{Chapter15C_07.fig.pdf}}    
 \end{Figure}
 
 自然三次曲线中，每条曲线起点的坐标、一阶导、二阶导与上一条曲线相同，保证$C^2$连续。
@@ -82,15 +80,16 @@
     \item 指定第一个点的二阶导数，这提供$1$个控制点。
     \item 对于$p$条曲线，指定每条曲线的终点的坐标，这提供$p$个控制点。
 \end{itemize}
-自然三次曲线的问题主要在于，虽然其保证了$C^2$连续性，但代价是完全失去了对后续点处导数的控制。换言之，除了第一条曲线，之后每一条曲线起点的一阶导数和二阶导数都是通过连续性条件链式生成的。这就意味着，只要在曲线起点处稍稍改变一些设定，将会对整个曲线链的每一段都产生影响，而且事实是，这种影响是相当混沌的！如\xref{fig:自然三次曲线构成的分段曲线}所示，这里仅仅是将第一段曲线起点处的二阶导数由$(7,-4)$改为$(8,-4)$，整条曲线的形状就发生了极大改变。我们将自然三次曲线的这种特性称为非局域性，即一段曲线控制点的改动会影响后续所有曲线。
+
+自然三次曲线的问题主要在于，虽然其保证了$C^2$连续性，但代价是完全失去了对后续点处导数的控制。换言之，除了第一条曲线，之后每一条曲线起点的一阶导数和二阶导数都是通过连续性条件链式生成的。这就意味着，只要在曲线起点处稍稍改变一些设定，将会对整个曲线链的每一段都产生影响，而且事实是，这种影响是相当混沌的！如\cref{fig:自然三次曲线构成的分段曲线}所示，这里仅仅是将第一段曲线起点处的二阶导数由$(7,-4)$改为$(8,-4)$，整条曲线的形状就发生了极大改变。我们将自然三次曲线的这种特性称为非局域性，即一段曲线控制点的改动会影响后续所有曲线。
 
 \subsection{厄米三次曲线}
-厄米三次曲线（Hermite Cubic）的约束方式如\xref{fig:厄米三次曲线}所示。
+厄米三次曲线（Hermite Cubic）的约束方式如\cref{fig:厄米三次曲线}所示。
 \begin{Figure}[厄米三次曲线]
-    \includegraphics[scale=0.8]{build/Chapter15C_02.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15C_02.fig.pdf}
 \end{Figure}
 厄米三次曲线中，控制点$\vb{p}_0,\vb{p}_1,\vb{p}_2,\vb{p}_3$分别代表$\vb{f}(0),\vb{f}'(0),\vb{f}(1),\vb{f}'(1)$
-\begin{Gather}
+\begin{Gather}{3}
     \vb{p}_0=f(0)=\vb{a}_0\\
     \vb{p}_1=f'(0)=\vb{a}_1\\
     \vb{p}_2=f(1)=\vb{a}_0+\vb{a}_1+\vb{a}_2+\vb{a}_3\\
@@ -123,7 +122,7 @@
 混合函数$\vb{b}(u)$为
 \begin{BoxFormula}[厄米三次曲线的混合函数]
     厄米三次曲线的混合函数为
-    \begin{Gather}
+    \begin{Gather}{3}
         b_0(u)=1-3u^2+2u^3\\
         b_1(u)=u-2u^2+u^3\\
         b_2(u)=3u^2-2u^3\\
@@ -131,9 +130,9 @@
     \end{Gather}
 \end{BoxFormula}
 
-\xref{fig:厄米三次曲线的混合函数}展示了厄米三次曲线的混合函数
+\cref{fig:厄米三次曲线的混合函数}展示了厄米三次曲线的混合函数
 \begin{Figure}[厄米三次曲线的混合函数]
-    \includegraphics[scale=0.8]{build/Chapter15B_01d.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15B_01d.fig.pdf}
 \end{Figure}
 
 厄米三次曲线中，每条曲线起点的坐标、一阶导与上一条曲线相同，保证$C^1$连续。
@@ -145,22 +144,18 @@
     \item 对于$p$条曲线，指定每条曲线的终点的坐标，这提供$p$个控制点。
     \item 对于$p$条曲线，指定每条曲线的终点的一阶导数，这提供$p$个控制点。
 \end{itemize}
-厄米三次曲线相较于自然三次曲线，具有局域性的优点，使曲线更为可控，但从$C^2$连续性下降到了$C^1$连续性。除此之外，厄米三次曲线指定起点和终点的坐标和一阶导，数学上较为对称。厄米三次曲线的局域性特点可以由\xref{fig:厄米三次曲线构成的分段曲线}直观展现，当我们将第一段曲线终点处的一阶导数由$(4,0)$变成$(-4,0)$后，其影响仅限于第一段曲线和第二段曲线，后续曲线完全相同。
+厄米三次曲线相较于自然三次曲线，具有局域性的优点，使曲线更为可控，但从$C^2$连续性下降到了$C^1$连续性。除此之外，厄米三次曲线指定起点和终点的坐标和一阶导，数学上较为对称。厄米三次曲线的局域性特点可以由\cref{fig:厄米三次曲线构成的分段曲线}直观展现，当我们将第一段曲线终点处的一阶导数由$(4,0)$变成$(-4,0)$后，其影响仅限于第一段曲线和第二段曲线，后续曲线完全相同。
 
 \begin{Figure}[厄米三次曲线构成的分段曲线]
-    \begin{FigureSub}[设定1;自然设定1]
-        \includegraphics[scale=0.8]{build/Chapter15C_04.fig.pdf}
-    \end{FigureSub}\\ \vspace{0.25cm}
-    \begin{FigureSub}[设定2;自然设定2]
-        \includegraphics[scale=0.8]{build/Chapter15C_05.fig.pdf}
-    \end{FigureSub}
+    \figuresub[设定1;自然设定1]{\includegraphics[scale=0.8]{Chapter15C_04.fig.pdf}}    \\ \vspace{0.25cm}
+    \figuresub[设定2;自然设定2]{\includegraphics[scale=0.8]{Chapter15C_05.fig.pdf}}    
 \end{Figure}
 
 \subsection{基数三次曲线}
-基数三次曲线（Cardinal Cubic）的约束方式如\xref{fig:基数三次曲线}所示。
+基数三次曲线（Cardinal Cubic）的约束方式如\cref{fig:基数三次曲线}所示。
 
 \begin{Figure}[基数三次曲线]
-    \includegraphics[scale=0.8]{build/Chapter15C_13.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15C_13.fig.pdf}
 \end{Figure}
 
 基数三次曲线类似于厄米三次曲线，仍然是在指定起点和终点的坐标和一阶导数。但不同的是，基数三次曲线中所有控制点都是坐标，一阶导数是通过控制点之间的向量间接表示的。
@@ -173,7 +168,7 @@
 \end{itemize}
 
 这一关系用数学式写出来就是
-\begin{Gather}
+\begin{Gather}{3}
     f(0)=\vb{p}_1\\
     f(1)=\vb{p}_2\\
     f'(0)=(1-\alpha)(\vb{p}_2-\vb{p}_0)/2\\
@@ -189,22 +184,22 @@
     \end{Equation}
 \end{BoxFormula}
 这样一来就简化为
-\begin{Gather}
+\begin{Gather}{3.5}
     f(0)=\vb{p}_1\\
     f(1)=\vb{p}_2\\
     f'(0)=\beta(\vb{p}_2-\vb{p}_0)\\
     f'(1)=\beta(\vb{p}_3-\vb{p}_1)
 \end{Gather}
 从而有
-\begin{Gather}
+\begin{Gather}{3.5}
     \vb{p}_0=f(1)-f'(0)/\beta=\vb{a}_0+\vb{a}_1(1-1/\beta)+\vb{a}_2+\vb{a}_3\\
     \vb{p}_1=f(0)=\vb{a}_0\\
     \vb{p}_2=f(1)=\vb{a}_0+\vb{a}_1+\vb{a}_2+\vb{a}_3\\
     \vb{p}_3=f(0)+f'(1)/\beta=\vb{a}_0+\vb{a}_1(1/\beta)+\vb{a}_2(2/\beta)+\vb{a}_3(3/\beta)
 \end{Gather}
-现在，我们可以回到计算约束矩阵和偏置矩阵的求解路径上来了。\goodbreak
+现在，我们可以回到计算约束矩阵和偏置矩阵的求解路径上来了。
 
-约束矩阵$\vb{C}$为\nopagebreak
+约束矩阵$\vb{C}$为
 \begin{BoxFormula}[基数三次曲线的约束矩阵]
     基数三次曲线的约束矩阵为
     \begin{Equation}
@@ -239,36 +234,28 @@
     \end{Gather}
 \end{BoxFormula}
 
-\xref{fig:基数三次曲线的混合函数}展示了基数三次曲线的混合函数，其中取张力参数$\alpha=0$（此时$\beta=1$）
+\cref{fig:基数三次曲线的混合函数}展示了基数三次曲线的混合函数，其中取张力参数$\alpha=0$（此时$\beta=1$）
 \begin{Figure}[基数三次曲线的混合函数]
-    \includegraphics[scale=0.8]{build/Chapter15B_01e.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15B_01e.fig.pdf}
 \end{Figure}
 
-基数三次曲线有一个相当好的性质，即所有控制点都是坐标，不需要指定任何一阶导数和二阶导数。\xref{fig:基数三次曲线}展示了如何运用分段的基数三次曲线绘制穿过一系列点的插值曲线，对于控制点$\vb{p}_0,\vb{p}_1,\vb{p}_2,\vb{p}_3$，取$0,1,2,3$时绘制$1,2$间的曲线，取$1,2,3,4$时绘制$2,3$间的曲线，依次类推。当然，由于基数三次曲线总是连接中间两个控制点，因此首末两个点是没有曲线连接的。
+基数三次曲线有一个相当好的性质，即所有控制点都是坐标，不需要指定任何一阶导数和二阶导数。\cref{fig:基数三次曲线}展示了如何运用分段的基数三次曲线绘制穿过一系列点的插值曲线，对于控制点$\vb{p}_0,\vb{p}_1,\vb{p}_2,\vb{p}_3$，取$0,1,2,3$时绘制$1,2$间的曲线，取$1,2,3,4$时绘制$2,3$间的曲线，依次类推。当然，由于基数三次曲线总是连接中间两个控制点，因此首末两个点是没有曲线连接的。
 
 基数三次曲线在节点处总是$C^1$连续的。试想，起点导数由$\vb{p}_2,\vb{p}_0$决定，终点导数由$\vb{p}_3,\vb{p}_1$决定。故对于链条中的某一条曲线，决定其终点处导数的$\vb{p}_3,\vb{p}_1$的点在下一条曲线中，会变成决定其起点处导数的$\vb{p}_2,\vb{p}_0$，这就保证了前一曲线的终点和后一曲线的起点处具有相同的导数。
 
 基数三次曲线是局域性的，这可以很容易的从其绘制分段曲线的方式中洞见。
 
 \begin{Figure}[基数三次曲线构成的分段曲线]
-    \begin{FigureSub}[$\alpha=1.0$;张力1]
-        \includegraphics[scale=0.8]{build/Chapter15C_08.fig.pdf}
-    \end{FigureSub} \\ \vspace{0.25cm}
-    \begin{FigureSub}[$\alpha=0.0$;张力0]
-        \includegraphics[scale=0.8]{build/Chapter15C_09.fig.pdf}
-    \end{FigureSub} \\ \vspace{0.25cm}
-    \begin{FigureSub}[$\alpha=-1.0$;张力-1]
-        \includegraphics[scale=0.8]{build/Chapter15C_10.fig.pdf}
-    \end{FigureSub} \\ \vspace{0.25cm}
-    \begin{FigureSub}[$\alpha=-2.0$;张力-2]
-        \includegraphics[scale=0.8]{build/Chapter15C_11.fig.pdf}
-    \end{FigureSub}
+    \figuresub[$\alpha=1.0$;张力1]{\includegraphics[scale=0.8]{Chapter15C_08.fig.pdf}}     \\ \vspace{0.25cm}
+    \figuresub[$\alpha=0.0$;张力0]{\includegraphics[scale=0.8]{Chapter15C_09.fig.pdf}}     \\ \vspace{0.25cm}
+    \figuresub[$\alpha=-1.0$;张力-1]{\includegraphics[scale=0.8]{Chapter15C_10.fig.pdf}}     \\ \vspace{0.25cm}
+    \figuresub[$\alpha=-2.0$;张力-2]{\includegraphics[scale=0.8]{Chapter15C_11.fig.pdf}}    
 \end{Figure}
 
-\xref{fig:基数三次曲线构成的分段曲线}直观展示了张力参数$\alpha$的作用，可以看出：当$\alpha=1$时曲线会完全紧绷，退化为控制点间的折线段。当$\alpha=0$时曲线则会比较松弛。另外$\alpha<0$的取值可以提供额外的松弛度。
+\cref{fig:基数三次曲线构成的分段曲线}直观展示了张力参数$\alpha$的作用，可以看出：当$\alpha=1$时曲线会完全紧绷，退化为控制点间的折线段。当$\alpha=0$时曲线则会比较松弛。另外$\alpha<0$的取值可以提供额外的松弛度。
 
 
-有一个有趣的想法是，我们可以将基数三次曲线构成的分段曲线视为一个整体（适用于$n$个控制点的曲线），讨论其混合函数。\xref{fml:基数三次样条曲线的混合函数}写出了这种情况下的混合函数。第$i$个控制点的混合函数$b_i(u)$的有效范围是以节点$u_i$为起点的四个节点区间内，这四个区间的方程从前到后依次适用\xref{fml:基数三次曲线的混合函数}的$b_3(v),b_2(v),b_1(v),b_0(v)$，逆序的原因是随着$u$的增大，控制点将最先充当$\vb{p}_3$，随后才变为$\vb{p}_2,\vb{p}_1,\vb{p}_0$。自变量$v$是将$u$在每一节点区间上的变化重映射至$[0,1)$。
+有一个有趣的想法是，我们可以将基数三次曲线构成的分段曲线视为一个整体（适用于$n$个控制点的曲线），讨论其混合函数。\cref{fml:基数三次样条曲线的混合函数}写出了这种情况下的混合函数。第$i$个控制点的混合函数$b_i(u)$的有效范围是以节点$u_i$为起点的四个节点区间内，这四个区间的方程从前到后依次适用\cref{fml:基数三次曲线的混合函数}的$b_3(v),b_2(v),b_1(v),b_0(v)$，逆序的原因是随着$u$的增大，控制点将最先充当$\vb{p}_3$，随后才变为$\vb{p}_2,\vb{p}_1,\vb{p}_0$。自变量$v$是将$u$在每一节点区间上的变化重映射至$[0,1)$。
 
 \begin{BoxFormula}[基数三次样条曲线的混合函数]
     基数三次样条曲线的混合函数为
@@ -283,12 +270,12 @@
     \end{Equation}
 \end{BoxFormula}
 
-\xref{fig:基数三次样条曲线的混合函数示例}对\xref{fml:基数三次样条曲线的混合函数}进行了可视化，可以看出其是如何由\xref{fig:基数三次曲线的混合函数}组合而来
+\cref{fig:基数三次样条曲线的混合函数示例}对\cref{fml:基数三次样条曲线的混合函数}进行了可视化，可以看出其是如何由\cref{fig:基数三次曲线的混合函数}组合而来
 \begin{Figure}[基数三次样条曲线的混合函数示例]
-    \includegraphics[scale=0.8]{build/Chapter15D_09d.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15D_09d.fig.pdf}
 \end{Figure}
 
-\xref{fig:基数三次样条曲线的混合函数}展示了$n=7$下各控制点的混合函数。值得注意的是，节点数目为$n+4=11$个。但是，实际上$\vb{f}(u)$仅在中间$5$个节点即$[u_3,u_7)$的范围内才是有意义的（本身$4$段曲线也只应该对应$5$个节点），最前和最后的$3$个节点区间都是无效的，这些区间中的控制点不足$4$个。
+\cref{fig:基数三次样条曲线的混合函数}展示了$n=7$下各控制点的混合函数。值得注意的是，节点数目为$n+4=11$个。但是，实际上$\vb{f}(u)$仅在中间$5$个节点即$[u_3,u_7)$的范围内才是有意义的（本身$4$段曲线也只应该对应$5$个节点），最前和最后的$3$个节点区间都是无效的，这些区间中的控制点不足$4$个。
 
 \begin{itemize}
     \item 在$[u_0,u_1)$区间，$0$作为$\vb{p}_3$，无法绘制。
@@ -298,22 +285,22 @@
     \item 在$[u_5,u_6)$区间，$1,2,3,4$作为$\vb{p}_0,\vb{p}_1,\vb{p}_2,\vb{p}_2$，绘制$2,3$间的曲线。
 \end{itemize}
 
-% 首先要说明的是，例如在\xref{fig:基数三次曲线构成的分段曲线}中，控制点数目$n=7$，然而，由于基数三次曲线不会连接首末两个点，只应有$5$个节点，不过为了方便起见，节点向量仍然可以按$7$个节点设置为$\vb{u}=(u_0,u_1,\cdots,u_6)$，因为这样一来，第$i$个控制点对应的节点就是$u_i$。不过，相应的需要限定曲线方程$\vb{f}(u)$及其混合函数$\vb{b}(u)$的定义域为$u\in[u_1,u_5)$。
+% 首先要说明的是，例如在\cref{fig:基数三次曲线构成的分段曲线}中，控制点数目$n=7$，然而，由于基数三次曲线不会连接首末两个点，只应有$5$个节点，不过为了方便起见，节点向量仍然可以按$7$个节点设置为$\vb{u}=(u_0,u_1,\cdots,u_6)$，因为这样一来，第$i$个控制点对应的节点就是$u_i$。不过，相应的需要限定曲线方程$\vb{f}(u)$及其混合函数$\vb{b}(u)$的定义域为$u\in[u_1,u_5)$。
 
-% \xref{fml:基数三次样条曲线的混合函数}写出了这种情况下的混合函数。可以看出，第$i$个控制点的混合函数$b_i(u)$的有效范围是以节点$u_i$为中心，蔓延至前后共四个节点区间内，这四个区间的方程从前到后依次适用\xref{fml:基数三次曲线的混合函数}的$b_3(v),b_2(v),b_1(v),b_0(v)$，之所以逆序，是因为随着$u$的增大，控制点将最先充当$\vb{p}_3$，随后才变为$\vb{p}_2,\vb{p}_1,\vb{p}_0$。自变量$v$是将$u$在每一个节点区间上的变化重新映射至$[0,1)$。
+% \cref{fml:基数三次样条曲线的混合函数}写出了这种情况下的混合函数。可以看出，第$i$个控制点的混合函数$b_i(u)$的有效范围是以节点$u_i$为中心，蔓延至前后共四个节点区间内，这四个区间的方程从前到后依次适用\cref{fml:基数三次曲线的混合函数}的$b_3(v),b_2(v),b_1(v),b_0(v)$，之所以逆序，是因为随着$u$的增大，控制点将最先充当$\vb{p}_3$，随后才变为$\vb{p}_2,\vb{p}_1,\vb{p}_0$。自变量$v$是将$u$在每一个节点区间上的变化重新映射至$[0,1)$。
 
 
 
-% \xref{fml:基数三次样条曲线的混合函数}通过\xref{fig:基数三次样条曲线的混合函数}可视化，可以直观看出其是如何由\xref{fig:基数三次曲线}的四段曲线拼接而来。
+% \cref{fml:基数三次样条曲线的混合函数}通过\cref{fig:基数三次样条曲线的混合函数}可视化，可以直观看出其是如何由\cref{fig:基数三次曲线}的四段曲线拼接而来。
 \begin{Figure}[基数三次样条曲线的混合函数]
-    \includegraphics[scale=0.8]{build/Chapter15D_01a.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15D_01a.fig.pdf}
 \end{Figure}
 
 \subsection{插值多项式}
-通过\xref{subsec:基数三次曲线}的讨论，我们引出这样一个问题：对于给定的$n$个控制点，如何找到一条曲线穿过这些点？基数三次曲线作为分段曲线已经给出了相当不错的解答。不过，相对应的，我们也可以直接用单一曲线来实现这一点，本小节要研究的插值多项式就将完成这一点。
+通过\cref{subsec:基数三次曲线}的讨论，我们引出这样一个问题：对于给定的$n$个控制点，如何找到一条曲线穿过这些点？基数三次曲线作为分段曲线已经给出了相当不错的解答。不过，相对应的，我们也可以直接用单一曲线来实现这一点，本小节要研究的插值多项式就将完成这一点。
 
 \begin{Figure}[拉格朗日形式插值多项式的混合函数]
-    \includegraphics[scale=0.8]{build/Chapter15D_01b.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15D_01b.fig.pdf}
 \end{Figure}
 
 插值多项式的讨论和过去不同的是，我们不会再从控制点的意义出发，通过约束矩阵和偏置矩阵求出混合函数，而是会跳过这些步骤直接写出混合函数。插值多项式有很多形式，最简洁的形式是下面给出的拉格朗日形式（Lagrange Form），其会给出一条$d=n-1$阶的曲线。
@@ -324,13 +311,13 @@
     \end{Equation}
 \end{BoxFormula}\goodbreak
 
-\xref{fml:拉格朗日形式插值多项式的混合函数}通过\xref{fig:拉格朗日形式插值多项式的混合函数}可视化，当$u$处于任一节点$u_i$时，相应的混合函数$b_i(u)=1$且其余混合函数均为$0$，这代表在各个节点上，拉格朗日形式的插值多项式可以保证曲线会通过相应的控制点。同时注意到，所有混合函数均存在过冲，尤其是在第一个和最后一个节点区间上。
+\cref{fml:拉格朗日形式插值多项式的混合函数}通过\cref{fig:拉格朗日形式插值多项式的混合函数}可视化，当$u$处于任一节点$u_i$时，相应的混合函数$b_i(u)=1$且其余混合函数均为$0$，这代表在各个节点上，拉格朗日形式的插值多项式可以保证曲线会通过相应的控制点。同时注意到，所有混合函数均存在过冲，尤其是在第一个和最后一个节点区间上。
 
 \begin{Figure}[拉格朗日形式插值多项式的效果]
-    \includegraphics[scale=0.8]{build/Chapter15C_12.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15C_12.fig.pdf}
 \end{Figure}
 
-\xref{fig:拉格朗日形式插值多项式的效果}展示了插值多项式的实际效果，可以直观看出插值多项式的混合函数的过冲带来的负面影响，在控制点$0,1$和$5,6$间，曲线的波动远远超出曲线控制点的波动，这是不期望的。
+\cref{fig:拉格朗日形式插值多项式的效果}展示了插值多项式的实际效果，可以直观看出插值多项式的混合函数的过冲带来的负面影响，在控制点$0,1$和$5,6$间，曲线的波动远远超出曲线控制点的波动，这是不期望的。
 
 
 

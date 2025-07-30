@@ -1,7 +1,7 @@
 \section{着色方程}
 
 \subsection{着色方程的建立}
-我们考虑\xref{fig:着色原理}所示的着色过程示意图，先将所有符号说明如下
+我们考虑\cref{fig:着色原理}所示的着色过程示意图，先将所有符号说明如下
 \begin{itemize}
     \item Light表示点光源的位置，在本节考虑的光源暂且都是点状的。
     \item View表示视线原点的位置。
@@ -10,17 +10,6 @@
     \item 向量$\vb{v}$代表三角面（与视线交点处）指向视线原点的单位向量。
     \item 向量$\vb{h}$代表指向$\vb{v},\vb{l}$角平分线的单位向量，可由$\vb{h}=(\vb{v}+\vb{l})/\norm{\vb{v}+\vb{l}}$得到。
 \end{itemize}
-\begin{Figure}[着色原理]
-    \begin{FigureSub}[Lambertian着色]
-        \includegraphics[scale=0.8]{build/Chapter09A_01.fig.pdf}
-    \end{FigureSub}\hspace{0.5cm}
-    \begin{FigureSub}[Blinn-Phong着色]
-        \includegraphics[scale=0.8]{build/Chapter09A_03.fig.pdf}
-    \end{FigureSub}\\ \vspace{0.5cm}
-    \begin{FigureSub}[Ambient着色]
-        \includegraphics[scale=0.8]{build/Chapter09A_02.fig.pdf}
-    \end{FigureSub}
-\end{Figure}
 
 着色过程可以分成以下三种机制：Lambertian着色、Blinn-Phong着色、Ambient着色。
 \begin{BoxFormula}[Lambertian着色]
@@ -41,6 +30,13 @@
         c=c_ac_d
     \end{Equation}
 \end{BoxFormula}
+
+\begin{Figure}[着色原理]
+    \figuresub[Lambertian着色]{\includegraphics[scale=0.8]{Chapter09A_01.fig.pdf}}{0.48}
+    \figuresub[Blinn-Phong着色]{\includegraphics[scale=0.8]{Chapter09A_03.fig.pdf}}{0.48}
+
+    \figuresub[Ambient着色]{\includegraphics[scale=0.8]{Chapter09A_02.fig.pdf}}{0.48}
+\end{Figure}
 
 这三种着色机制是共同作用的，最终的着色结果是三者之和
 \begin{Equation}
@@ -67,7 +63,7 @@
 \end{itemize}
 而对于一种着色机制，取决于光源类型和反射机制，会带有两项颜色系数
 \begin{itemize}
-    \item Lambertian着色是点光源的漫反射，故有$c=c_lc_d\max(0,\vb{n}\cdot\vb{l})成立$。
+    \item Lambertian着色是点光源的漫反射，故有$c=c_lc_d\max(0,\vb{n}\cdot\vb{l})$成立。
     \item Blinn-Phong着色是点光源的镜面反射，故有$c=c_lc_s\max(0,\vb{n}\cdot\vb{h})^p$成立。
     \item Ambient着色是环境光源的漫反射（环境光总垂直表面），故有$c=c_ac_d$成立。
 \end{itemize}
@@ -91,37 +87,29 @@
 
 \subsection{着色方程的效果}
 \paragraph{Lambertian着色}
-\xref{fig:Lambertian着色}展示了Lambertian着色的效果，该球自身为灰色，场景中使用了两个点光源，左上方设置了一个较亮的白色点光源，右侧设置了一个较暗的蓝色点光源，两者的效果是叠加的。
+\cref{fig:Lambertian着色}展示了Lambertian着色的效果，该球自身为灰色，场景中使用了两个点光源，左上方设置了一个较亮的白色点光源，右侧设置了一个较暗的蓝色点光源，两者的效果是叠加的。
 \begin{Figure}[Lambertian着色]
-    \includegraphics[width=6.5cm]{image/RasterizationIOW/SphereLambertian.png}
+    \includegraphics[width=6.5cm]{RasterizationIOW/SphereLambertian.png}
 \end{Figure}
 
 \paragraph{Ambient着色}
-\xref{fig:Ambient着色}展示了Ambient着色的效果，环境光的引入使阴影部分也有一定亮度。
+\cref{fig:Ambient着色}展示了Ambient着色的效果，环境光的引入使阴影部分也有一定亮度。
 \begin{Figure}[Ambient着色]
-    \includegraphics[width=6.5cm]{image/RasterizationIOW/SphereAmbient.png}
+    \includegraphics[width=6.5cm]{RasterizationIOW/SphereAmbient.png}
 \end{Figure}
 
 \paragraph{Blinn-Phong着色}
-\xref{fig:Blinn-Phong着色}展示了Blinn-Phong着色的效果，注意到两个光源在球面上形成的高光。
+\cref{fig:Blinn-Phong着色}展示了Blinn-Phong着色的效果，注意到两个光源在球面上形成的高光。
 
 \begin{Figure}[Blinn-Phong着色]
-    \includegraphics[width=6.5cm]{image/RasterizationIOW/SphereBlinnPhong.png}
+    \includegraphics[width=6.5cm]{RasterizationIOW/SphereBlinnPhong.png}
 \end{Figure}
 
-\xref{fig:Blinn-Phong着色中系数p的影响}展示了Blinn-Phong着色中系数$p$的影响，依次取$p=10,30,100,300$，注意到$p$越大高光的光斑越小。因为根据\xref{fml:Blinn-Phong着色}，较大的$p$意味着镜面反射集中在较狭窄的角度范围内。
+\cref{fig:Blinn-Phong着色中系数p的影响}展示了Blinn-Phong着色中系数$p$的影响，依次取$p=10,30,100,300$，注意到$p$越大高光的光斑越小。因为根据\cref{fml:Blinn-Phong着色}，较大的$p$意味着镜面反射集中在较狭窄的角度范围内。
 
 \begin{Figure}[Blinn-Phong着色中系数$p$的影响;Blinn-Phong着色中系数p的影响]
-    \begin{FigureSub}[$p=10$]
-        \includegraphics[width=3.53cm]{image/RasterizationIOW/SphereP1.png}
-    \end{FigureSub}
-    \begin{FigureSub}[$p=30$]
-        \includegraphics[width=3.53cm]{image/RasterizationIOW/SphereP2.png}
-    \end{FigureSub}
-    \begin{FigureSub}[$p=100$]
-        \includegraphics[width=3.53cm]{image/RasterizationIOW/SphereP3.png}
-    \end{FigureSub}
-    \begin{FigureSub}[$p=300$]
-        \includegraphics[width=3.53cm]{image/RasterizationIOW/SphereP4.png}
-    \end{FigureSub}
+    \figuresub[$p=10$]{\includegraphics[width=3.53cm]{RasterizationIOW/SphereP1.png}}    
+    \figuresub[$p=30$]{\includegraphics[width=3.53cm]{RasterizationIOW/SphereP2.png}}    
+    \figuresub[$p=100$]{\includegraphics[width=3.53cm]{RasterizationIOW/SphereP3.png}}    
+    \figuresub[$p=300$]{\includegraphics[width=3.53cm]{RasterizationIOW/SphereP4.png}}    
 \end{Figure}

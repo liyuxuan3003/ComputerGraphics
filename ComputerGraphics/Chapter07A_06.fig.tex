@@ -1,4 +1,10 @@
-\documentclass{xStandalone}
+\makeatletter\def\input@path{{minimus}{standalone-silicon}}\makeatother
+
+\documentclass{standalone-silicon}
+
+\usepackage{minimus-text}
+\usepackage{minimus-math}
+\usepackage{minimus-tikz}
 
 \begin{document}
 \begin{tikzpicture}
@@ -7,17 +13,17 @@
 
 \path (0,0) coordinate (O);
 
-\path (O) ++ (0,-2.25) coordinate (A) node {\includegraphics{build/Chapter07A_01.fig.pdf}};
+\path (O) ++ (0,-2.25) coordinate (A) node {\includegraphics{Chapter07A_01.fig.pdf}};
 
-\path (A) ++ (0,-5.5) coordinate (B) node {\includegraphics{build/Chapter07A_02.fig.pdf}};
+\path (A) ++ (0,-5.5) coordinate (B) node {\includegraphics{Chapter07A_02.fig.pdf}};
 
-\path (B) ++ (0,-5.5) coordinate (C) node {\includegraphics{build/Chapter07A_03.fig.pdf}};
+\path (B) ++ (0,-5.5) coordinate (C) node {\includegraphics{Chapter07A_03.fig.pdf}};
 
 \path (C) ++ (0,-6.0) coordinate (D);
 
-\path (D) ++ (-1.575,0) node {\includegraphics{build/Chapter07A_04.fig.pdf}};
+\path (D) ++ (-1.575,0) node {\includegraphics{Chapter07A_04.fig.pdf}};
 
-\path (D) ++ (10,0) node {\includegraphics{build/Chapter07A_05.fig.pdf}};
+\path (D) ++ (10,0) node {\includegraphics{Chapter07A_05.fig.pdf}};
 
 \draw[-latex,very thick] (-3,-4.4) -- node[pos=0.5,right] {\textbf{1. Camera Transformation}~~\textcolor{gray}{(For Perspective Camera)}} node[pos=0.5,left] {$\vb{M}_{cam}$} (-3,-5.6);
 

@@ -1,32 +1,33 @@
-\documentclass{xStandalone}
+\makeatletter\def\input@path{{minimus}{standalone-silicon}}\makeatother
+
+\documentclass{standalone-silicon}
+
+\usepackage{minimus-text}
+\usepackage{minimus-math}
+\usepackage{minimus-tikz}
 
 \begin{document}
 \begin{tikzpicture}
 
-\xSetX
-\xValDefine{xC}[0]
-\xValOffset{xAR}{xC}[-0.5]
-\xValOffset{xAL}{xAR}[-3.25]
-\xValMiddle{xAC}{xAL}{xAR}
-\xValMirror{xBR}{xAL}{xC}
-\xValMirror{xBL}{xAR}{xC}
-\xValMiddle{xBC}{xBL}{xBR}
+\path (0,0) coordinate (xC) 
+   ++ (-0.5,0) coordinate (xAR) 
+   ++ (-3.25,0) coordinate (xAL);
 
-\xSetY
-\xValDefine{yB}[0]
-\xValOffset{yLB}{yB}[0]
-\xValOffset{yLA}{yLB}[0.75]
-\xValOffset{yPB}{yLA}[0.1]
-\xValOffset{yPA}{yPB}[0.75]
-\xValOffset{yNegB}{yPA}[0.1]
-\xValOffset{yNegA}{yNegB}[0.5]
-\xValOffset{yCrB}{yNegA}[0]
-\xValOffset{yCrA}{yCrB}[1.25]
-\xValOffset{yPosB}{yCrA}[0]
-\xValOffset{yPosA}{yPosB}[0.5]
-\xValOffset{yQB}{yPosA}[0.1]
-\xValOffset{yQA}{yQB}[0.75]
-\xValOffset{yA}{yQA}[0]
+\path ($(xAL)!0.5!(xAR)$) coordinate (xAC) ;
+\path ($(xAL)!2.0!(xC)$) coordinate (xBR) ;
+\path ($(xAR)!2.0!(xC)$) coordinate (xBL) ;
+\path ($(xBL)!0.5!(xBR)$) coordinate (xBC) ;
+
+\path (0,0) coordinate (yB) coordinate (yLB) 
+   ++ (0,0.75) coordinate (yLA) 
+   ++ (0,0.1) coordinate (yPB) 
+   ++ (0,0.75) coordinate (yPA)  
+   ++ (0,0.1) coordinate (yNegB) 
+   ++ (0,0.5) coordinate (yNegA) coordinate (yCrB) 
+   ++ (0,1.25) coordinate (yCrA)  coordinate (yPosB) 
+   ++ (0,0.5) coordinate (yPosA) 
+   ++ (0,0.1) coordinate (yQB) 
+   ++ (0,0.75) coordinate (yQA) coordinate (yA) ;
 
 \draw[fill=black!25!yellow] (xAL|-yLB) rectangle node[white]{Backlight} (xBR|-yLA);
 \draw[fill=gray!70!black] (xAL|-yPB) rectangle node[white]{Polarizer (Horizontal)} (xBR|-yPA);
@@ -47,7 +48,7 @@
 \path (xAC|-yQA) node[above] {ON};
 \path (xBC|-yQA) node[above] {OFF};
 
-\xValBorder{xAL}{xBR}{yB}{yA}[0.6]*
+\draw ($(xAL|-yB)+(-0.6,-0.6)$) rectangle ($(xBR|-yA)+(0.6,0.6)$) ;
 
 \end{tikzpicture}
 \end{document}

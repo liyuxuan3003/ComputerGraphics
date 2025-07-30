@@ -37,33 +37,33 @@
 \end{Equation}
 那么$\vb{a},\lambda$就称为$\vb{A}$的一组特征向量（Eigen Vector）和特征值（Eigen Value）。换言之，若矩阵作用在一个向量上却只会令这个向量伸长或压缩，那么这个向量就是矩阵的特征向量。
 
-很重要的问题是如何寻找特征向量和特征值？我们可以先加入一个$\vb{I}$\setpeq{求解特征向量和特征值}
-\begin{Equation}&[1]
+很重要的问题是如何寻找特征向量和特征值？我们可以先加入一个$\vb{I}$
+\begin{Equation}[求解特征向量和特征值1]
     \vb{A}\vb{a}=\lambda\vb{I}\vb{a}
 \end{Equation}
 移项至左侧
-\begin{Equation}&[2]
+\begin{Equation}[求解特征向量和特征值12]
     \vb{A}\vb{a}-\lambda\vb{I}\vb{a}=0
 \end{Equation}
 提出矩阵
-\begin{Equation}&[3]
+\begin{Equation}[求解特征向量和特征值13]
     (\vb{A}-\lambda\vb{I})\vb{a}=0
 \end{Equation}
 该方程成立唯一的条件是$\vb{A}-\lambda\vb{I}$是一个奇异阵，换言之，行列式为$0$。假设$\vb{A}$是$2\times 2$的
-\begin{Equation}&[4]
+\begin{Equation}[求解特征向量和特征值14]
     \begin{vmatrix}
         a_{11}-\lambda&a_{12}\\
         a_{21}&a_{22}-\lambda\\
     \end{vmatrix}=0
 \end{Equation}
 即
-\begin{Equation}&[5]
+\begin{Equation}[求解特征向量和特征值15]
     \lambda^2-(a_{11}+a_{22})\lambda+(a_{11}a_{22}-a_{12}a_{21})=0
 \end{Equation}
 这是一个二次方程，故可以解出两个特征值$\lambda$。事实上，对于一个$n\times n$的矩阵，其具有$n$个特征值。由于四次以上的方程无系解析解，故对于$n>4$的矩阵，其特征值只有数值解。
 
 
-而对于某个已经求出的特征值$\lambda$，也很容易确定对应的特征向量$\vb{a}=(x,y)$，考虑\xrefpeq{3}
+而对于某个已经求出的特征值$\lambda$，也很容易确定对应的特征向量$\vb{a}=(x,y)$，考虑\cref{eq:求解特征向量和特征值3}
 \begin{Equation}
     \begin{pmatrix}
         a_{11}-\lambda&a_{12}\\

@@ -1,27 +1,29 @@
-\documentclass{xStandalone}
+\makeatletter\def\input@path{{minimus}{standalone-silicon}}\makeatother
+
+\documentclass{standalone-silicon}
+
+\usepackage{minimus-text}
+\usepackage{minimus-math}
+\usepackage{minimus-tikz}
 
 \begin{document}
 \begin{tikzpicture}
 
-\xSetX
-\xValDefine{xC}[0]
-\xValOffset{xAR}{xC}[-0.5]
-\xValOffset{xAL}{xAR}[-3.25]
-\xValMiddle{xAC}{xAL}{xAR}
-\xValMirror{xBR}{xAL}{xC}
-\xValMirror{xBL}{xAR}{xC}
-\xValMiddle{xBC}{xBL}{xBR}
+\path (0,0) coordinate (xC) 
+   ++ (-0.5,0) coordinate (xAR) 
+   ++ (-3.25,0) coordinate (xAL);
 
-\xSetY
-\xValDefine{yB}[0]
-\xValOffset{yNegB}{yB}[0.1]
-\xValOffset{yNegA}{yNegB}[0.5]
-\xValOffset{yCrB}{yNegA}[0]
-\xValOffset{yCrA}{yCrB}[3.6]
-\xValOffset{yPosB}{yCrA}[0]
-\xValOffset{yPosA}{yPosB}[0.5]
-\xValOffset{yA}{yPosA}[0]
- 
+\path ($(xAL)!0.5!(xAR)$) coordinate (xAC) ;
+\path ($(xAL)!2.0!(xC)$) coordinate (xBR) ;
+\path ($(xAR)!2.0!(xC)$) coordinate (xBL) ;
+\path ($(xBL)!0.5!(xBR)$) coordinate (xBC) ;
+
+\path (0,0) coordinate (yB) 
+   ++ (0,0.1) coordinate (yNegB) 
+   ++ (0,0.5) coordinate (yNegA) coordinate (yCrB) 
+   ++ (0,3.6) coordinate (yCrA)  coordinate (yPosB) 
+   ++ (0,0.5) coordinate (yPosA) coordinate (yA) ;
+
 \draw[fill=gray] (xAL|-yNegB) rectangle node[white] {Cathode [-]} (xAR|-yNegA);
 \draw[fill=gray] (xBL|-yNegB) rectangle node[white] {Cathode [+]} (xBR|-yNegA);
 \draw[fill=black!25!yellow] (xAL|-yCrB) rectangle node[white,align=center] {Light\\ Emiting\\ Diode} (xAR|-yCrA);
@@ -36,7 +38,7 @@
 \path (xAC|-yA) node[above] {ON};
 \path (xBC|-yA) node[above] {OFF};
 
-\xValBorder{xAL}{xBR}{yB}{yA}[0.6]*
+\draw[ultra thin] ($(xAL|-yB)+(-0.6,-0.6)$) rectangle ($(xBR|-yA)+(0.6,0.6)$) ;
 
 \end{tikzpicture}
 \end{document}

@@ -108,31 +108,24 @@
 
 \subsection{法向量变换}
 
-在三维空间中，我们经常会用法向量表示一个面的方向，然而，法向量进行变换后往往不再是法向量。\xref{fig:法向量在三维变换中的问题}展示了这一问题，矩形经过变换矩阵$\vb{M}$的剪切变换后，法向量$\vb{n}$顺着剪切变为了斜向上的$\vb{M}\vb{n}$，但其实$\vb{M}\vb{n}$并不垂直于平面，此时，正确的法向量应是图中标出的$\vb{N}\vb{n}$。
+在三维空间中，我们经常会用法向量表示一个面的方向，然而，法向量进行变换后往往不再是法向量。\cref{fig:法向量在三维变换中的问题}展示了这一问题，矩形经过变换矩阵$\vb{M}$的剪切变换后，法向量$\vb{n}$顺着剪切变为了斜向上的$\vb{M}\vb{n}$，但其实$\vb{M}\vb{n}$并不垂直于平面，此时，正确的法向量应是图中标出的$\vb{N}\vb{n}$。
 
 这就告诉我们，当图形通过矩阵$\vb{M}$变换时，法向量若也通过矩阵$\vb{M}$变换将得到不正确的结果，法向量需要另外一个不同的矩阵$\vb{N}$矩形进行变换。故现在的问题是怎么由$\vb{M}$求出$\vb{N}$？
 
-
-
 \begin{Figure}[法向量在三维变换中的问题]
-    \begin{FigureSub}[变换前;变换前--法向量在三维变换中的问题]
-        \includegraphics[scale=0.8]{build/Chapter06C_01.fig.pdf}
-    \end{FigureSub}
-    \quad
-    \begin{FigureSub}[变换后;变换后--法向量在三维变换中的问题]
-        \includegraphics[scale=0.8]{build/Chapter06C_02.fig.pdf}
-    \end{FigureSub}
+    \figuresub[变换前;变换前--法向量在三维变换中的问题]{\includegraphics[scale=0.8]{Chapter06C_01.fig.pdf}}{0.48}
+    \figuresub[变换后;变换后--法向量在三维变换中的问题]{\includegraphics[scale=0.8]{Chapter06C_02.fig.pdf}}{0.48}
 \end{Figure}
-首先，可以确定的是变换前法向量$\vb{n}$一定垂直于切向量$\vb{t}$\setpeq{法向量变换}
-\begin{Equation}&[1]
+首先，可以确定的是变换前法向量$\vb{n}$一定垂直于切向量$\vb{t}$
+\begin{Equation}[法向量变换1]
     \vb{n}^T\vb{t}=0
 \end{Equation}
 
 我们将变换后的向量用$\vb{n}_N=\vb{N}\vb{n},~\vb{n}_M=\vb{M}\vb{n},~\vb{t}_M=\vb{M}\vb{t}$表示，我们要找到$\vb{N}$使下式成立
-\begin{Equation}&[2]
+\begin{Equation}[法向量变换2]
     \vb{n}_N^T\vb{t}_M=0
 \end{Equation}
-我们可以在\xrefpeq{1}做一些变形，利用$\vb{M}^{-1}\vb{M}=\vb{I}$
+我们可以在\cref{eq:法向量变换1}做一些变形，利用$\vb{M}^{-1}\vb{M}=\vb{I}$
 \begin{Equation}
     \vb{n}^T\vb{t}=\vb{n}^T\vb{I}\vb{t}=\vb{n}^T\vb{M}^{-1}\vb{M}\vb{t}=0
 \end{Equation}
@@ -144,7 +137,7 @@
 \begin{Equation}
     (\vb{n}^T\vb{M}^{-1})\vb{t}_M=0
 \end{Equation}
-比照\xrefpeq{2}，即得
+比照\cref{eq:法向量变换2}，即得
 \begin{Equation}
     \vb{n}_N^T=\vb{n}^T\vb{M}^{-1}
 \end{Equation}

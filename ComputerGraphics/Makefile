@@ -1,58 +1,7 @@
 PROJECT:=ComputerGraphics
+DEPS_MAIN_TEX:=${STYS_MINIMUS} ${CLSS_NOTEBOOK_NEON}
+DEPS_FIGS_TEX:=${STYS_MINIMUS} ${CLSS_STANDALONE_SILICON}
 
-BUILD_DIR:=build
+include makefile-latex/makefile-latex.mk
 
-OUTPUT:=${BUILD_DIR}/${PROJECT}.pdf
-
-FLAGS:=-xelatex -synctex=1 -interaction=nonstopmode -file-line-error -output-directory=${BUILD_DIR}
-
-STYS:=$(wildcard *.sty)
-CLSS:=$(wildcard *.cls)
-TEXS:=$(filter-out .fig.tex,$(wildcard *.tex))
-FIGS:=$(wildcard *.fig.tex)
-OCTS:=$(wildcard *.fig.m)
-WLSS:=$(wildcard *.fig.wls)
-ASCS:=$(wildcard *.fig.py)
-
-FIGS_PDF:=$(addprefix ${BUILD_DIR}/,$(FIGS:.tex=.pdf))
-OCTS_PDF:=$(addprefix ${BUILD_DIR}/,$(OCTS:.m=.pdf))
-WLSS_PDF:=$(addprefix ${BUILD_DIR}/,$(WLSS:.wls=.pdf))
-ASCS_PDF:=$(addprefix ${BUILD_DIR}/,$(ASCS:.py=.pdf))
-
-default: ${BUILD_DIR} ${OUTPUT}
-	@echo Makefile: Done!
-
-${OUTPUT}: ${TEXS} ${FIGS_PDF} ${OCTS_PDF} ${WLSS_PDF} ${ASCS_PDF} ${STYS} ${CLSS}
-	latexmk ${FLAGS} ${PROJECT}.tex
-	touch $@
-
-${BUILD_DIR}/Chapter07A_06.fig.pdf: Chapter07A_06.fig.tex \
-${BUILD_DIR}/Chapter07A_01.fig.pdf \
-${BUILD_DIR}/Chapter07A_02.fig.pdf \
-${BUILD_DIR}/Chapter07A_03.fig.pdf \
-${BUILD_DIR}/Chapter07A_04.fig.pdf \
-${BUILD_DIR}/Chapter07A_05.fig.pdf
-	latexmk ${FLAGS} $<
-	touch $@
-
-${BUILD_DIR}/%.fig.pdf:%.fig.tex ${STYS} ${CLSS}
-	latexmk ${FLAGS} $<
-	touch $@
-
-${BUILD_DIR}/%.fig.pdf:%.fig.m
-	octave-cli $<
-
-${BUILD_DIR}/%.fig.pdf:%.fig.wls
-	wolframscript -script $<
-
-${BUILD_DIR}/%.fig.pdf:%.fig.py
-	python $<
-
-${BUILD_DIR}:
-	mkdir -p ${BUILD_DIR}
-
-run: default
-	start ${OUTPUT}
-
-output:
-	@echo ${OUTPUT}
+${BUILD_DIR}/Chapter07A_06.fig.pdf: ${BUILD_DIR}/Chapter07A_01.fig.pdf ${BUILD_DIR}/Chapter07A_02.fig.pdf ${BUILD_DIR}/Chapter07A_03.fig.pdf ${BUILD_DIR}/Chapter07A_04.fig.pdf ${BUILD_DIR}/Chapter07A_05.fig.pdf

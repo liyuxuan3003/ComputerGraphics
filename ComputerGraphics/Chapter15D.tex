@@ -15,15 +15,11 @@
 在计算机图形学中，最常用的是三次贝塞尔曲线。
 
 \subsubsection{贝塞尔曲线的引入}
-贝塞尔曲线可以由这样一种朴素的想法引入。有一个控制点会这样影响起点和终点处曲线的方向：曲线在起点处向控制点的方向出发，曲线在终点处会自控制点的方向到达。当然，也可以有两个控制点，使起点处的方向和终点处的方向能分别被两个控制点独立控制。上述这种想法，分别给出了二次贝塞尔曲线和三次贝塞尔曲线的定义，如\xref{fig:二次贝塞尔曲线}和\xref{fig:三次贝塞尔曲线}所示。
+贝塞尔曲线可以由这样一种朴素的想法引入。有一个控制点会这样影响起点和终点处曲线的方向：曲线在起点处向控制点的方向出发，曲线在终点处会自控制点的方向到达。当然，也可以有两个控制点，使起点处的方向和终点处的方向能分别被两个控制点独立控制。上述这种想法，分别给出了二次贝塞尔曲线和三次贝塞尔曲线的定义，如\cref{fig:二次贝塞尔曲线}和\cref{fig:三次贝塞尔曲线}所示。
 \begin{Figure}[贝塞尔曲线]
-    \begin{FigureSub}[二次贝塞尔曲线]
-        \includegraphics[scale=0.8]{build/Chapter15D_03.fig.pdf}
-    \end{FigureSub}
+    \figuresub[二次贝塞尔曲线]{\includegraphics[scale=0.8]{Chapter15D_03.fig.pdf}}    
     \hspace{1cm}
-    \begin{FigureSub}[三次贝塞尔曲线]
-        \includegraphics[scale=0.8]{build/Chapter15D_02.fig.pdf}
-    \end{FigureSub}
+    \figuresub[三次贝塞尔曲线]{\includegraphics[scale=0.8]{Chapter15D_02.fig.pdf}}    
 \end{Figure}
 
 三次贝塞尔曲线的定义如下
@@ -86,13 +82,13 @@
     \end{Gather}
 \end{BoxFormula}\goodbreak
 
-\xref{fig:三次贝塞尔曲线的混合函数}展示了三次贝塞尔曲线的混合函数
+\cref{fig:三次贝塞尔曲线的混合函数}展示了三次贝塞尔曲线的混合函数
 \begin{Figure}[三次贝塞尔曲线的混合函数]
-    \includegraphics[scale=0.8]{build/Chapter15B_01f.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15B_01f.fig.pdf}
 \end{Figure}
 
 \subsubsection{贝塞尔曲线的一般形式}
-其实，我们可以看出，三次贝塞尔曲线和基数三次曲线一样，本质上都是仿照厄米三次曲线在定义$f(0),f(1),f'(0),f'(1)$，只不过用了$f'(0),f'(1)$是用控制点间的相对距离间接表示。贝塞尔曲线的一个重要优势是，它的形式可以从三次很轻松的扩展到任意$d$次！根据\xref{fml:三次贝塞尔曲线的混合函数}
+其实，我们可以看出，三次贝塞尔曲线和基数三次曲线一样，本质上都是仿照厄米三次曲线在定义$f(0),f(1),f'(0),f'(1)$，只不过用了$f'(0),f'(1)$是用控制点间的相对距离间接表示。贝塞尔曲线的一个重要优势是，它的形式可以从三次很轻松的扩展到任意$d$次！根据\cref{fml:三次贝塞尔曲线的混合函数}
 \begin{Gather}
     b_{0,3}(u)=1-3u+3u^2-u^3\\
     b_{1,3}(u)=3u-6u^2+3u^3\\
@@ -119,18 +115,18 @@
     贝塞尔曲线的混合函数称为伯恩斯坦多项式（Bernstein Polynomial）。
 \end{BoxFormula}
 
-\xref{fig:贝塞尔曲线的混合函数}展示了$n=7$个控制点下$d=6$次贝塞尔曲线的混合函数
+\cref{fig:贝塞尔曲线的混合函数}展示了$n=7$个控制点下$d=6$次贝塞尔曲线的混合函数
 \begin{Figure}[贝塞尔曲线的混合函数]
-    \includegraphics[scale=0.8]{build/Chapter15D_01c.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15D_01c.fig.pdf}
 \end{Figure}
 
-\xref{fig:贝塞尔曲线的效果}展示了$d=6$的高次贝塞尔曲线的实际效果，这揭示了贝塞尔曲线的几个重要性质
+\cref{fig:贝塞尔曲线的效果}展示了$d=6$的高次贝塞尔曲线的实际效果，这揭示了贝塞尔曲线的几个重要性质
 \begin{itemize}
     \item 贝塞尔曲线具有变差减弱性质（Variation Diminishing Property）。通俗的说，即贝塞尔曲线一定会比其控制点组成的折线段显得更为平滑，具有更少的弯曲。这一点可以用任意直线与贝塞尔曲线的交点数一定少于该直线与控制点折线段的交点数来严格定义。
-    \item 贝塞尔曲线被其控制点的凸包（Convex Hull）所包围，不会出现超出该范围的过冲（例如\xref{fig:拉格朗日形式插值多项式的效果}的插值多项式显然不满足该性质）。控制点的凸包即控制点所能围成的最大闭合多边形，形象的说，可以想象将一个橡皮筋套在所有点外，此时橡皮筋的形状就是凸包。
+    \item 贝塞尔曲线被其控制点的凸包（Convex Hull）所包围，不会出现超出该范围的过冲（例如\cref{fig:拉格朗日形式插值多项式的效果}的插值多项式显然不满足该性质）。控制点的凸包即控制点所能围成的最大闭合多边形，形象的说，可以想象将一个橡皮筋套在所有点外，此时橡皮筋的形状就是凸包。
 \end{itemize}
 \begin{Figure}[贝塞尔曲线的效果]
-    \includegraphics[scale=0.8]{build/Chapter15D_07.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15D_07.fig.pdf}
 \end{Figure}
 
 \subsubsection{贝塞尔曲线的分段拼接}
@@ -140,42 +136,35 @@
     \item 前后两段贝塞尔曲线的共用点、前段的第二控制点、后段的第一控制点，需要满足三点共线，确保$G^1$连续，假如共用点恰好位于两个控制点的中点处，则可以有$C^1$连续。
 \end{itemize}
 
+在\cref{fig:贝塞尔曲线的分段拼接}中，展示了一个拼接两段贝塞尔曲线的例子，$2,3,4$共线确保了$G^1$连续。
 \begin{Figure}[贝塞尔曲线的分段拼接]
-    \includegraphics[scale=0.8]{build/Chapter15D_10.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15D_10.fig.pdf}
 \end{Figure}
 
-在\xref{fig:贝塞尔曲线的分段拼接}中，展示了一个拼接两段贝塞尔曲线的例子，$2,3,4$共线确保了$G^1$连续。
-
 \subsubsection{贝塞尔曲线的德卡斯特里奥算法}
-
-我们或许曾经尝试过如\xref{fig:贝塞尔曲线与“以直代曲”}所示的这种“以直代曲”的数学小游戏，在折线$\vb{p}_0,\vb{p}_1,\vb{p}_2$的两条线段上，等距的取一系列点，随后将$\vb{p}_0,\vb{p}_1$和$\vb{p}_1,\vb{p}_2$上相同比例位置处的点用直线连接起来，其包络线就会呈现一条相当漂亮的曲线。实际上，这条曲线就是以$\vb{p}_0,\vb{p}_1,\vb{p}_2$组成的二次贝塞尔曲线！这相当有趣，然而，如果我们期望能有一种快速绘制出贝塞尔曲线的算法，仅仅知道这些信息是不够的。第一，我们需要精确的知道贝塞尔曲线可以由哪些点连接的折线段近似。第二，我们需要找到一种办法能将上述想法推广至更高次情形，尤其是三次贝塞尔曲线。
-
+我们或许曾经尝试过如\cref{fig:贝塞尔曲线与“以直代曲”}所示的这种“以直代曲”的数学小游戏，在折线$\vb{p}_0,\vb{p}_1,\vb{p}_2$的两条线段上，等距的取一系列点，随后将$\vb{p}_0,\vb{p}_1$和$\vb{p}_1,\vb{p}_2$上相同比例位置处的点用直线连接起来，其包络线就会呈现一条相当漂亮的曲线。实际上，这条曲线就是以$\vb{p}_0,\vb{p}_1,\vb{p}_2$组成的二次贝塞尔曲线！这相当有趣，然而，如果我们期望能有一种快速绘制出贝塞尔曲线的算法，仅仅知道这些信息是不够的。第一，我们需要精确的知道贝塞尔曲线可以由哪些点连接的折线段近似。第二，我们需要找到一种办法能将上述想法推广至更高次情形，尤其是三次贝塞尔曲线。
 \begin{Figure}[贝塞尔曲线与“以直代曲”]
-    \includegraphics[scale=0.8]{build/Chapter15D_06.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15D_06.fig.pdf}
 \end{Figure}
 
 德卡斯特里奥算法（De Casteljau Algorithm）是一个相当有效的贝塞尔曲线的近似算法。
 
-对于二次贝塞尔曲线，上述“以直代曲”的朴素想法已经非常接近算法的思想了，只需要再加上小小的一步。如\xref{fig:二次贝塞尔曲线DeC算法}所示，在对$\vb{p}_0,\vb{p}_1$和$\vb{p}_1,\vb{p}_2$等距的在比例$1/4,2/4,/3/4$取点并连线后，对于每一比例的连线，在该连线相同比例的位置再取一点，这一点恰好会落在贝塞尔曲线上。连接起点、终点、所有求出的中间点即可得到一条近似的贝塞尔曲线，增加取点密度可以提高曲线质量。对于三次贝塞尔曲线，只需要在上述基础上多迭代一轮即可。如\xref{fig:三次贝塞尔曲线DeC算法}所示，对$\vb{p}_0,\vb{p}_1$和$\vb{p}_1,\vb{p}_2$和$\vb{p}_2,\vb{p}_3$三条线段等距取点，对于每一比例，这会连接出两条线段。在这两条线段上按该比例取点连线，在这条新连线上该比例处的点将位于三次贝塞尔曲线上。
+对于二次贝塞尔曲线，上述“以直代曲”的朴素想法已经非常接近算法的思想了，只需要再加上小小的一步。如\cref{fig:二次贝塞尔曲线DeC算法}所示，在对$\vb{p}_0,\vb{p}_1$和$\vb{p}_1,\vb{p}_2$等距的在比例$1/4,2/4,/3/4$取点并连线后，对于每一比例的连线，在该连线相同比例的位置再取一点，这一点恰好会落在贝塞尔曲线上。连接起点、终点、所有求出的中间点即可得到一条近似的贝塞尔曲线，增加取点密度可以提高曲线质量。对于三次贝塞尔曲线，只需要在上述基础上多迭代一轮即可。如\cref{fig:三次贝塞尔曲线DeC算法}所示，对$\vb{p}_0,\vb{p}_1$和$\vb{p}_1,\vb{p}_2$和$\vb{p}_2,\vb{p}_3$三条线段等距取点，对于每一比例，这会连接出两条线段。在这两条线段上按该比例取点连线，在这条新连线上该比例处的点将位于三次贝塞尔曲线上。
 
 \begin{Figure}[贝塞尔曲线的德卡斯特里奥算法图示]
-    \begin{FigureSub}[二次贝塞尔曲线;二次贝塞尔曲线DeC算法]
-        \includegraphics[scale=0.8]{build/Chapter15D_04.fig.pdf}
-    \end{FigureSub}\hspace{1cm}
-    \begin{FigureSub}[三次贝塞尔曲线;三次贝塞尔曲线DeC算法]
-        \includegraphics[scale=0.8]{build/Chapter15D_05.fig.pdf}
-    \end{FigureSub}
+    \figuresub[二次贝塞尔曲线;二次贝塞尔曲线DeC算法]{\includegraphics[scale=0.8]{Chapter15D_04.fig.pdf}}    \hspace{1cm}
+    \figuresub[三次贝塞尔曲线;三次贝塞尔曲线DeC算法]{\includegraphics[scale=0.8]{Chapter15D_05.fig.pdf}}    
 \end{Figure}
 
 \subsection{基样条曲线}
 基样条曲线（B-Spline, Basis Spline）或B样条的一个特点是，其提供了一种构建具有$n$个控制点的任意$d$次曲线，但与贝塞尔函数$d=n-1$不同的是，基样条曲线的次数$d$可以与控制点数目$n$无关！从而我们可以根据应用的实际需要，灵活平衡曲线的连续性和复杂性。
 
-基样条曲线的想法类似于\xref{fml:基数三次样条曲线的混合函数}，我们曾研究过基数三次曲线构成的分段曲线作为一个整体的混合函数，这样的混合函数本身也是一个三次的分段函数。这就提示我们，假如能找到一种方法，能对于任意$d$次，产生一个恰当的$d$次的分段函数作为混合函数，这个混合函数就应当是某个$d$次单一曲线构成的分段曲线的混合函数，且不需要了解这个单一曲线的性质。
+基样条曲线的想法类似于\cref{fml:基数三次样条曲线的混合函数}，我们曾研究过基数三次曲线构成的分段曲线作为一个整体的混合函数，这样的混合函数本身也是一个三次的分段函数。这就提示我们，假如能找到一种方法，能对于任意$d$次，产生一个恰当的$d$次的分段函数作为混合函数，这个混合函数就应当是某个$d$次单一曲线构成的分段曲线的混合函数，且不需要了解这个单一曲线的性质。
 
 % 下面，我们首先给出一次、二次、三次的基样条曲线的表达式，随后再讨论一般情况。
 
 \subsubsection{基样条曲线的引入}
-在\xref{fml:一次基样条曲线的混合函数}、\xref{fml:二次基样条曲线的混合函数}、\xref{fml:三次基样条曲线的混合函数}中直接给出了一次、二次、三次基样条的混合函数
+在\cref{fml:一次基样条曲线的混合函数}、\cref{fml:二次基样条曲线的混合函数}、\cref{fml:三次基样条曲线的混合函数}中直接给出了一次、二次、三次基样条的混合函数
 \begin{itemize}
     \item $d$次基样条曲线的混合函数由$d$次多项式构成。
     \item $d$次基样条曲线的混合函数是$d+1$分段（因为单一曲线有$d+1$个控制点）。
@@ -221,28 +210,22 @@
     \end{Equation}
 \end{BoxFormula}
 
-\xref{fig:基样条曲线的混合函数示例}展示了一次、二次、三次基样条曲线的混合函数。我们注意到，随着次数$d$的增加，相应基样条曲线的混合函数的峰值会越来越低，从$d=1$的$1.0$下降到$d=2,3$的$0.75,0.67$。
+\cref{fig:基样条曲线的混合函数示例}展示了一次、二次、三次基样条曲线的混合函数。我们注意到，随着次数$d$的增加，相应基样条曲线的混合函数的峰值会越来越低，从$d=1$的$1.0$下降到$d=2,3$的$0.75,0.67$。
 
 \begin{Figure}[基样条曲线的混合函数示例]
-    \begin{FigureSub}[一次基样条曲线]
-        \includegraphics[scale=0.8]{build/Chapter15D_09a.fig.pdf}
-    \end{FigureSub}\\ \vspace{0.1cm}
-    \begin{FigureSub}[二次基样条曲线]
-        \includegraphics[scale=0.8]{build/Chapter15D_09b.fig.pdf}
-    \end{FigureSub}\hspace*{-1.5cm}
-    \begin{FigureSub}[三次基样条曲线]
-        \includegraphics[scale=0.8]{build/Chapter15D_09c.fig.pdf}
-    \end{FigureSub}
+    \figuresub[一次基样条曲线]{\includegraphics[scale=0.8]{Chapter15D_09a.fig.pdf}}    \\ \vspace{0.1cm}
+    \figuresub[二次基样条曲线]{\includegraphics[scale=0.8]{Chapter15D_09b.fig.pdf}}    \hspace*{-1.5cm}
+    \figuresub[三次基样条曲线]{\includegraphics[scale=0.8]{Chapter15D_09c.fig.pdf}}    
 \end{Figure}
 
-\xref{fig:基样条曲线的混合函数}展示了$n=7$个控制点下$d=3$次基样条曲线的混合函数。和\xref{fig:基数三次样条曲线的混合函数}一致，这种情况下会有$n+d+1$个节点，但只有中央$n-d+1$个节点是有效范围，首末$d$个节点在定义域外。
+\cref{fig:基样条曲线的混合函数}展示了$n=7$个控制点下$d=3$次基样条曲线的混合函数。和\cref{fig:基数三次样条曲线的混合函数}一致，这种情况下有$n+d+1$个节点，但只有中央$n-d+1$个节点是有效范围，首末$d$个节点在定义域外。
 \begin{Figure}[基样条曲线的混合函数]
-    \includegraphics[scale=0.8]{build/Chapter15D_01d.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15D_01d.fig.pdf}
 \end{Figure}
 
-\xref{fig:基样条曲线的效果}展示了$d=3$次基样条曲线的实际效果
+\cref{fig:基样条曲线的效果}展示了$d=3$次基样条曲线的实际效果
 \begin{Figure}[基样条曲线的效果]
-    \includegraphics[scale=0.8]{build/Chapter15D_08.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter15D_08.fig.pdf}
 \end{Figure}
 
 基样条曲线也满足贝塞尔曲线的两条性质：曲线满足变差减弱、曲线被控制点凸包包围。

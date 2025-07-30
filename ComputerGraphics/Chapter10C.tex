@@ -1,20 +1,14 @@
 \section{卷积在图像处理中的应用}
 
-卷积在图像处理中有许多应用，如\xref{fig:卷积在图像处理中的应用}所示，最简单的例子就是图像的模糊和锐化。
+卷积在图像处理中有许多应用，如\cref{fig:卷积在图像处理中的应用}所示，最简单的例子就是图像的模糊和锐化。
 
 \begin{Figure}[卷积在图像处理中的应用]
-    \begin{FigureSub}[模糊;卷积图像处理-模糊]
-        \includegraphics[scale=1.8]{build/Chapter10B_04a.fig.pdf}
-    \end{FigureSub}\hspace{0.2cm}
-    \begin{FigureSub}[原始;卷积图像处理-原始]
-        \includegraphics[scale=1.8]{build/Chapter10B_04b.fig.pdf}
-    \end{FigureSub}\hspace{0.2cm}
-    \begin{FigureSub}[锐化;卷积图像处理-锐化]
-        \includegraphics[scale=1.8]{build/Chapter10B_04c.fig.pdf}
-    \end{FigureSub}
+    \figuresub[模糊;卷积图像处理-模糊]{\includegraphics[scale=1.8]{Chapter10B_04a.fig.pdf}}{0.32}
+    \figuresub[原始;卷积图像处理-原始]{\includegraphics[scale=1.8]{Chapter10B_04b.fig.pdf}}{0.32}
+    \figuresub[锐化;卷积图像处理-锐化]{\includegraphics[scale=1.8]{Chapter10B_04c.fig.pdf}}{0.32}
 \end{Figure}
 
-\xref{fig:卷积图像处理-原始}展示的是被栅格化的$e^\pi$的图像，现在尝试对其进行模糊和锐化。\goodbreak
+\cref{fig:卷积图像处理-原始}展示的是被栅格化的$e^\pi$的图像，现在尝试对其进行模糊和锐化。\goodbreak
 
 模糊的本质就是与周围的像素做平均，Gaussian卷积核可以提供最均匀的模糊效果
 \begin{Equation}
@@ -37,7 +31,7 @@
 \begin{Equation}
     f_{sharp}=(1+\alpha)d-\alpha f_{g,\sigma}
 \end{Equation}
-其中$\alpha$越大，锐化程度越高，\xref{fig:卷积图像处理-锐化}中取$\alpha=1$。有趣的是，若取$\alpha=0$和$\alpha=-1$时，它实际会给出原始（$f_{sharp}=d$）和模糊（$f_{sharp}=f_{g,\sigma}$）。故\xref{fig:卷积在图像处理中的应用}也可认为是对应$\alpha=-1,0,1$。
+其中$\alpha$越大，锐化程度越高，\cref{fig:卷积图像处理-锐化}中取$\alpha=1$。有趣的是，若取$\alpha=0$和$\alpha=-1$时，它实际会给出原始（$f_{sharp}=d$）和模糊（$f_{sharp}=f_{g,\sigma}$）。故\cref{fig:卷积在图像处理中的应用}也可认为是对应$\alpha=-1,0,1$。
 
 \begin{BoxFormula}[图像的模糊]
     图像的模糊可以用以下卷积核表示

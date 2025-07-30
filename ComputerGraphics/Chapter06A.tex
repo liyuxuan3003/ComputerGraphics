@@ -2,22 +2,30 @@
 
 在本节，我们会讨论四种基本的二维矩阵变换：缩放、剪切、旋转、反射。当一个矩阵变换作用于一个二维图形时，实质上就是令矩阵与二维图形上每一个点对应的向量做矩阵乘法。
 
-\begin{Equation}
-    \begin{pmatrix}
-        x'\\
-        y'
-    \end{pmatrix}=
-    \begin{pmatrix}
-        a_{11}&a_{12}\\
-        a_{21}&a_{22}
-    \end{pmatrix}
-\end{Equation}
+\begin{BoxFormula}[二维坐标变换]
+    二维坐标变化的一般形式为
+    \begin{Equation}
+        \begin{pmatrix}
+            x'\\
+            y'
+        \end{pmatrix}=
+        \begin{pmatrix}
+            a_{11}&a_{12}\\
+            a_{21}&a_{22}
+        \end{pmatrix}
+        \begin{pmatrix}
+            x\\
+            y
+        \end{pmatrix}
+    \end{Equation}
+\end{BoxFormula}
 
+为了更好理解每一种矩阵变换的作用，本节讨论时将会把不同变换作用在\cref{fig:矩阵变换的对象}所示图形上。
 \begin{Figure}[矩阵变换的对象]
-    \includegraphics[scale=0.8]{build/Chapter06A_01.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter06A_01.fig.pdf}
 \end{Figure}
 
-为了更好理解每一种矩阵变换的作用，本节讨论时将会把不同变换作用在\xref{fig:矩阵变换的对象}所示图形上。
+其中，四个不同颜色的色块可以辅助判断图形变换后发生的方向变化。
 
 \subsection{缩放变换}
 \begin{BoxDefinition}[缩放变换]
@@ -33,9 +41,9 @@
 其中$s_x,s_y$分别代表图形沿$x$轴和沿$y$轴的缩放比例，特别的$\te{scale}(1,1)$即不变化。另外，通常我们认为在缩放变换中$s_x>0,s_y>0$均为正，对于负值的情况我们会将其视为反射。
 
 \begin{Figure}[缩放变换]
-    \includegraphics[scale=0.8]{build/Chapter06A_02.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter06A_02.fig.pdf}
 \end{Figure}
-\xref{fig:缩放变换}中，展示了$\te{scale}(2,2)$的效果，注意到图形整体被放大了两倍。
+\cref{fig:缩放变换}中，展示了$\te{scale}(2,2)$的效果，注意到图形整体被放大了两倍。
 
 \subsection{剪切变换}
 \begin{BoxDefinition}[剪切变换]
@@ -77,19 +85,14 @@
 \end{Equation}
 很明显的，变换时$y$越大的点变换后$x'=x+dy$在$x$方向上就会发生越大的偏移。
 
-剪切最直观的理解就是矩形变为平行四边形，\xref{fig:剪切变换}展示了$\te{shear}_x(1)$和$\te{shear}_y(1)$的效果。
+剪切最直观的理解就是矩形变为平行四边形，\cref{fig:剪切变换}展示了$\te{shear}_x(1)$和$\te{shear}_y(1)$的效果。
 
 \begin{Figure}[剪切变换]
-    \begin{FigureSub}[沿$x$方向的剪切]
-        \includegraphics[scale=0.8]{build/Chapter06A_03.fig.pdf}
-    \end{FigureSub}
-    \hspace{1cm}
-    \begin{FigureSub}[沿$y$方向的剪切]
-        \includegraphics[scale=0.8]{build/Chapter06A_04.fig.pdf}
-    \end{FigureSub}
+    \figuresub[沿$x$方向的剪切]{\includegraphics[scale=0.8]{Chapter06A_03.fig.pdf}}{0.4}    
+    \figuresub[沿$y$方向的剪切]{\includegraphics[scale=0.8]{Chapter06A_04.fig.pdf}}{0.4}
 \end{Figure}
 
-剪切也可以从另外一种角度理解，如果令$d=\tan\phi$，那么$\te{shear}_x(d)$和$\te{shear}_y(d)$可以分别解读为“仅令$y$轴顺时针旋转$\phi$”和“仅令$x$逆时针旋转$\phi$”，\xref{fig:剪切变换}中亦展现了这一点。
+剪切也可以从另外一种角度理解，如果令$d=\tan\phi$，那么$\te{shear}_x(d)$和$\te{shear}_y(d)$可以分别解读为“仅令$y$轴顺时针旋转$\phi$”和“仅令$x$逆时针旋转$\phi$”，\cref{fig:剪切变换}中亦展现了这一点。
 
 \subsection{旋转变换}
 
@@ -103,8 +106,8 @@
         \end{pmatrix}
     \end{Equation}
 \end{BoxDefinition}
-其中$\phi$代表逆时针的旋转角度。旋转的矩阵比较费解，我们可以先将其展开\setpeq{旋转变换}
-\begin{Equation}&[1]
+其中$\phi$代表逆时针的旋转角度。旋转的矩阵比较费解，我们可以先将其展开
+\begin{Equation}[旋转变换1]
     \begin{pmatrix}
         x'\\
         y'\\
@@ -123,9 +126,9 @@
     \end{pmatrix}
 \end{Equation}
 现在我们考虑$(x,y)$自身，设其模长和幅角（相对$x$轴的夹角）分别为$r$和$\alpha$
-\begin{Gather}
-    x=r\cos\alpha\xlabelpeq{2}\\
-    y=r\sin\alpha\xlabelpeq{3}
+\begin{Gather}[旋转变换]
+    x=r\cos\alpha\id{2}\\
+    y=r\sin\alpha\id{3}
 \end{Gather}
 类似的$(x',y')$也可以这样表示，但由于其相对$(x,y)$旋转了$\phi$故幅角变为$\alpha+\phi$
 \begin{Gather}
@@ -137,17 +140,17 @@
     x'=r\cos\alpha\cos\phi-r\sin\alpha\sin\phi\\
     y'=r\sin\alpha\cos\phi+r\cos\alpha\sin\phi
 \end{Gather}
-代入\xrefpeq{2}和\xrefpeq{3}
+代入\cref{eq:旋转变换2}和\cref{eq:旋转变换3}
 \begin{Gather}
     x'=x\cos\phi-y\sin\phi\\
     y'=y\cos\phi+x\sin\phi
 \end{Gather}
-这和\xrefpeq{1}中矩阵给出的结果，至此就解释了为什么这样一个矩阵可以表示旋转。
+这和\cref{eq:旋转变换1}中矩阵给出的结果，至此就解释了为什么这样一个矩阵可以表示旋转。
 
 \begin{Figure}[旋转变换]
-    \includegraphics[scale=0.8]{build/Chapter06A_05.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter06A_05.fig.pdf}
 \end{Figure}
-\xref{fig:旋转变换}中，展示了$\te{rotate}(\pi/4)$的效果，注意到图形逆时针旋转了$\pi/4$。
+\cref{fig:旋转变换}中，展示了$\te{rotate}(\pi/4)$的效果，注意到图形逆时针旋转了$\pi/4$。
 
 \subsection{反射变换}
 
@@ -169,14 +172,9 @@
         \end{pmatrix}
     \end{Equation}
 \end{BoxDefinition}
-从\xref{fig:反射变换}中可以看出$\te{reflect}_x$和$\te{reflect}_y$分别代表图形以$x$轴或以$y$轴进行对称，也可以认为是另一轴翻转为负方向。特别注意这里的色块分布，反射变换不等价$\mp\pi/2$的旋转变换！
+从\cref{fig:反射变换}中可以看出$\te{reflect}_x$和$\te{reflect}_y$分别代表图形以$x$轴或以$y$轴进行对称，也可以认为是另一轴翻转为负方向。特别注意这里的色块分布，反射变换不等价$\mp\pi/2$的旋转变换！
 
 \begin{Figure}[反射变换]
-    \begin{FigureSub}[以$x$轴为对称轴的反射]
-        \includegraphics[scale=0.8]{build/Chapter06A_07.fig.pdf}
-    \end{FigureSub}
-    \hspace{1cm}
-    \begin{FigureSub}[以$y$轴为对称轴的剪切]
-        \includegraphics[scale=0.8]{build/Chapter06A_06.fig.pdf}
-    \end{FigureSub}
+    \figuresub[以$x$轴为对称轴的反射]{\includegraphics[scale=0.8]{Chapter06A_07.fig.pdf}}{0.4}    
+    \figuresub[以$y$轴为对称轴的剪切]{\includegraphics[scale=0.8]{Chapter06A_06.fig.pdf}}{0.4}   
 \end{Figure}

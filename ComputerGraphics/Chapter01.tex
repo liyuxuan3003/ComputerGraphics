@@ -7,7 +7,7 @@
 \end{itemize}
 
 \begin{Figure}[Ray Tracing In One Weekend]
-    \includegraphics[width=11cm]{image/Final.png}
+    \includegraphics[width=11cm]{Final.png}
 \end{Figure}
 
 光栅化可以大致分为以下几步
@@ -22,8 +22,8 @@
 光栅化的优势在于渲染效率较高，事实上，目前主流的GPU和3D游戏都是基于光栅化的三维渲染技术。然而，这种简单的变换虽然可以正确呈现三维场景，但效果往往不够逼真。
 
 \begin{Figure}[NVDIA Fermi架构]
-    \includegraphics[scale=0.7]{build/Chapter01A_01.fig.pdf}
-    \includegraphics[scale=0.7]{build/Chapter01A_02.fig.pdf}
+    \includegraphics[scale=0.7]{Chapter01A_01.fig.pdf}
+    \includegraphics[scale=0.7]{Chapter01A_02.fig.pdf}
 \end{Figure}
 
 光线追踪是与光栅化相对应的技术，它模拟了现实中的光线行为。其基本思想是，对于图像中的每一像素，向特定方向发出一条光线，该光线会在场景中的物体间发生多次反射和折射，最终到达光源。该像素的颜色就会由其发出光线经过的物体颜色和光源颜色决定。光线追踪可以轻易的实现许多复杂的光学效果，例如：透明材料、反光材料、软阴影、镜头虚化。这是光栅化无法匹敌的，然而，由于光线追踪需要迭代计算光线的传播行为，其效率也相对较低。

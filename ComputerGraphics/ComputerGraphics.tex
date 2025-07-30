@@ -1,28 +1,33 @@
+\makeatletter\def\input@path{{minimus}{notebook-neon}}\makeatother
+
+\documentclass{notebook-neon}
+
+\usepackage{minimus-section}
+\usepackage{minimus-text}
+\usepackage{minimus-math}
+\usepackage{minimus-float}
+\usepackage{minimus-code}
+\usepackage{minimus-colorbox}
+\usepackage{minimus-tikz}
+\usepackage{minimus-reference}
+\usepackage{minimus-bibtex}
+
+\graphicspath{{build}{image}}
+\lstset{inputpath={code}}
+
 \title{计算机图形学}
 \author{李宇轩}
 
-\documentclass{xNoteBook}
-
-\usepackage{xCommon}
-\usepackage{xMath}
-\usepackage{xFloat}
-\usepackage{xTikZ}
-
-\usepackage{Local}
-
-\usepackage{gbt7714}
-
 \begin{document}
-
-% \setkeys{Gin}{draft}
 
 \maketitle
 
 \frontmatter
+
 \makesymb
 
 \begin{center}
-    \includegraphics[width=13.5cm]{image/017.jpeg}
+    \includegraphics[width=13.5cm]{017.jpeg}
 \end{center}
 
 \clearpage
@@ -32,10 +37,22 @@
 \listoftables
 
 \mainmatter
+
 \nocite{*}
 
+\part{图像顺序渲染}
+\input{Chapter04.tex}
+\input{Chapter24.tex}
+\input{Chapter23.tex}
+\input{Chapter12.tex}
+
+\part{物体顺序渲染}
+\input{Chapter07.tex}
+\input{Chapter08.tex}
+\input{Chapter09.tex}
+\input{Chapter11.tex}
+
 \part{计算机图形学基础}
-% \input{Chapter01.tex}
 \input{Chapter03.tex}
 \input{Chapter06.tex}
 \input{Chapter15.tex}
@@ -43,24 +60,10 @@
 \input{Chapter10.tex}
 \input{Chapter18.tex}
 
-\part{物体顺序渲染：光栅化}
-\input{Chapter07.tex}
-\input{Chapter08.tex}
-\input{Chapter09.tex}
-\input{Chapter11.tex}
-
-\part{图像顺序渲染：光线追踪}
-\input{Chapter04.tex}
-\input{Chapter24.tex}
-\input{Chapter23.tex}
-\input{Chapter12.tex}
-
-
 \appendix
 
 \backmatter
 
-\bibliographystyle{gbt7714-numerical}
 \bibliography{Reference.bib}
 
 \end{document}

@@ -1,11 +1,21 @@
-\documentclass{xStandalone}
+\makeatletter\def\input@path{{minimus}{standalone-silicon}}\makeatother
+
+\documentclass{standalone-silicon}
+
+\usepackage{minimus-text}
+\usepackage{minimus-math}
+\usepackage{minimus-tikz}
+
+\graphicspath{{image}{build}}
 
 \begin{document}
 \begin{tikzpicture}
-    \clip (-3.25,-3.25) rectangle (3.25,3.25);
 
-    \path (0,0) node{\includegraphics[width=6.5cm]{image/RasterizationIOW/SpherePerFragment.png}};
+\clip (-3.25,-3.25) rectangle (3.25,3.25);
 
-    \path (-1.7,-1.7) node (A) [draw,ultra thick,white,inner sep=0.01cm] {\includegraphics[width=2.8cm,clip,bb=172 280 272 380]{image/RasterizationIOW/SpherePerFragment.png}};
+\path (0,0) node{\includegraphics[width=6.5cm]{RasterizationIOW/SpherePerFragment.png}};
+
+\path (-1.7,-1.7) node (A) [draw,ultra thick,white,inner sep=0.01cm] {\includegraphics[width=2.8cm,clip,bb=172 280 272 380]{RasterizationIOW/SpherePerFragment.png}};
+
 \end{tikzpicture}
 \end{document}

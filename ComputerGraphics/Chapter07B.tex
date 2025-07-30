@@ -1,5 +1,5 @@
 \section{相机变换}
-正如\xref{sec:视角变换的流程}中所说，相机变换就是\xref{sec:坐标系变换}中从$xyz$系到$uvw$系的一个变换，我们可以照抄\xref{fml:坐标系变换}的结论。这里有一个疑问，为什么从世界的$xyz$系变换至相机的$uvw$系后\xref{fig:视角变换流程}中的相机空间的坐标轴仍然用$x,y,z$表示？这可以理解为在完成变换后我们重新命名了坐标轴，或者说，我们总是用$x,y,z$表示一个空间自身的坐标轴，否则每次变换就要引入三个新字母。
+正如\cref{sec:视角变换的流程}中所说，相机变换就是\cref{sec:坐标系变换}中从$xyz$系到$uvw$系的一个变换，我们可以照抄\cref{fml:坐标系变换}的结论。这里有一个疑问，为什么从世界的$xyz$系变换至相机的$uvw$系后\cref{fig:视角变换流程}中的相机空间的坐标轴仍然用$x,y,z$表示？这可以理解为在完成变换后我们重新命名了坐标轴，或者说，我们总是用$x,y,z$表示一个空间自身的坐标轴，否则每次变换就要引入三个新字母。
 
 \begin{BoxFormula}[相机变换]
     相机变换的变换矩阵$\vb{M}_{cam}$是
@@ -20,11 +20,11 @@
     \end{Equation}
 \end{BoxFormula}
 
-这里还有一个问题，相机的$\vb{u},\vb{v},\vb{w}$如何确定？如\xref{fig:相机基矢的确定}所示，通常关于一个相机我们了解的是它的观察方向$\vb{g}$和一个表示“上方”的$\vb{t}$，这里最容易求出的是$\vb{w}$，它是$\vb{g}$反方向的单位向量
+这里还有一个问题，相机的$\vb{u},\vb{v},\vb{w}$如何确定？如\cref{fig:相机基矢的确定}所示，通常关于一个相机我们了解的是它的观察方向$\vb{g}$和一个表示“上方”的$\vb{t}$，这里最容易求出的是$\vb{w}$，它是$\vb{g}$反方向的单位向量
 \begin{Equation}
     \vb{w}=-\frac{\vb{g}}{\norm{\vb{g}}}
 \end{Equation}
-我们知道，在另外两个基矢中，$\vb{u}$代表画面的右，$\vb{v}$代表画面的上，因此或许会理所当然的写出$\vb{v}=\vb{t}/\norm{\vb{t}}$，然而，这里的$\vb{t}$未必恰好在$\vb{v}$的方向上，如\xref{fig:相机基矢的确定}，可以看到$\vb{t}$只是指示了一个大致的向上的朝向。因此，更明智的做法是先通过$\vb{t}$和$\vb{w}$构成的平面求出垂直的$\vb{u}$，即
+我们知道，在另外两个基矢中，$\vb{u}$代表画面的右，$\vb{v}$代表画面的上，因此或许会理所当然的写出$\vb{v}=\vb{t}/\norm{\vb{t}}$，然而，这里的$\vb{t}$未必恰好在$\vb{v}$的方向上，如\cref{fig:相机基矢的确定}，可以看到$\vb{t}$只是指示了一个大致的向上的朝向。因此，更明智的做法是先通过$\vb{t}$和$\vb{w}$构成的平面求出垂直的$\vb{u}$，即
 \begin{Equation}
     \vb{u}=\frac{\vb{t}\times\vb{w}}{\norm{\vb{t}\times\vb{w}}}
 \end{Equation}
@@ -35,7 +35,7 @@
 \end{Equation}
 
 \begin{Figure}[相机基矢的确定]
-    \includegraphics[scale=0.8]{build/Chapter07B_01.fig.pdf}
+    \includegraphics[scale=0.8]{Chapter07B_01.fig.pdf}
 \end{Figure}
 将该结论整理如下
 \begin{BoxFormula}[相机基矢的确定]

@@ -2,36 +2,28 @@
 
 
 
-在\xref{sec:着色方程}中，我们已经了解已知光源位置、观察原点、观察点的情况下如何计算观察到的颜色，现在的问题是，这怎么用来确定每一像素的颜色？不过首先要说明的一点是，尽管法向量通常是对于一个三角面而言的，但在着色时，我们常常会使用三角面“顶点的法向量”，这是如何定义的？如\xref{fig:顶点处的法向量}，顶点处的法向量定义为共享该顶点的所有三角面的法向量的平均值。
-
-\begin{Figure}[顶点处的法向量]
-    \includegraphics[scale=0.8]{build/Chapter08D_01.fig.pdf}
-\end{Figure}
+在\cref{sec:着色方程}中，我们已经了解已知光源位置、观察原点、观察点的情况下如何计算观察到的颜色，现在的问题是，这怎么用来确定每一像素的颜色？不过首先要说明的一点是，尽管法向量通常是对于一个三角面而言的，但在着色时，我们常常会使用三角面“顶点的法向量”，这是如何定义的？如\cref{fig:顶点处的法向量}，顶点处的法向量定义为共享该顶点的所有三角面的法向量的平均值。
 
 在确定三角面对应像素的颜色时，有两种着色频率（Shading Frequency）
 \begin{itemize}
-    \item 逐顶点着色（Per-vertex Shading），如\xref{fig:逐顶点着色}所示。
-    \item 逐片元着色（Per-fragment Shading），如\xref{fig:逐片元着色}所示。
+    \item 逐顶点着色（Per-vertex Shading），如\cref{fig:逐顶点着色}所示。
+    \item 逐片元着色（Per-fragment Shading），如\cref{fig:逐片元着色}所示。
 \end{itemize}
-\begin{Figure}[着色频率]
-    \begin{FigureSub}[逐顶点着色]
-        \includegraphics[scale=0.8]{build/Chapter08D_02.fig.pdf}
-    \end{FigureSub}
-    \hspace{0.5cm}
-    \begin{FigureSub}[逐片元着色]
-        \includegraphics[scale=0.8]{build/Chapter08D_03.fig.pdf}
-    \end{FigureSub}
+
+\begin{Figure}[顶点处的法向量]
+    \includegraphics[scale=0.8]{Chapter08D_01.fig.pdf}
 \end{Figure}
-两者的差别在于，逐顶点着色是先根据顶点法向量$\vb{n}_0,\vb{n}_1,\vb{n}_2$通过\xref{sec:着色方程}介绍的着色方程计算顶点处的颜色$c_0,c_1,c_2$，随后通过插值$c=\alpha c_0+\beta c_1+\gamma c_2$得到三角面内某一特定像素的颜色，这一插值方法被称为重心坐标插值（Barycentric Interpolation）。在\xref{fig:光栅化三角形}中表现的就是逐顶点着色，顶点$\vb{p}_0,\vb{p}_1,\vb{p}_2$被分别假定为红、绿、蓝。然而，我们知道有一些着色方法对于法向量的法向量极为敏感，为此，逐片元着色先对法向量$\vb{n}_0,\vb{n}_1,\vb{n}_2$进行$\vb{n}=\alpha\vb{n}_0+\beta\vb{n}_1+\gamma\vb{n}_2$插值，这样一来三角面内就分布着均匀过渡的法向量，由此再计算颜色，就可以获得更均匀的着色效果。逐片元着色相较逐顶点着色具有更好的效果但也更为耗时，因此我们可以根据具体情况采用合适的着色频率，例如，Blinn-Phong着色对法向量非常敏感，Lambertian着色和Ambient着色对法向量则相对不敏感，两者就可以分别采用逐片元着色和逐顶点着色。
+
+\begin{Figure}[着色频率]
+    \figuresub[逐顶点着色]{\includegraphics[scale=0.8]{Chapter08D_02.fig.pdf}}{0.48}    
+    \figuresub[逐片元着色]{\includegraphics[scale=0.8]{Chapter08D_03.fig.pdf}}{0.48}
+\end{Figure}
 
 \begin{Figure}[着色频率的效果]
-    \begin{FigureSub}[逐顶点着色的效果]
-        \includegraphics[width=6.5cm]{build/SpherePerVertex.fig.pdf}
-    \end{FigureSub}
-    \hspace{0.5cm}
-    \begin{FigureSub}[逐片元着色的效果]
-        \includegraphics[width=6.5cm]{build/SpherePerFragment.fig.pdf}
-    \end{FigureSub}
+    \figuresub[逐顶点着色的效果]{\includegraphics[width=6.5cm]{SpherePerVertex.fig.pdf}}{0.48}    
+    \figuresub[逐片元着色的效果]{\includegraphics[width=6.5cm]{SpherePerFragment.fig.pdf}}{0.48}   
 \end{Figure}
 
-\xref{fig:着色频率的效果}展示了不同着色频率的效果差异，可以看出，逐顶点着色和逐片元着色的结果在大部分区域是没有差别的，然而，在对法向量变化较为敏感的高光区域，逐顶点着色的高光光斑表现处明显的三角面拼合图案，整体呈六边形。而相比之下，逐片元着色的高光光斑就自然很多。
+两者的差别在于，逐顶点着色是先根据顶点法向量$\vb{n}_0,\vb{n}_1,\vb{n}_2$通过\cref{sec:着色方程}介绍的着色方程计算顶点处的颜色$c_0,c_1,c_2$，随后通过插值$c=\alpha c_0+\beta c_1+\gamma c_2$得到三角面内某一特定像素的颜色，这一插值方法被称为重心坐标插值（Barycentric Interpolation）。在\cref{fig:光栅化三角形}中表现的就是逐顶点着色，顶点$\vb{p}_0,\vb{p}_1,\vb{p}_2$被分别假定为红、绿、蓝。然而，我们知道有一些着色方法对于法向量的法向量极为敏感，为此，逐片元着色先对法向量$\vb{n}_0,\vb{n}_1,\vb{n}_2$进行$\vb{n}=\alpha\vb{n}_0+\beta\vb{n}_1+\gamma\vb{n}_2$插值，这样一来三角面内就分布着均匀过渡的法向量，由此再计算颜色，就可以获得更均匀的着色效果。逐片元着色相较逐顶点着色具有更好的效果但也更为耗时，因此我们可以根据具体情况采用合适的着色频率，例如，Blinn-Phong着色对法向量非常敏感，Lambertian着色和Ambient着色对法向量则相对不敏感，两者就可以分别采用逐片元着色和逐顶点着色。
+
+\cref{fig:着色频率的效果}展示了不同着色频率的效果差异，可以看出，逐顶点着色和逐片元着色的结果在大部分区域是没有差别的，然而，在对法向量变化较为敏感的高光区域，逐顶点着色的高光光斑表现处明显的三角面拼合图案，整体呈六边形。而相比之下，逐片元着色的高光光斑就自然很多。
