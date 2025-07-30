@@ -1,0 +1,16 @@
+[submodule "Minimus"]
+	path = ComputerGraphics/minimus
+	url = git@Lithium:LaTeX/Minimus.git
+	branch = master
+[submodule "NotebookNeon"]
+	path = ComputerGraphics/notebook-neon
+	url = git@Lithium:LaTeX/NotebookNeon.git
+	branch = master
+[submodule "StandaloneSilicon"]
+	path = ComputerGraphics/standalone-silicon
+	url = git@Lithium:LaTeX/StandaloneSilicon.git
+	branch = master
+[submodule "MakefileLaTeX"]
+	path = ComputerGraphics/makefile-latex
+	url = git@Lithium:LaTeX/MakefileLaTeX.git
+	branch = master
